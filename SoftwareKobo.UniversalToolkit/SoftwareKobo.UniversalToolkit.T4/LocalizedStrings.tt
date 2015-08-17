@@ -1,0 +1,184 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Xml" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Xml" #>
+<#@ output extension=".cs" #>
+<#
+    bool hadOutput = false;
+
+    HashSet<KeyName> resourceKeys = new HashSet<KeyName>();// 存放 key 和对应的 resw 的名字。
+
+    foreach (var reswPath in GetAllReswPath())
+    {
+        string name = GetReswName(reswPath);
+        var keys = GetReswKeys(reswPath).ToList();
+
+        for (int i = 0; i < keys.Count; i++)
+        {
+            var key = keys[i];
+
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                continue;
+            }
+
+            KeyName keyName = KeyName.Create(key, name);
+            resourceKeys.Add(keyName);
+        }
+    }
+#>
+<#
+    if (resourceKeys.Any())
+    {
+#>
+using Windows.ApplicationModel.Resources;
+
+namespace <#= GetNamespace() #>
+{
+    public static partial class LocalizedStrings
+    {
+<#
+    }
+#>
+<#
+    foreach (var keyName in resourceKeys)
+    {
+        string key = keyName.Key;
+        string name = keyName.Name;
+        
+        // 将 key 的第一个字母大写，作为属性名。
+        string propertyName = key[0].ToString().ToUpper() + key.Substring(1);
+                
+        // ResourceLoader 的 key，如果为 "Resources"，则可以省略。
+        string resourceName = string.Equals(name, "Resources", StringComparison.OrdinalIgnoreCase) ? string.Empty : ("\"" + name + "\"");
+
+        // 不是第一个属性，添加换行。
+        if (hadOutput == true)
+        {
+            WriteLine(string.Empty);
+        }
+#>
+        public static string <#= propertyName #>
+        {
+            get
+            {
+                return ResourceLoader.GetForCurrentView(<#= resourceName #>).GetString("<#= key #>");
+            }
+        }
+<#
+        hadOutput = true;        
+    }
+#>
+<#
+    if (resourceKeys.Any())
+    {
+#>
+    }
+}
+<#
+    }
+#>
+<#+ 
+    /// <summary>
+    /// 获取当前项目的默认命名空间。
+    /// </summary>
+    /// <returns>当前项目的默认命名空间。</returns>
+    private string GetNamespace()
+    {
+        return this.Host.ResolveParameterValue("directiveId", "namespaceDirectiveProcessor", "namespaceHint");
+    }
+
+    /// <summary>
+    /// 获取当前项目的绝对路径。
+    /// </summary>
+    /// <returns>当前项目的绝对路径。</returns>
+    private string GetProjectPath()
+    {
+        return this.Host.ResolveAssemblyReference("$(ProjectDir)");
+    }
+
+    /// <summary>
+    /// 获取 Strings 文件夹内的所有 resw 的绝对路径。
+    /// </summary>
+    /// <returns>Strings 文件夹内的所有 resw 的绝对路径。如果没有，则返回空集合。</returns>
+    private IEnumerable<string> GetAllReswPath()
+    {
+        string projectPath = GetProjectPath();
+        string stringsPath = Path.Combine(projectPath, "Strings");
+        
+        // 当前项目存在 Strings 文件夹。
+        if (Directory.Exists(stringsPath))
+        {
+            // 获取 Strings 文件夹下所有的 resw 文件的路径。
+            return Directory.GetFiles(stringsPath, "*.resw", SearchOption.AllDirectories);
+        }
+        else
+        {
+            return Enumerable.Empty<string>();
+        }
+    }
+
+    /// <summary>
+    /// 获取 resw 的文件名。
+    /// </summary>
+    /// <returns>resw 的文件名。</returns>
+    private string GetReswName(string reswPath)
+    {
+        return Path.GetFileNameWithoutExtension(reswPath);
+    }
+
+    /// <summary>
+    /// 获取 resw 内的所有键的名称。
+    /// </summary>
+    /// <returns>resw 内所有键的名称，不包含用于本地化控件属性的键。</returns>
+    private IEnumerable<string> GetReswKeys(string reswPath)
+    {
+        XmlDocument document = new XmlDocument();
+        document.Load(reswPath);
+
+        // 获取 resw 文件中的 data 节点。
+        XmlNodeList dataNodes = document.GetElementsByTagName("data");
+        foreach(var temp in dataNodes)
+        {
+            XmlElement dataNode = temp as XmlElement;
+            if (dataNode != null)
+            {
+                string key = dataNode.GetAttribute("name");
+                // key 中包含 ‘.’ 的作为控件的多语言化，不处理。
+                if (key.Contains(".") == false)
+                {
+                    yield return key;
+                }
+            }
+        }
+    }
+
+    // 辅助结构体
+    private struct KeyName
+    {
+        internal string Key
+        {
+            get;
+            set;
+        }
+
+        internal string Name
+        {
+            get;
+            set;
+        }
+
+        internal static KeyName Create(string key, string name)
+        {
+            return new KeyName()
+                {
+                    Key = key,
+                    Name = name
+                };
+        }
+    }
+ #>
