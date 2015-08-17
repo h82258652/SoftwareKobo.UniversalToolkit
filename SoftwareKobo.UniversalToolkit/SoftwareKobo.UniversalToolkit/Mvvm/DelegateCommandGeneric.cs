@@ -7,17 +7,18 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
     /// <summary>
     /// 委托命令。
     /// </summary>
-    public class RelayCommand : ICommand
+    /// <typeparam name="T">参数类型。</typeparam>
+    public class DelegateCommand<T> : ICommand
     {
-        private readonly Func<Task> _asyncExecute;
-        private readonly Func<bool> _canExecute;
-        private readonly Action _execute;
+        private readonly Func<T, Task> _asyncExecute;
+        private readonly Func<T, bool> _canExecute;
+        private readonly Action<T> _execute;
 
         /// <summary>
         /// 初始化委托命令。
         /// </summary>
         /// <param name="execute">命令动作。</param>
-        public RelayCommand(Action execute) : this(execute, null)
+        public DelegateCommand(Action<T> execute) : this(execute, null)
         {
         }
 
@@ -25,7 +26,7 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
         /// 初始化委托命令。
         /// </summary>
         /// <param name="asyncExecute">命令动作。</param>
-        public RelayCommand(Func<Task> asyncExecute) : this(asyncExecute, null)
+        public DelegateCommand(Func<T, Task> asyncExecute) : this(asyncExecute, null)
         {
         }
 
@@ -34,7 +35,7 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
         /// </summary>
         /// <param name="execute">命令动作。</param>
         /// <param name="canExecute">指示命令在某个状态下是否能够执行。</param>
-        public RelayCommand(Action execute, Func<bool> canExecute)
+        public DelegateCommand(Action<T> execute, Func<T, bool> canExecute)
         {
             if (execute == null)
             {
@@ -50,7 +51,7 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
         /// </summary>
         /// <param name="asyncExecute">命令动作。</param>
         /// <param name="canExecute">指示命令在某个状态下是否能够执行。</param>
-        public RelayCommand(Func<Task> asyncExecute, Func<bool> canExecute)
+        public DelegateCommand(Func<T, Task> asyncExecute, Func<T, bool> canExecute)
         {
             if (asyncExecute == null)
             {
@@ -73,7 +74,7 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
         /// <returns>是否允许命令执行。</returns>
         public bool CanExecute(object parameter)
         {
-            return this._canExecute == null || this._canExecute();
+            return _canExecute == null || this._canExecute((T)parameter);
         }
 
         /// <summary>
@@ -84,11 +85,11 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
         {
             if (this._execute != null)
             {
-                this._execute();
+                _execute((T)parameter);
             }
             else
             {
-                await this._asyncExecute();
+                await _asyncExecute((T)parameter);
             }
         }
 

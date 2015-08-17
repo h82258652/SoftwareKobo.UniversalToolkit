@@ -126,8 +126,8 @@
     <Compile Include="Helpers\HardwareButtonsHelper.cs" />
     <Compile Include="Helpers\NavigationBackHelper.cs" />
     <Compile Include="Mvvm\BindableBase.cs" />
-    <Compile Include="Mvvm\RelayCommand.cs" />
-    <Compile Include="Mvvm\RelayCommandGeneric.cs" />
+    <Compile Include="Mvvm\DelegateCommand.cs" />
+    <Compile Include="Mvvm\DelegateCommandGeneric.cs" />
     <Compile Include="Mvvm\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Properties\SoftwareKobo.UniversalToolkit.rd.xml" />
