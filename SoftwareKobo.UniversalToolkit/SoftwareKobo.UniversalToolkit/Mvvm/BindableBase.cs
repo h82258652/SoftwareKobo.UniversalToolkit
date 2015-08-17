@@ -9,13 +9,9 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
     public abstract class BindableBase : INotifyPropertyChanged
     {
         /// <summary>
-        /// 通知属性发生变化。
+        /// 在属性值时被更改时发生。
         /// </summary>
-        /// <param name="propertyName">属性名称。</param>
-        protected virtual void RaisePropertyChanged([CallerMemberName]string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// 通知该对象所有属性发生变化。
@@ -26,8 +22,12 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
         }
 
         /// <summary>
-        /// 在属性值时被更改时发生。
+        /// 通知属性发生变化。
         /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
+        /// <param name="propertyName">属性名称。</param>
+        protected virtual void RaisePropertyChanged([CallerMemberName]string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
