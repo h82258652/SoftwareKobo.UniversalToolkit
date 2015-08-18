@@ -129,6 +129,7 @@
     <Compile Include="Mvvm\DelegateCommand.cs" />
     <Compile Include="Mvvm\DelegateCommandGeneric.cs" />
     <Compile Include="Mvvm\ViewModelBase.cs" />
+    <Compile Include="Mvvm\ViewModelLocatorBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Properties\SoftwareKobo.UniversalToolkit.rd.xml" />
   </ItemGroup>
