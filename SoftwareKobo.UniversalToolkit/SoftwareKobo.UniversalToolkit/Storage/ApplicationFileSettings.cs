@@ -8,7 +8,7 @@ namespace SoftwareKobo.UniversalToolkit.Storage
     {
         private StorageFolder _folder;
 
-        public ApplicationFileSettings(StorageFolder folder)
+        internal ApplicationFileSettings(StorageFolder folder)
         {
             _folder = folder;
         }

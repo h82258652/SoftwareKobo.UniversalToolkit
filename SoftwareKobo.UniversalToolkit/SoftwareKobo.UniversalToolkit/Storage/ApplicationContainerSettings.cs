@@ -3,11 +3,11 @@ using Windows.Storage;
 
 namespace SoftwareKobo.UniversalToolkit.Storage
 {
-    public class ApplicationContainerSettings : ISettings
+    internal class ApplicationContainerSettings : ISettings
     {
         private ApplicationDataContainer _container;
 
-        public ApplicationContainerSettings(ApplicationDataContainer container)
+        internal ApplicationContainerSettings(ApplicationDataContainer container)
         {
             _container = container;
         }
