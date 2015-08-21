@@ -1,30 +1,122 @@
-﻿using System;
+﻿using SoftwareKobo.UniversalToolkit.Controls;
+using System;
 using System.Diagnostics;
+using System.Reflection;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.Globalization;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 namespace SoftwareKobo.UniversalToolkit
 {
     public abstract class Bootstrapper : Application
     {
-        protected Bootstrapper()
+        private bool _isEnabledDebugSettings;
+        private Type _mainPageType;
+        private Type _splashScreenType;
+
+        public Bootstrapper(Type mainPageType) : this(mainPageType, null)
         {
+        }
+
+        public Bootstrapper(Type mainPageType, Type splashScreenType)
+        {
+            this.VerifyConstructorParameters(mainPageType, splashScreenType);
+
+            this._mainPageType = mainPageType;
+            this._splashScreenType = splashScreenType;
+
             this.Resuming += this.OnResuming;
             this.Suspending += async (sender, e) =>
             {
-                var deferral = e.SuspendingOperation.GetDeferral();
+                SuspendingDeferral deferral = e.SuspendingOperation.GetDeferral();
                 try
                 {
                     await this.OnSuspendingAsync(sender, e);
                 }
-                catch
+                finally
                 {
                     deferral.Complete();
                 }
             };
-            this.UnhandledException += this.OnUnhandledException;
+            this.UnhandledException += OnUnhandledException;
+        }
+
+        public Frame RootFrame
+        {
+            get;
+            protected set;
+        }
+
+        protected bool IsEnabledDebugSettings
+        {
+            get
+            {
+                return this._isEnabledDebugSettings;
+            }
+            set
+            {
+                this._isEnabledDebugSettings = value;
+                this.EnabledDebugSettings(value);
+            }
+        }
+
+        [Conditional("DEBUG")]
+        protected virtual void EnabledDebugSettings(bool isEnabled)
+        {
+            if (Debugger.IsAttached)
+            {
+                this.DebugSettings.EnableFrameRateCounter = isEnabled;
+            }
+        }
+
+        protected virtual Task InitAppParametersAsync()
+        {
+            return Task.FromResult<object>(null);
+        }
+
+        protected override async void OnLaunched(LaunchActivatedEventArgs args)
+        {
+            this.IsEnabledDebugSettings = true;
+
+            this.InitRootFrame();
+
+            await this.InitAppParametersAsync();
+
+            if (this._splashScreenType != null)
+            {
+                if (args.PreviousExecutionState != ApplicationExecutionState.Running)
+                {
+                    ExtendedSplashScreenContent extendedSplashScreenContent = Activator.CreateInstance(this._splashScreenType) as ExtendedSplashScreenContent;
+                    extendedSplashScreenContent.Finished += (sender, e) =>
+                    {
+                        Window.Current.Content = this.RootFrame;
+                        this.RootFrame.Navigate(this._mainPageType, args.Arguments);
+                    };
+
+                    ExtendedSplashScreen extendedSplashScreen = await ExtendedSplashScreen.CreateAsync(args.SplashScreen, extendedSplashScreenContent);
+                    Window.Current.Content = extendedSplashScreen;
+                }
+            }
+            else
+            {
+                Window.Current.Content = this.RootFrame;
+                this.RootFrame.Navigate(this._mainPageType, args.Arguments);
+            }
+
+            Window.Current.Activate();
+        }
+
+        /// <summary>
+        /// 在应用程序从挂起状态转换为运行状态时发生。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected virtual void OnResuming(object sender, object e)
+        {
         }
 
         protected virtual Task OnSuspendingAsync(object sender, SuspendingEventArgs e)
@@ -32,35 +124,54 @@ namespace SoftwareKobo.UniversalToolkit
             return Task.FromResult<object>(null);
         }
 
-        protected virtual void OnResuming(object sender, object e)
-        {
-        }
-
+        /// <summary>
+        /// 当异常可由应用程序代码处理，如从本机级别的 Windows 运行时错误转发时发生。应用程序可标记事件数据中处理的匹配项。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected virtual void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             Debug.Fail(e.Message, e.Exception.StackTrace);
+            if (Debugger.IsAttached)
+            {
+                Debugger.Break();
+            }
         }
 
-        #region NotImp
-
-        protected override void OnLaunched(LaunchActivatedEventArgs args)
+        protected virtual void RootFrameNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
-            base.OnLaunched(args);
-            throw new NotImplementedException();
+            Debug.Fail("Failed to load Page" + e.SourcePageType.FullName, e.Exception.StackTrace);
+            if (Debugger.IsAttached)
+            {
+                Debugger.Break();
+            }
         }
 
-        protected override void OnActivated(IActivatedEventArgs args)
+        private void InitRootFrame()
         {
-            base.OnActivated(args);
-            throw new NotImplementedException();
+            RootFrame = Window.Current.Content as Frame;
+            if (RootFrame == null)
+            {
+                RootFrame = new Frame()
+                {
+                    Language = ApplicationLanguages.Languages[0]
+                };
+                RootFrame.NavigationFailed += RootFrameNavigationFailed;
+            }
         }
 
-        protected override void OnWindowCreated(WindowCreatedEventArgs args)
+        [Conditional("DEBUG")]
+        private void VerifyConstructorParameters(Type mainPageType, Type splashScreenType)
         {
-            base.OnWindowCreated(args);
-            throw new NotImplementedException();
+#warning
+            if (typeof(Page).IsAssignableFrom(mainPageType) == false)
+            {
+                throw new ArgumentException("", nameof(mainPageType));
+            }
+            if (splashScreenType != null && typeof(ExtendedSplashScreenContent).IsAssignableFrom(splashScreenType) == false)
+            {
+                throw new ArgumentException("", nameof(splashScreenType));
+            }
         }
-
-        #endregion NotImp
     }
 }
