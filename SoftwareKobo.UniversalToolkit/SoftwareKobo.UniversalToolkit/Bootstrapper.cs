@@ -1,5 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
+using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 
 namespace SoftwareKobo.UniversalToolkit
@@ -35,6 +38,29 @@ namespace SoftwareKobo.UniversalToolkit
 
         protected virtual void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
+            Debug.Fail(e.Message, e.Exception.StackTrace);
         }
+
+        #region NotImp
+
+        protected override void OnLaunched(LaunchActivatedEventArgs args)
+        {
+            base.OnLaunched(args);
+            throw new NotImplementedException();
+        }
+
+        protected override void OnActivated(IActivatedEventArgs args)
+        {
+            base.OnActivated(args);
+            throw new NotImplementedException();
+        }
+
+        protected override void OnWindowCreated(WindowCreatedEventArgs args)
+        {
+            base.OnWindowCreated(args);
+            throw new NotImplementedException();
+        }
+
+        #endregion NotImp
     }
 }

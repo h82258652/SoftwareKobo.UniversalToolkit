@@ -117,8 +117,10 @@
     <Compile Include="Async\EventHandlerTaskSource.cs" />
     <Compile Include="Async\RoutedEventHandlerTaskSource.cs" />
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Converters\BooleanInverseConverter.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\StringFormatConverter.cs" />
+    <Compile Include="Converters\UnixTimestampToDateTimeConverter.cs" />
     <Compile Include="Extensions\BackgroundTaskBuilderExtensions.cs" />
     <Compile Include="Extensions\HttpClientExtensions.cs" />
     <Compile Include="Extensions\MessageDialogExtensions.cs" />
