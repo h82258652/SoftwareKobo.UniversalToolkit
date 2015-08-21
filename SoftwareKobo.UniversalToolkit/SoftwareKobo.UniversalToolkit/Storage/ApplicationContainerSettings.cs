@@ -21,8 +21,15 @@ namespace SoftwareKobo.UniversalToolkit.Storage
         {
             try
             {
-                string json = (string)_container.Values[key];
-                return JsonConvert.DeserializeObject<T>(json);
+                if (ApplicationSettings.IsPrimitive<T>())
+                {
+                    return (T)_container.Values[key];
+                }
+                else
+                {
+                    string json = (string)_container.Values[key];
+                    return JsonConvert.DeserializeObject<T>(json);
+                }
             }
             catch
             {
@@ -37,8 +44,15 @@ namespace SoftwareKobo.UniversalToolkit.Storage
 
         public void Write<T>(string key, T value)
         {
-            string json = JsonConvert.SerializeObject(value);
-            _container.Values[key] = json;
+            if (ApplicationSettings.IsPrimitive<T>())
+            {
+                _container.Values[key] = value;
+            }
+            else
+            {
+                string json = JsonConvert.SerializeObject(value);
+                _container.Values[key] = json;
+            }
         }
     }
 }

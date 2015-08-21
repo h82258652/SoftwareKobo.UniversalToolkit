@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace SoftwareKobo.UniversalToolkit.Mvvm
@@ -29,37 +27,7 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
         /// <param name="propertyName">属性名称。</param>
         protected virtual void RaisePropertyChanged([CallerMemberName]string propertyName = null)
         {
-            var handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-                handler(this, new PropertyChangedEventArgs(nameof(IsValid)));
-            }
-        }
-
-        /// <summary>
-        /// 指示该模型的所有属性是否验证成功。
-        /// </summary>
-        public virtual bool IsValid
-        {
-            get
-            {
-                return ValidationResults.Count <= 0;
-            }
-        }
-
-        /// <summary>
-        /// 获取该模型的验证错误。
-        /// </summary>
-        public virtual ICollection<ValidationResult> ValidationResults
-        {
-            get
-            {
-                ValidationContext context = new ValidationContext(this);
-                var validationResults = new List<ValidationResult>();
-                Validator.TryValidateObject(this, context, validationResults, true);
-                return validationResults;
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

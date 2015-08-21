@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Windows.Storage;
 
 namespace SoftwareKobo.UniversalToolkit.Storage
@@ -41,6 +42,22 @@ namespace SoftwareKobo.UniversalToolkit.Storage
                 default:
                     throw new ArgumentException("unknown settings strategy", nameof(strategy));
             }
+        }
+
+        internal static bool IsPrimitive<T>()
+        {
+            return IsPrimitive(typeof(T));
+        }
+
+        private static readonly Type[] primitives = new Type[]
+        {
+            typeof(int),
+            typeof(string),
+        };
+
+        internal static bool IsPrimitive(Type type)
+        {
+            return primitives.Contains(type);
         }
     }
 }

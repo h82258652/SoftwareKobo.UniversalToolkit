@@ -31,8 +31,15 @@ namespace SoftwareKobo.UniversalToolkit.Storage
             try
             {
                 var file = _folder.GetFileAsync(key).AsTask().Result;
-                string json = FileIO.ReadTextAsync(file).AsTask().Result;
-                return JsonConvert.DeserializeObject<T>(json);
+                string str = FileIO.ReadTextAsync(file).AsTask().Result;
+                if (typeof(T) == typeof(string))
+                {
+                    return (T)Convert.ChangeType(str, typeof(T));
+                }
+                else
+                {
+                    return JsonConvert.DeserializeObject<T>(str);
+                }
             }
             catch
             {
@@ -58,9 +65,17 @@ namespace SoftwareKobo.UniversalToolkit.Storage
         {
             try
             {
-                string json = JsonConvert.SerializeObject(value);
+                string str;
+                if (typeof(T) == typeof(string))
+                {
+                    str = value.ToString();
+                }
+                else
+                {
+                    str = JsonConvert.SerializeObject(value);
+                }
                 var file = _folder.GetFileAsync(key).AsTask().Result;
-                FileIO.WriteTextAsync(file, json).AsTask().Wait();
+                FileIO.WriteTextAsync(file, str).AsTask().Wait();
             }
             catch
             {
