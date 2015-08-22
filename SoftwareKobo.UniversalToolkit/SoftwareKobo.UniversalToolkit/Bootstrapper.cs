@@ -163,14 +163,13 @@ namespace SoftwareKobo.UniversalToolkit
         [Conditional("DEBUG")]
         private void VerifyConstructorParameters(Type mainPageType, Type splashScreenType)
         {
-#warning
             if (typeof(Page).IsAssignableFrom(mainPageType) == false)
             {
-                throw new ArgumentException("", nameof(mainPageType));
+                throw new ArgumentException($"parameter {nameof(mainPageType)} is not sub type of {nameof(Page)}", nameof(mainPageType));
             }
             if (splashScreenType != null && typeof(ExtendedSplashScreenContent).IsAssignableFrom(splashScreenType) == false)
             {
-                throw new ArgumentException("", nameof(splashScreenType));
+                throw new ArgumentException($"parameter {nameof(splashScreenType)} is not sub type of {nameof(ExtendedSplashScreenContent)}", nameof(splashScreenType));
             }
         }
     }
