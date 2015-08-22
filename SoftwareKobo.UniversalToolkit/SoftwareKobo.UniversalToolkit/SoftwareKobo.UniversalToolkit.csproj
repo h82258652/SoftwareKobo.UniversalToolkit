@@ -120,6 +120,7 @@
       <DependentUpon>ExtendedSplashScreen.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ExtendedSplashScreenContent.cs" />
+    <Compile Include="TODO.cs" />
     <Compile Include="Converters\BooleanInverseConverter.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\StringFormatConverter.cs" />
@@ -148,6 +149,7 @@
     <Compile Include="Storage\ApplicationTempSettings.cs" />
     <Compile Include="Storage\ISettings.cs" />
     <Compile Include="Storage\SettingsStrategy.cs" />
+    <Compile Include="Triggers\OrientationStateTrigger.cs" />
     <Content Include="Properties\SoftwareKobo.UniversalToolkit.rd.xml" />
   </ItemGroup>
   <ItemGroup />
