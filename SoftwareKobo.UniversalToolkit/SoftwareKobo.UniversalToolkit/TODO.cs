@@ -35,4 +35,6 @@ namespace SoftwareKobo.UniversalToolkit
     // 模板选择器 http://www.cnblogs.com/ms-uap/p/4201334.html
 
     // 封装获取屏幕分辨率 http://www.cnblogs.com/hebeiDGL/p/4609672.html
+
+    // VisualTreeHelper 扩展
 }
