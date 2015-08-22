@@ -120,6 +120,7 @@
       <DependentUpon>ExtendedSplashScreen.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ExtendedSplashScreenContent.cs" />
+    <Compile Include="Helpers\ScreenResolutionHelper.cs" />
     <Compile Include="TODO.cs" />
     <Compile Include="Converters\BooleanInverseConverter.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SoftwareKobo.UniversalToolkit
+﻿namespace SoftwareKobo.UniversalToolkit
 {
+    #region 完全未动工
+
     // WrapPanel
     // DockPanel
     // AeroPanel https://github.com/JustinXinLiu/EffectsAndAnimationsWinComposition
@@ -18,13 +14,9 @@ namespace SoftwareKobo.UniversalToolkit
 
     // ValidationSystem
 
-    // Kinds of triggers
-
     // 后台任务helper or system（在Bootstrapper自动注册管理）
 
     // ListViewBaseExtensions
-
-    // 改进 Bootstrapper，特别是 NavigationState
 
     // 多窗口管理 http://www.cnblogs.com/tcjiaan/p/4748697.html
 
@@ -34,7 +26,21 @@ namespace SoftwareKobo.UniversalToolkit
 
     // 模板选择器 http://www.cnblogs.com/ms-uap/p/4201334.html
 
-    // 封装获取屏幕分辨率 http://www.cnblogs.com/hebeiDGL/p/4609672.html
+    #endregion 完全未动工
+
+    #region 大概做了一半？
 
     // VisualTreeHelper 扩展
+
+    // Kinds of triggers
+
+    // 改进 Bootstrapper，特别是 NavigationState
+
+    #endregion 大概做了一半？
+
+    #region 完工
+
+    // 封装获取屏幕分辨率 http://www.cnblogs.com/hebeiDGL/p/4609672.html
+
+    #endregion 完工
 }
