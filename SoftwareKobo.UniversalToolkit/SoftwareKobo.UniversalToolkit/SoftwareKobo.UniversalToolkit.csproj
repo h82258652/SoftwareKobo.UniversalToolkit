@@ -121,6 +121,10 @@
     </Compile>
     <Compile Include="Controls\ExtendedSplashScreenContent.cs" />
     <Compile Include="Helpers\ScreenResolutionHelper.cs" />
+    <Compile Include="Storage\ImageCache.cs" />
+    <Compile Include="Storage\ImageLoadFailedEventArgs.cs" />
+    <Compile Include="Storage\IsolatedStorageFileExtensions.cs" />
+    <Compile Include="Storage\StorageCachedImage.cs" />
     <Compile Include="TODO.cs" />
     <Compile Include="Converters\BooleanInverseConverter.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
@@ -151,6 +155,7 @@
     <Compile Include="Storage\ISettings.cs" />
     <Compile Include="Storage\SettingsStrategy.cs" />
     <Compile Include="Triggers\OrientationStateTrigger.cs" />
+    <Compile Include="Validation\ModelValidation.cs" />
     <Content Include="Properties\SoftwareKobo.UniversalToolkit.rd.xml" />
   </ItemGroup>
   <ItemGroup />

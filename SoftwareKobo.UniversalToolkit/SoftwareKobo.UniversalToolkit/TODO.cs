@@ -14,7 +14,7 @@
 
     // ValidationSystem
 
-    // 后台任务helper or system（在Bootstrapper自动注册管理）
+    // 后台任务helper or system（在Bootstrapper自动注册管理），后者否决，改为 T4 生成帮助类
 
     // ListViewBaseExtensions
 

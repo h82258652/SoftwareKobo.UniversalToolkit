@@ -9,5 +9,6 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <TextBlock VerticalAlignment="Center">MainView</TextBlock>
+        <Button VerticalAlignment="Bottom" Content="Test" Click="Button_Click"></Button>
     </Grid>
 </Page>

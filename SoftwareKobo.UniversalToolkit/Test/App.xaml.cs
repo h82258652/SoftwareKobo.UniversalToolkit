@@ -25,11 +25,6 @@ namespace Test
         {
             this.InitializeComponent();
         }
-
-        protected override async Task InitAppParametersAsync()
-        {
-            await Task.Delay(5000);
-        }
     }
 
     //    /// <summary>
