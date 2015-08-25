@@ -81,6 +81,15 @@ namespace SoftwareKobo.UniversalToolkit.Storage
             IsolatedStorageFileExtensions.DeleteDirectoryRecursive(CACHED_IMAGE_DIRECTORY);
         }
 
+        /// <summary>
+        /// 获取已缓存的文件的总大小。
+        /// </summary>
+        /// <returns>返回图片缓存文件夹的大小，单位为字节。</returns>
+        public static long GetCachedImagesSize()
+        {
+            return IsolatedStorageFileExtensions.GetDirectorySize(CACHED_IMAGE_DIRECTORY);
+        }
+
         private static string GetFilePath(Uri uri)
         {
             return Path.Combine(CACHED_IMAGE_DIRECTORY, WebUtility.UrlEncode(uri.OriginalString));

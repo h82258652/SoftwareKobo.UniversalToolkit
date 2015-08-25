@@ -8,27 +8,72 @@ namespace SoftwareKobo.UniversalToolkit.Storage
     public static class IsolatedStorageFileExtensions
     {
         /// <summary>
-        /// 递归删除独立存储根目录的某个文件夹及其子级内容。
+        /// 递归删除独立存储目录的某个文件夹及其子级内容。
         /// </summary>
-        /// <param name="directory">需要删除的根目录文件夹名称。</param>
+        /// <param name="directory">需要删除的目录文件夹路径。</param>
         public static void DeleteDirectoryRecursive(string directory)
         {
-            IsolatedStorageFile iso = IsolatedStorageFile.GetUserStoreForApplication();
-            if (iso.DirectoryExists(directory))
+            using (IsolatedStorageFile isf = IsolatedStorageFile.GetUserStoreForApplication())
             {
-                string[] files = iso.GetFileNames(directory + @"/*");
-                foreach (string file in files)
+                if (isf.DirectoryExists(directory))
                 {
-                    iso.DeleteFile(directory + @"/" + file);
-                }
+                    string[] files = isf.GetFileNames(directory + @"/*");
+                    foreach (string file in files)
+                    {
+                        isf.DeleteFile(directory + @"/" + file);
+                    }
 
-                string[] subDirectories = iso.GetDirectoryNames(directory + @"/");
-                foreach (string subDirectory in subDirectories)
+                    string[] subDirectories = isf.GetDirectoryNames(directory + @"/");
+                    foreach (string subDirectory in subDirectories)
+                    {
+                        DeleteDirectoryRecursive(directory + @"/" + subDirectory);
+                    }
+
+                    isf.DeleteDirectory(directory);
+                }
+            }
+        }
+
+        public static long GetDirectorySize(string directory)
+        {
+            long directorySize;
+            GetDirectorySize(directory, out directorySize);
+            return directorySize;
+        }
+
+        private static void GetDirectorySize(string directory, out long directorySize)
+        {
+            directorySize = 0;
+            using (IsolatedStorageFile isf = IsolatedStorageFile.GetUserStoreForApplication())
+            {
+                if (isf.DirectoryExists(directory))
                 {
-                    DeleteDirectoryRecursive(directory + @"/" + subDirectory);
-                }
+                    string[] files = isf.GetFileNames(directory + @"/*");
+                    foreach (string file in files)
+                    {
+                        long fileSize = GetFileSize(directory + @"/" + file);
+                        directorySize += fileSize;
+                    }
 
-                iso.DeleteDirectory(directory);
+                    string[] subDirectories = isf.GetDirectoryNames(directory + @"/");
+                    foreach (string subDirectory in subDirectories)
+                    {
+                        long subDirectorySize;
+                        GetDirectorySize(directory + @"/" + subDirectory, out subDirectorySize);
+                        directorySize += directorySize;
+                    }
+                }
+            }
+        }
+
+        private static long GetFileSize(string filePath)
+        {
+            using (IsolatedStorageFile isf = IsolatedStorageFile.GetUserStoreForApplication())
+            {
+                using (IsolatedStorageFileStream fileStream = isf.OpenFile(filePath, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+                {
+                    return fileStream.Length;
+                }
             }
         }
     }
