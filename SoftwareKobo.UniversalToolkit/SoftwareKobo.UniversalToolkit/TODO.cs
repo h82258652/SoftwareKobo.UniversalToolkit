@@ -10,8 +10,6 @@
     // 下拉刷新面板
     // CircleImage
 
-    // 图片缓存系统
-
     // ValidationSystem
 
     // 后台任务helper or system（在Bootstrapper自动注册管理），后者否决，改为 T4 生成帮助类
@@ -26,6 +24,8 @@
 
     // 模板选择器 http://www.cnblogs.com/ms-uap/p/4201334.html
 
+    // WeakAction 和 WeakAction<T> 然后改进整个框架特别是MVVM部分，使用WeakAction
+
     #endregion 完全未动工
 
     #region 大概做了一半？
@@ -35,6 +35,8 @@
     // Kinds of triggers
 
     // 改进 Bootstrapper，特别是 NavigationState
+
+    // 图片缓存系统
 
     #endregion 大概做了一半？
 
