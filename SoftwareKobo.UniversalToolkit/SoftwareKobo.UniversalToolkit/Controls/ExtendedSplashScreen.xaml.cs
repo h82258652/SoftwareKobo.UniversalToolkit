@@ -1,6 +1,8 @@
 ﻿using SoftwareKobo.UniversalToolkit.Extensions;
 using System;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Windows.ApplicationModel;
@@ -8,6 +10,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Graphics.Display;
 using Windows.Storage;
+using Windows.Storage.Streams;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -24,7 +27,7 @@ namespace SoftwareKobo.UniversalToolkit.Controls
     {
         private SplashScreen _splashScreen;
 
-        private ExtendedSplashScreen(SplashScreen splashScreen,ExtendedSplashScreenContent content)
+        private ExtendedSplashScreen(SplashScreen splashScreen, ExtendedSplashScreenContent content)
         {
             this.InitializeComponent();
 
@@ -64,9 +67,9 @@ namespace SoftwareKobo.UniversalToolkit.Controls
             }
         }
 
-        internal static async Task<ExtendedSplashScreen> CreateAsync(SplashScreen splashScreen,ExtendedSplashScreenContent content)
+        internal static async Task<ExtendedSplashScreen> CreateAsync(SplashScreen splashScreen, ExtendedSplashScreenContent content)
         {
-            ExtendedSplashScreen extendedSplashScreen = new ExtendedSplashScreen(splashScreen,content);
+            ExtendedSplashScreen extendedSplashScreen = new ExtendedSplashScreen(splashScreen, content);
 
             await extendedSplashScreen.InitSplashScreenAsync();
 
@@ -87,8 +90,13 @@ namespace SoftwareKobo.UniversalToolkit.Controls
                 XAttribute imageAttribute = splashScreenElement.Attribute("Image");
                 if (imageAttribute != null)
                 {
-                    string image = imageAttribute.Value;
-                    this.imgExtendedSplashBackground.Source = new BitmapImage(new Uri("ms-appx:///" + image, UriKind.Absolute));
+                    string imagePath = imageAttribute.Value;
+                    StorageFile imageFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///" + imagePath, UriKind.Absolute));
+                    var buffer =( await FileIO.ReadBufferAsync(imageFile)).ToArray();
+                    MemoryStream stream = new MemoryStream(buffer);
+                    BitmapImage bitmap = new BitmapImage();
+                    await bitmap.SetSourceAsync(stream.AsRandomAccessStream());
+                    this.imgExtendedSplashBackground.Source = bitmap;
                 }
 
                 XAttribute backgroundColorAttribute = splashScreenElement.Attribute("BackgroundColor");
