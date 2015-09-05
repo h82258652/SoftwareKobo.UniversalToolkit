@@ -26,7 +26,7 @@ namespace Test
             this.InitializeComponent();
             this.Loaded += async (sender,e) =>
             {
-                await Task.Delay(3000);
+                await Task.Delay(2000);
                 this.Finish();
             };
         }

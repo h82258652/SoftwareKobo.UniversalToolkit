@@ -133,14 +133,6 @@ namespace SoftwareKobo.UniversalToolkit.Validation
             if (errorMessagePlaceholder!=null)
             {
                 // set error message.
-
-                Image imgage = new Image();
-                imgage.RegisterPropertyChangedCallback(Image.SourceProperty, new DependencyPropertyChangedCallback((DependencyObject o,DependencyProperty e) =>
-                 {
-                     BitmapImage source = o.GetValue(e) as BitmapImage;
-                     var uri= source.UriSource;
-                     uri.Scheme
-                 }));
             }
         }
     }

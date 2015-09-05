@@ -47,6 +47,9 @@ namespace SoftwareKobo.UniversalToolkit.Storage
             this.UriSource = new BitmapImage(uri);
         }
 
+        /// <summary>
+        /// 图片加载失败时触发该事件。
+        /// </summary>
         public event EventHandler<ImageLoadFailedEventArgs> ImageFailed;
 
         public bool IsLoading
