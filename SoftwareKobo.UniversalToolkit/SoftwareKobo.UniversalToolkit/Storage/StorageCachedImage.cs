@@ -47,7 +47,7 @@ namespace SoftwareKobo.UniversalToolkit.Storage
             this.UriSource = new BitmapImage(uri);
         }
 
-        public event EventHandler<ImageLoadFailedEventArgs> LoadFailed;
+        public event EventHandler<ImageLoadFailedEventArgs> ImageFailed;
 
         public bool IsLoading
         {
@@ -183,7 +183,10 @@ namespace SoftwareKobo.UniversalToolkit.Storage
             }
             catch (Exception ex)
             {
-                obj?.LoadFailed(obj, new ImageLoadFailedEventArgs(ex));
+                if (obj.ImageFailed != null)
+                {
+                    obj.ImageFailed(obj, new ImageLoadFailedEventArgs(ex));
+                }
             }
             finally
             {
