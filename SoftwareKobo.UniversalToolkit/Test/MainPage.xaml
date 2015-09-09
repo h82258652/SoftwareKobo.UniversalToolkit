@@ -4,14 +4,16 @@
       xmlns:local="using:Test"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:extensions="using:SoftwareKobo.UniversalToolkit.Extensions"
+      xmlns:control="using:SoftwareKobo.UniversalToolkit.Controls"
       mc:Ignorable="d">
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <StackPanel HorizontalAlignment="Center">
             <TextBox x:Name="txt" />
             <Button Content="Add"
                     Click="Button_Click"></Button>
-            <Button Content="Check" Click="Button_Click_1"></Button>
-            <Image x:Name="img" ImageFailed="img_ImageFailed"></Image>
+            <Button Content="Check"></Button>
+            <Image x:Name="img"></Image>
         </StackPanel>
     </Grid>
 </Page>
