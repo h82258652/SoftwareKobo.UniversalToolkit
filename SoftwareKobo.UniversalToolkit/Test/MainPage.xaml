@@ -14,7 +14,7 @@
             <VisualStateGroup>
                 <VisualState x:Name="l">
                     <VisualState.StateTriggers>
-                        <triggers:NetworkStateTrigger NetworkState="Avaliable"></triggers:NetworkStateTrigger>
+                        <triggers:OrientationStateTrigger Orientation="Landscape"></triggers:OrientationStateTrigger>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="rrg.Background"
@@ -23,7 +23,7 @@
                 </VisualState>
                 <VisualState x:Name="p">
                     <VisualState.StateTriggers>
-                        <triggers:NetworkStateTrigger NetworkState="Unavaliable"></triggers:NetworkStateTrigger>
+                        <triggers:OrientationStateTrigger Orientation="Portrait"></triggers:OrientationStateTrigger>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="rrg.Background"

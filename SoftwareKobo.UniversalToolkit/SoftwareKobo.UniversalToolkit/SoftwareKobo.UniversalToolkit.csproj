@@ -120,7 +120,6 @@
       <DependentUpon>ExtendedSplashScreen.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ExtendedSplashScreenContent.cs" />
-    <Compile Include="Helpers\ScreenResolutionHelper.cs" />
     <Compile Include="Storage\ImageLoadFailedEventArgs.cs" />
     <Compile Include="Storage\IsolatedStorageFileExtensions.cs" />
     <Compile Include="Storage\StorageCachedImage.cs" />
