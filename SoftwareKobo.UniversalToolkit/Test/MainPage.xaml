@@ -6,8 +6,32 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:extensions="using:SoftwareKobo.UniversalToolkit.Extensions"
       xmlns:control="using:SoftwareKobo.UniversalToolkit.Controls"
+      xmlns:triggers="using:SoftwareKobo.UniversalToolkit.Triggers"
       mc:Ignorable="d">
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+          x:Name="rrg">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="l">
+                    <VisualState.StateTriggers>
+                        <triggers:NetworkStateTrigger NetworkState="Avaliable"></triggers:NetworkStateTrigger>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="rrg.Background"
+                                Value="Red"></Setter>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="p">
+                    <VisualState.StateTriggers>
+                        <triggers:NetworkStateTrigger NetworkState="Unavaliable"></triggers:NetworkStateTrigger>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="rrg.Background"
+                                Value="Blue"></Setter>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
         <StackPanel HorizontalAlignment="Center">
             <TextBox x:Name="txt" />
             <Button Content="Add"

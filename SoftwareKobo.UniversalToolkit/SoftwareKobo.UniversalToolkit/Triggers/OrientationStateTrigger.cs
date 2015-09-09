@@ -1,38 +1,68 @@
-﻿using Windows.Graphics.Display;
+﻿using Windows.ApplicationModel;
+using Windows.Graphics.Display;
 using Windows.UI.Xaml;
 
 namespace SoftwareKobo.UniversalToolkit.Triggers
 {
+    /// <summary>
+    /// 设备方向触发器。
+    /// </summary>
     public class OrientationStateTrigger : StateTriggerBase
     {
+        public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register(nameof(Orientation), typeof(Orientation), typeof(OrientationStateTrigger), new PropertyMetadata(Orientation.None, OrientationChanged));
+
         public OrientationStateTrigger()
         {
-            DisplayInformation.GetForCurrentView().OrientationChanged += OrientationStateTrigger_OrientationChanged;
+            if (DesignMode.DesignModeEnabled == false)
+            {
+                DisplayInformation.GetForCurrentView().OrientationChanged += OrientationStateTrigger_OrientationChanged;
+            }
         }
 
-        private void OrientationStateTrigger_OrientationChanged(DisplayInformation sender, object args)
-        {
-            this.SetActive(sender.CurrentOrientation == Orientation);
-        }
-
-        public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register(nameof(Orientation), typeof(DisplayOrientations), typeof(OrientationStateTrigger), new PropertyMetadata(DisplayOrientations.None, OrientationChanged));
-
-        private static void OrientationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var obj = (OrientationStateTrigger)d;
-            var value = (DisplayOrientations)e.NewValue;
-            obj.SetActive(value == obj.Orientation);
-        }
-
-        public DisplayOrientations Orientation
+        public Orientation Orientation
         {
             get
             {
-                return (DisplayOrientations)this.GetValue(OrientationProperty);
+                return (Orientation)this.GetValue(OrientationProperty);
             }
             set
             {
                 this.SetValue(OrientationProperty, value);
+            }
+        }
+
+        private static void OrientationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var obj = (OrientationStateTrigger)d;
+            obj.UpdateState();
+        }
+
+        private void OrientationStateTrigger_OrientationChanged(DisplayInformation sender, object args)
+        {
+            UpdateState();
+        }
+
+        private void UpdateState()
+        {
+            if (DesignMode.DesignModeEnabled == false)
+            {
+                var currentOrientation = DisplayInformation.GetForCurrentView().CurrentOrientation;
+                switch (currentOrientation)
+                {
+                    case DisplayOrientations.Landscape:
+                    case DisplayOrientations.LandscapeFlipped:
+                        this.SetActive(this.Orientation == Orientation.Landscape);
+                        break;
+
+                    case DisplayOrientations.Portrait:
+                    case DisplayOrientations.PortraitFlipped:
+                        this.SetActive(this.Orientation == Orientation.Portrait);
+                        break;
+
+                    default:
+                        this.SetActive(this.Orientation == Orientation.None);
+                        break;
+                }
             }
         }
     }

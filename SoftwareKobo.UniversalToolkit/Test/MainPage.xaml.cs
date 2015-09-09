@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SoftwareKobo.UniversalToolkit.Extensions;
 using SoftwareKobo.UniversalToolkit.Storage;
 using System;
 using System.Collections.Generic;
@@ -37,6 +38,7 @@ namespace Test
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            rrg.Background = new SolidColorBrush( ColorExtensions.AccentColor);
         }
     }
 }
