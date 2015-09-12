@@ -1,4 +1,5 @@
 ﻿using SoftwareKobo.UniversalToolkit.Extensions;
+using SoftwareKobo.UniversalToolkit.Utils.AppxManifest;
 using System;
 using System.IO;
 using System.Linq;
@@ -11,6 +12,7 @@ using Windows.Foundation;
 using Windows.Graphics.Display;
 using Windows.Storage;
 using Windows.Storage.Streams;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -78,34 +80,26 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 
         private async Task InitSplashScreenAsync()
         {
-            StorageFile appxManifestFile = await Package.Current.InstalledLocation.GetFileAsync("AppxManifest.xml");
-            string appxManifestXml = await FileIO.ReadTextAsync(appxManifestFile);
-
-            XDocument document = XDocument.Parse(appxManifestXml);
-            XElement root = document.Root;
-            string uapNamespace = root.GetNamespaceOfPrefix("uap").NamespaceName;
-            XElement splashScreenElement = document.Descendants(XName.Get("SplashScreen", uapNamespace)).SingleOrDefault();
-            if (splashScreenElement != null)
+            var visualElements = PackageManifest.Current.Applications.First().VisualElements;
+            var splashScreen = visualElements.SplashScreen;
+            if (splashScreen != null)
             {
-                XAttribute imageAttribute = splashScreenElement.Attribute("Image");
-                if (imageAttribute != null)
+                if (string.IsNullOrEmpty(splashScreen.Image) == false)
                 {
-                    string imagePath = imageAttribute.Value;
+                    string imagePath = splashScreen.Image;
                     StorageFile imageFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///" + imagePath, UriKind.Absolute));
-                    var buffer =( await FileIO.ReadBufferAsync(imageFile)).ToArray();
-                    MemoryStream stream = new MemoryStream(buffer);
-                    BitmapImage bitmap = new BitmapImage();
-                    await bitmap.SetSourceAsync(stream.AsRandomAccessStream());
-                    this.imgExtendedSplashBackground.Source = bitmap;
+                    var buffer = (await FileIO.ReadBufferAsync(imageFile)).ToArray();
+                    using (MemoryStream stream = new MemoryStream(buffer))
+                    {
+                        BitmapImage bitmap = new BitmapImage();
+                        await bitmap.SetSourceAsync(stream.AsRandomAccessStream());
+                        this.imgExtendedSplashBackground.Source = bitmap;
+                    }
                 }
 
-                XAttribute backgroundColorAttribute = splashScreenElement.Attribute("BackgroundColor");
-                if (backgroundColorAttribute != null)
-                {
-                    string backgroundColor = backgroundColorAttribute.Value;
-                    this.Background = new SolidColorBrush(ColorExtensions.FromHex(backgroundColor));
-                }
-            }
+                Color backgroundColor = splashScreen.BackgroundColor.HasValue ? splashScreen.BackgroundColor.Value : visualElements.BackgroundColor;
+                this.Background = new SolidColorBrush(backgroundColor);
+            }            
         }
     }
 }

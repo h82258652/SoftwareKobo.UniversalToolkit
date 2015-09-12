@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Runtime.Serialization.Json;
 using System.Threading.Tasks;
+using Windows.ApplicationModel;
 using Windows.ApplicationModel.Background;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -35,10 +36,16 @@ namespace Test
         {
             this.InitializeComponent();
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            rrg.Background = new SolidColorBrush( ColorExtensions.AccentColor);
+           var application= Package.Current.Manifest().Applications.First();
+            await new MessageDialog(application.Id).ShowAsync();
+           var vi= application.VisualElements;
+            await new MessageDialog(vi.ToString()).ShowAsync();
+            await new MessageDialog(vi.BackgroundColor.ToString()).ShowAsync();
+            var ffq = vi.SplashScreen;
+            await new MessageDialog(ffq.ToString()).ShowAsync();
         }
     }
 }

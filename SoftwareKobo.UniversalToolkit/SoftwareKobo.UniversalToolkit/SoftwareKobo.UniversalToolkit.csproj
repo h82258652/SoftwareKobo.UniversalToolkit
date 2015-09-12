@@ -120,6 +120,7 @@
       <DependentUpon>ExtendedSplashScreen.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ExtendedSplashScreenContent.cs" />
+    <Compile Include="Extensions\PackageExtensions.cs" />
     <Compile Include="Storage\ImageLoadFailedEventArgs.cs" />
     <Compile Include="Storage\IsolatedStorageFileExtensions.cs" />
     <Compile Include="Storage\StorageCachedImage.cs" />
@@ -156,6 +157,11 @@
     <Compile Include="Triggers\NetworkState.cs" />
     <Compile Include="Triggers\NetworkStateTrigger.cs" />
     <Compile Include="Triggers\OrientationStateTrigger.cs" />
+    <Compile Include="Utils\AppxManifest\ApplicationManifest.cs" />
+    <Compile Include="Utils\AppxManifest\ManifestBase.cs" />
+    <Compile Include="Utils\AppxManifest\PackageManifest.cs" />
+    <Compile Include="Utils\AppxManifest\SplashScreenManifest.cs" />
+    <Compile Include="Utils\AppxManifest\VisualElementsManifest.cs" />
     <Compile Include="Utils\ScreenResolution.cs" />
     <Compile Include="Validation\ModelValidation.cs" />
     <Content Include="Properties\SoftwareKobo.UniversalToolkit.rd.xml" />

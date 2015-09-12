@@ -1,4 +1,7 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Reflection;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 
@@ -9,11 +12,31 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
     /// </summary>
     public static class ColorExtensions
     {
+        private static IDictionary<string, Color> _knownColors;
+
         public static Color AccentColor
         {
             get
             {
                 return new UISettings().GetColorValue(UIColorType.Accent);
+            }
+        }
+
+        public static IDictionary<string, Color> KnownColors
+        {
+            get
+            {
+                if (_knownColors == null)
+                {
+                    _knownColors = new Dictionary<string, Color>();
+                    foreach (var property in typeof(Colors).GetRuntimeProperties())
+                    {
+                        string colorName = property.Name;
+                        Color color = (Color)property.GetValue(null);
+                        _knownColors.Add(colorName, color);
+                    }
+                }
+                return _knownColors;
             }
         }
 
@@ -23,6 +46,18 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
             byte g = byte.Parse(hex.Substring(3, 2), NumberStyles.HexNumber);
             byte b = byte.Parse(hex.Substring(5, 2), NumberStyles.HexNumber);
             return FromRgb(r, g, b);
+        }
+        
+        public static Color? FromName(string name)
+        {
+            foreach (var knownColor in KnownColors)
+            {
+                if (string.Equals(knownColor.Key, name, StringComparison.OrdinalIgnoreCase))
+                {
+                    return knownColor.Value;
+                }
+            }
+            return null;
         }
 
         /// <summary>

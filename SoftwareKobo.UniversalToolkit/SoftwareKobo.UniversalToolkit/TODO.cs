@@ -26,6 +26,12 @@
 
     // WeakAction 和 WeakAction<T> 然后改进整个框架特别是MVVM部分，使用WeakAction
 
+    // MDL2
+    // http://www.cnblogs.com/hebeiDGL/p/4386228.html
+    // https://github.com/Windows-XAML/Template10/blob/master/Template10%20(Library)/Common/Mdl2.cs
+
+    // AppxManifest.xml 辅助类
+
     #endregion 完全未动工
 
     #region 大概做了一半？
