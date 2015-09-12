@@ -1,6 +1,8 @@
 ﻿using SoftwareKobo.UniversalToolkit.Controls;
+using SoftwareKobo.UniversalToolkit.Utils.AppxManifest;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
@@ -73,16 +75,35 @@ namespace SoftwareKobo.UniversalToolkit
             }
         }
 
+        public static new Bootstrapper Current
+        {
+            get
+            {
+                return Application.Current as Bootstrapper;
+            }
+        }
+
         protected virtual Task InitAppParametersAsync()
+        {
+            return Task.FromResult<object>(null);
+        }
+
+        protected virtual Task OnPrimaryLaunchedAsync()
         {
             return Task.FromResult<object>(null);
         }
 
         protected override async void OnLaunched(LaunchActivatedEventArgs args)
         {
-            this.IsEnabledDebugSettings = true;
+            AppStartArgs eff = AppStartArgs.LoadDefaultSetting();
+            await OnPrimaryLaunchedAsync();
 
-            this.InitRootFrame();
+           var list = PackageManifest.Current.Applications.Select(temp => temp.Id).ToList();
+
+         //   this.IsEnabledDebugSettings = true;
+
+          
+                        this.InitRootFrame();
 
             await this.InitAppParametersAsync();
 

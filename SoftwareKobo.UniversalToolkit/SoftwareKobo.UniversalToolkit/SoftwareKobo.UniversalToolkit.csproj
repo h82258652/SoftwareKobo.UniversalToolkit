@@ -113,9 +113,15 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppStartArgs.cs" />
+    <Compile Include="AppStartInfo.cs" />
     <Compile Include="Async\EventAsync.cs" />
     <Compile Include="Async\EventHandlerTaskSource.cs" />
     <Compile Include="Async\RoutedEventHandlerTaskSource.cs" />
+    <Compile Include="Bootstrapper2.cs" />
+    <Compile Include="Bootstrapper3.cs" />
+    <Compile Include="Bootstrapper3.old.cs" />
+    <Compile Include="Bootstrapper4.cs" />
     <Compile Include="Controls\ExtendedSplashScreen.xaml.cs">
       <DependentUpon>ExtendedSplashScreen.xaml</DependentUpon>
     </Compile>
@@ -158,6 +164,7 @@
     <Compile Include="Triggers\NetworkStateTrigger.cs" />
     <Compile Include="Triggers\OrientationStateTrigger.cs" />
     <Compile Include="Utils\AppxManifest\ApplicationManifest.cs" />
+    <Compile Include="Utils\AppxManifest\DefaultTileManifest.cs" />
     <Compile Include="Utils\AppxManifest\ManifestBase.cs" />
     <Compile Include="Utils\AppxManifest\PackageManifest.cs" />
     <Compile Include="Utils\AppxManifest\SplashScreenManifest.cs" />

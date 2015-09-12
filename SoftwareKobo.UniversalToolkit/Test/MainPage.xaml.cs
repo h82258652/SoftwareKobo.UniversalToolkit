@@ -12,6 +12,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Background;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage.Pickers;
 using Windows.System;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -36,16 +37,26 @@ namespace Test
         {
             this.InitializeComponent();
         }
-        
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+           var rr= e.Parameter;
+            base.OnNavigatedTo(e);
+        }
+
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-           var application= Package.Current.Manifest().Applications.First();
-            await new MessageDialog(application.Id).ShowAsync();
-           var vi= application.VisualElements;
-            await new MessageDialog(vi.ToString()).ShowAsync();
-            await new MessageDialog(vi.BackgroundColor.ToString()).ShowAsync();
-            var ffq = vi.SplashScreen;
-            await new MessageDialog(ffq.ToString()).ShowAsync();
+            FileSavePicker f = new FileSavePicker();
+            f.FileTypeChoices.Add("Images", new string[] { ".jpg" });
+           var r=  await f.PickSaveFileAsync();
+
+           //var application= Package.Current.Manifest().Applications.First();
+           // await new MessageDialog(application.Id).ShowAsync();
+           //var vi= application.VisualElements;
+           // await new MessageDialog(vi.ToString()).ShowAsync();
+           // await new MessageDialog(vi.BackgroundColor.ToString()).ShowAsync();
+           // var ffq = vi.SplashScreen;
+           // await new MessageDialog(ffq.ToString()).ShowAsync();
         }
     }
 }

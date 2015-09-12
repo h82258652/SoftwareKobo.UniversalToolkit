@@ -19,11 +19,18 @@ using System.Threading.Tasks;
 
 namespace Test
 {
-    sealed partial class App : Bootstrapper
+    sealed partial class App : Bootstrapper3
     {
-        public App() : base(typeof(MainPage), typeof(CustomSplashScreen))
+        //public App() : base(typeof(MainPage), typeof(CustomSplashScreen))
+        //{
+        //    this.InitializeComponent();
+        //}
+
+        public App()// : base(typeof(MainPage), typeof(CustomSplashScreen))
         {
             this.InitializeComponent();
+            this.DefaultMainPage = typeof(MainPage);
+            this.DefaultSplashScreen = () => new CustomSplashScreen();
         }
     }
 

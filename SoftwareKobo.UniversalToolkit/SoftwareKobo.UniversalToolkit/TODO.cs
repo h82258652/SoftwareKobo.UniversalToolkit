@@ -43,6 +43,7 @@
     // 改进 Bootstrapper，特别是 NavigationState
 
     // 图片缓存系统
+    // 添加 AutoRetry 属性
 
     #endregion 大概做了一半？
 

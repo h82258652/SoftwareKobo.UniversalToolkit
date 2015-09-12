@@ -26,6 +26,22 @@ namespace SoftwareKobo.UniversalToolkit.Utils.AppxManifest
             }
         }
 
+        public DefaultTileManifest DefaultTileElement
+        {
+            get
+            {
+                XElement defaultTileElement = this.GetChildElement("uap:DefaultTileElement");
+                if (defaultTileElement == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return new DefaultTileManifest(defaultTileElement);
+                }
+            }
+        }
+
         public string Description
         {
             get

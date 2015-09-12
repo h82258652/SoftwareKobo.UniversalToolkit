@@ -26,15 +26,6 @@
           <uap:Rotation Preference="landscapeFlipped" />
         </uap:InitialRotationPreference>
       </uap:VisualElements>
-      <Extensions>
-        <uap:Extension Category="windows.fileSavePicker">
-          <uap:FileSavePicker>
-            <uap:SupportedFileTypes>
-              <uap:SupportsAnyFileType />
-            </uap:SupportedFileTypes>
-          </uap:FileSavePicker>
-        </uap:Extension>
-      </Extensions>
     </Application>
   </Applications>
   <Capabilities>
