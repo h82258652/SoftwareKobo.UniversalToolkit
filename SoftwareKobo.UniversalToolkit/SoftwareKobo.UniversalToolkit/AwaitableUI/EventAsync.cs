@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 
-namespace SoftwareKobo.UniversalToolkit.Async
+namespace SoftwareKobo.UniversalToolkit.AwaitableUI
 {
     public static class EventAsync
     {

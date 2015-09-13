@@ -9,10 +9,11 @@
     // 汉堡按钮（绑定SplitView用于开关）
     // 下拉刷新面板
     // CircleImage
+    // Gif Image Control
+    // WebP Image Control
 
     // ValidationSystem
 
-    // 后台任务helper or system（在Bootstrapper自动注册管理），后者否决，改为 T4 生成帮助类
 
     // ListViewBaseExtensions
 
@@ -31,6 +32,7 @@
     // https://github.com/Windows-XAML/Template10/blob/master/Template10%20(Library)/Common/Mdl2.cs
 
     // AppxManifest.xml 辅助类
+    // 后台任务helper or system（在Bootstrapper自动注册管理），后者否决，改为 T4 生成帮助类
 
     #endregion 完全未动工
 
@@ -48,8 +50,6 @@
     #endregion 大概做了一半？
 
     #region 完工
-
-    // 封装获取屏幕分辨率 http://www.cnblogs.com/hebeiDGL/p/4609672.html
-
+    
     #endregion 完工
 }

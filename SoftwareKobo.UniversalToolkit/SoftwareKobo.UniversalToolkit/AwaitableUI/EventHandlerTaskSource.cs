@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace SoftwareKobo.UniversalToolkit.Async
+namespace SoftwareKobo.UniversalToolkit.AwaitableUI
 {
     internal class EventHandlerTaskSource<TEventArgs>
     {
