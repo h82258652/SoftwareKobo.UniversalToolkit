@@ -17,6 +17,8 @@ namespace SoftwareKobo.UniversalToolkit
 {
     public abstract class Bootstrapper4 : Application
     {
+        private Type _defaultMainPage;
+
         protected Bootstrapper4()
         {
             this.Resuming += this.OnResuming;
@@ -50,9 +52,35 @@ namespace SoftwareKobo.UniversalToolkit
             }
         }
 
+        /// <summary>
+        /// App 的默认扩展启动屏幕。
+        /// </summary>
+        protected internal Func<ExtendedSplashScreenContent> DefaultExtendedSplashScreen
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// App 的默认主页。
+        /// </summary>
+        protected internal Type DefaultMainPage
+        {
+            get
+            {
+                return this._defaultMainPage;
+            }
+            set
+            {
+                VerifyDefaultMainPageType(value);
+                this._defaultMainPage = value;
+            }
+        }
+
         protected override sealed async void OnActivated(IActivatedEventArgs args)
         {
             AppStartInfo info = AppStartInfo.Default;
+            await this.OnPreStartAsync(args, info);
 
             #region 所有激活类型
 
@@ -114,6 +142,7 @@ namespace SoftwareKobo.UniversalToolkit
         protected override sealed async void OnCachedFileUpdaterActivated(CachedFileUpdaterActivatedEventArgs args)
         {
             AppStartInfo info = AppStartInfo.Default;
+            await this.OnPreStartAsync(args, info);
             await this.OnCachedFileUpdaterStartAsync(args, info);
             this.InternalStartAsync(args, info);
         }
@@ -126,6 +155,7 @@ namespace SoftwareKobo.UniversalToolkit
         protected override sealed async void OnFileActivated(FileActivatedEventArgs args)
         {
             AppStartInfo info = AppStartInfo.Default;
+            await this.OnPreStartAsync(args, info);
             await this.OnFileTypeAssociationStartAsync(args, info);
             this.InternalStartAsync(args, info);
         }
@@ -133,6 +163,7 @@ namespace SoftwareKobo.UniversalToolkit
         protected override sealed async void OnFileOpenPickerActivated(FileOpenPickerActivatedEventArgs args)
         {
             AppStartInfo info = AppStartInfo.Default;
+            await this.OnPreStartAsync(args, info);
             await this.OnFileOpenPickerStartAsync(args, info);
             this.InternalStartAsync(args, info);
         }
@@ -145,6 +176,7 @@ namespace SoftwareKobo.UniversalToolkit
         protected override sealed async void OnFileSavePickerActivated(FileSavePickerActivatedEventArgs args)
         {
             AppStartInfo info = AppStartInfo.Default;
+            await this.OnPreStartAsync(args, info);
             await this.OnFileSavePickerStartAsync(args, info);
             this.InternalStartAsync(args, info);
         }
@@ -163,6 +195,7 @@ namespace SoftwareKobo.UniversalToolkit
         {
             AppStartInfo info = AppStartInfo.Default;
             info.Parameter = args.Arguments;
+            await this.OnPreStartAsync(args, info);
 
             #region 确定 Launch 类型
 
@@ -201,6 +234,11 @@ namespace SoftwareKobo.UniversalToolkit
             return Task.FromResult<object>(null);
         }
 
+        protected virtual Task OnPreStartAsync(IActivatedEventArgs args, AppStartInfo info)
+        {
+            return Task.FromResult<object>(null);
+        }
+
         protected virtual Task OnPrimaryStartAsync(LaunchActivatedEventArgs args, AppStartInfo info)
         {
             return Task.FromResult<object>(null);
@@ -218,6 +256,7 @@ namespace SoftwareKobo.UniversalToolkit
         protected override sealed async void OnSearchActivated(SearchActivatedEventArgs args)
         {
             AppStartInfo info = AppStartInfo.Default;
+            await this.OnPreStartAsync(args, info);
             await this.OnSearchStartAsync(args, info);
             this.InternalStartAsync(args, info);
         }
@@ -235,6 +274,7 @@ namespace SoftwareKobo.UniversalToolkit
         protected override sealed async void OnShareTargetActivated(ShareTargetActivatedEventArgs args)
         {
             AppStartInfo info = AppStartInfo.Default;
+            await this.OnPreStartAsync(args, info);
             await this.OnShareTargetStartAsync(args, info);
             this.InternalStartAsync(args, info);
         }
@@ -261,6 +301,15 @@ namespace SoftwareKobo.UniversalToolkit
 
         protected virtual void RootFrameNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
+        }
+
+        [Conditional("DEBUG")]
+        private static void VerifyDefaultMainPageType(Type defaultMainPageType)
+        {
+            if (defaultMainPageType != null && typeof(Page).IsAssignableFrom(defaultMainPageType) == false)
+            {
+                throw new ArgumentException($"parameter {nameof(DefaultMainPage)} must sub type of {nameof(Page)}", nameof(DefaultMainPage));
+            }
         }
 
         private void InitializeRootFrame()
@@ -326,42 +375,6 @@ namespace SoftwareKobo.UniversalToolkit
                     await extendedSplashScreenTcs.Task;
                 }
             }
-        }
-
-        private Type _defaultMainPage;
-
-        /// <summary>
-        /// App 的默认主页。
-        /// </summary>
-        protected internal Type DefaultMainPage
-        {
-            get
-            {
-                return this._defaultMainPage;
-            }
-            set
-            {
-                VerifyDefaultMainPageType(value);
-                this._defaultMainPage = value;
-            }
-        }
-
-        [Conditional("DEBUG")]
-        private static void VerifyDefaultMainPageType(Type defaultMainPageType)
-        {
-            if (defaultMainPageType != null && typeof(Page).IsAssignableFrom(defaultMainPageType) == false)
-            {
-                throw new ArgumentException($"parameter {nameof(DefaultMainPage)} must sub type of {nameof(Page)}", nameof(DefaultMainPage));
-            }
-        }
-
-        /// <summary>
-        /// App 的默认扩展启动屏幕。
-        /// </summary>
-        protected internal Func<ExtendedSplashScreenContent> DefaultExtendedSplashScreen
-        {
-            get;
-            set;
         }
     }
 }
