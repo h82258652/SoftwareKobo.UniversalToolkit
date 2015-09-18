@@ -1,2 +1,1 @@
-MainPackage=D:\Projects\SoftwareKobo.UniversalToolkit3\SoftwareKobo.UniversalToolkit\Test\bin\x86\Release\Test_1.1.2.0_x86.appx
-SymbolPackage=D:\Projects\SoftwareKobo.UniversalToolkit3\SoftwareKobo.UniversalToolkit\Test\AppPackages\Test_1.1.2.0\Test_1.1.2.0_x86.appxsym
+MainPackage=D:\Projects\SoftwareKobo.UniversalToolkit3\SoftwareKobo.UniversalToolkit\Test\bin\x86\Release\Test_1.1.3.0_x86.appx

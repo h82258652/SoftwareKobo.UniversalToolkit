@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="18174h82258652.36821D577DB6D" Publisher="CN=D8CBB42C-5DD4-4A02-8424-31AF9627DADA" Version="1.1.2.0" />
+  <Identity Name="18174h82258652.36821D577DB6D" Publisher="CN=D8CBB42C-5DD4-4A02-8424-31AF9627DADA" Version="1.1.3.0" />
   <mp:PhoneIdentity PhoneProductId="6519a48b-4aa6-49de-afab-e6b74281abc1" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>周公解梦 for WP8.1</DisplayName>
