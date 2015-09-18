@@ -31,10 +31,11 @@ namespace SoftwareKobo.UniversalToolkit.Storage
     /// </example>
     public sealed class StorageCachedImage : BitmapSource
     {
+        public static readonly DependencyProperty IsAutoRetryProperty = DependencyProperty.Register(nameof(IsAutoRetry), typeof(bool), typeof(StorageCachedImage), new PropertyMetadata(false));
+
         public static readonly DependencyProperty IsLoadingProperty = DependencyProperty.Register(nameof(IsLoading), typeof(bool), typeof(StorageCachedImage), new PropertyMetadata(false));
 
-        public static readonly DependencyProperty UriSourceProperty =
-            DependencyProperty.Register(nameof(UriSource), typeof(ImageSource), typeof(StorageCachedImage), new PropertyMetadata(null, UriSourceChanged));
+        public static readonly DependencyProperty UriSourceProperty = DependencyProperty.Register(nameof(UriSource), typeof(ImageSource), typeof(StorageCachedImage), new PropertyMetadata(null, UriSourceChanged));
 
         private const string CACHED_IMAGE_DIRECTORY = @"CachedImages";
 
@@ -51,6 +52,18 @@ namespace SoftwareKobo.UniversalToolkit.Storage
         /// 图片加载失败时触发该事件。
         /// </summary>
         public event EventHandler<ImageLoadFailedEventArgs> ImageFailed;
+
+        public bool IsAutoRetry
+        {
+            get
+            {
+                return (bool)this.GetValue(IsAutoRetryProperty);
+            }
+            set
+            {
+                this.SetValue(IsAutoRetryProperty, value);
+            }
+        }
 
         public bool IsLoading
         {
@@ -111,89 +124,102 @@ namespace SoftwareKobo.UniversalToolkit.Storage
             }
 
             StorageCachedImage obj = (StorageCachedImage)d;
-            obj.IsLoading = true;
-            try
+            while (obj.IsAutoRetry)
             {
-                using (var streamSource = new InMemoryRandomAccessStream())
+                obj.IsLoading = true;
+                try
                 {
-                    obj.SetSource(streamSource);
-                }
-                BitmapImage value = e.NewValue as BitmapImage;
-                if (value == null)
-                {
-                    return;
-                }
-                Uri uri = value.UriSource;
-                if (uri != null && string.IsNullOrEmpty(uri.OriginalString) == false)
-                {
-                    string scheme = uri.Scheme;
-                    if (scheme == "http" || scheme == "https")
+                    #region 清空之前的图像
+
+                    using (var streamSource = new InMemoryRandomAccessStream())
                     {
-                        using (var isolatedStorage = IsolatedStorageFile.GetUserStoreForApplication())
+                        obj.SetSource(streamSource);
+                    }
+
+                    #endregion 清空之前的图像
+
+                    BitmapImage value = e.NewValue as BitmapImage;
+                    if (value == null)
+                    {
+                        return;
+                    }
+                    Uri uri = value.UriSource;
+                    if (uri != null && string.IsNullOrEmpty(uri.OriginalString) == false)
+                    {
+                        string scheme = uri.Scheme;
+                        if (scheme == "http" || scheme == "https")
                         {
-                            var filePath = GetFilePath(uri);
-                            if (isolatedStorage.FileExists(filePath))
+                            // 网络图像。
+                            using (var isolatedStorage = IsolatedStorageFile.GetUserStoreForApplication())
                             {
-                                using (var cachedImageStream = isolatedStorage.OpenFile(filePath, FileMode.Open, FileAccess.Read))
+                                var filePath = GetFilePath(uri);
+                                if (isolatedStorage.FileExists(filePath))
                                 {
-                                    await obj.SetSourceAsync(cachedImageStream.AsRandomAccessStream());
-                                }
-                            }
-                            else
-                            {
-                                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
-                                request.AllowReadStreamBuffering = true;
-                                try
-                                {
-                                    using (WebResponse response = await request.GetResponseAsync())
+                                    // 使用本地缓存。
+                                    using (var cachedImageStream = isolatedStorage.OpenFile(filePath, FileMode.Open, FileAccess.Read))
                                     {
-                                        using (var stream = response.GetResponseStream())
-                                        {
-                                            if (isolatedStorage.FileExists(filePath) == false)
-                                            {
-                                                if (isolatedStorage.DirectoryExists(CACHED_IMAGE_DIRECTORY) == false)
-                                                {
-                                                    isolatedStorage.CreateDirectory(CACHED_IMAGE_DIRECTORY);
-                                                }
-
-                                                using (var cacheImageFile = isolatedStorage.CreateFile(filePath))
-                                                {
-                                                    stream.CopyTo(cacheImageFile);
-                                                }
-                                            }
-
-                                            stream.Seek(0, SeekOrigin.Begin);
-                                            await obj.SetSourceAsync(stream.AsRandomAccessStream());
-                                        }
+                                        await obj.SetSourceAsync(cachedImageStream.AsRandomAccessStream());
                                     }
                                 }
-                                catch (WebException)
+                                else
                                 {
-                                    throw;
+                                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
+                                    request.AllowReadStreamBuffering = true;
+                                    try
+                                    {
+                                        using (WebResponse response = await request.GetResponseAsync())
+                                        {
+                                            using (var stream = response.GetResponseStream())
+                                            {
+                                                if (isolatedStorage.FileExists(filePath) == false)
+                                                {
+                                                    if (isolatedStorage.DirectoryExists(CACHED_IMAGE_DIRECTORY) == false)
+                                                    {
+                                                        isolatedStorage.CreateDirectory(CACHED_IMAGE_DIRECTORY);
+                                                    }
+
+                                                    using (var cacheImageFile = isolatedStorage.CreateFile(filePath))
+                                                    {
+                                                        stream.CopyTo(cacheImageFile);
+                                                    }
+                                                }
+
+                                                stream.Seek(0, SeekOrigin.Begin);
+                                                await obj.SetSourceAsync(stream.AsRandomAccessStream());
+                                            }
+                                        }
+                                    }
+                                    catch (WebException)
+                                    {
+                                        throw;
+                                    }
                                 }
                             }
                         }
-                    }
-                    else
-                    {
-                        var streamSourceReference = RandomAccessStreamReference.CreateFromUri(uri);
-                        using (var streamSource = await streamSourceReference.OpenReadAsync())
+                        else
                         {
-                            obj.SetSource(streamSource);
+                            // 本地图像。
+                            var streamSourceReference = RandomAccessStreamReference.CreateFromUri(uri);
+                            using (var streamSource = await streamSourceReference.OpenReadAsync())
+                            {
+                                obj.SetSource(streamSource);
+                            }
                         }
                     }
+                    // 设置新图像成功。
+                    break;
                 }
-            }
-            catch (Exception ex)
-            {
-                if (obj.ImageFailed != null)
+                catch (Exception ex)
                 {
-                    obj.ImageFailed(obj, new ImageLoadFailedEventArgs(ex));
+                    if (obj.ImageFailed != null)
+                    {
+                        obj.ImageFailed(obj, new ImageLoadFailedEventArgs(ex));
+                    }
                 }
-            }
-            finally
-            {
-                obj.IsLoading = false;
+                finally
+                {
+                    obj.IsLoading = false;
+                }
             }
         }
     }

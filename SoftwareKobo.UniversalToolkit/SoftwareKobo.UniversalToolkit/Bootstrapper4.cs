@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Globalization;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -320,10 +321,10 @@ namespace SoftwareKobo.UniversalToolkit
                 {
                     Language = ApplicationLanguages.Languages[0]
                 };
-                if (args.PreviousExecutionState==ApplicationExecutionState.Terminated)
+                if (args.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
-#warning
-                    //RootFrame.SetNavigationState()
+                    string navigationState = (string)ApplicationData.Current.LocalSettings.Values["RootFrameNavigationState"];
+                    RootFrame.SetNavigationState(navigationState);
                 }
 
                 /*
@@ -332,6 +333,11 @@ namespace SoftwareKobo.UniversalToolkit
                     //TODO: 从之前挂起的应用程序加载状态
                 }
                 */
+                RootFrame.Navigated += (sender, e) =>
+                {
+                    string navigationState = RootFrame.GetNavigationState();
+                    ApplicationData.Current.LocalSettings.Values["RootFrameNavigationState"] = navigationState;
+                };
                 RootFrame.NavigationFailed += RootFrameNavigationFailed;
             }
         }
@@ -339,7 +345,7 @@ namespace SoftwareKobo.UniversalToolkit
         private async void InternalStartAsync(IActivatedEventArgs args, AppStartInfo info)
         {
             await this.ShowExtendedSplashScreenAsync(args, info);
-                        
+
             this.InitializeRootFrame(args);
 
             this.NavigateToFirstPage(args, info);

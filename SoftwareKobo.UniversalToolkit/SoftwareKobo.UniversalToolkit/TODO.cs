@@ -2,6 +2,8 @@
 {
     #region 完全未动工
 
+    // 商店 uri 帮助类 http://www.cnblogs.com/zhxilin/p/4819372.html
+
     // WrapPanel
     // DockPanel
     // AeroPanel https://github.com/JustinXinLiu/EffectsAndAnimationsWinComposition
@@ -13,7 +15,6 @@
     // WebP Image Control
 
     // ValidationSystem
-
 
     // ListViewBaseExtensions
 
@@ -50,6 +51,6 @@
     #endregion 大概做了一半？
 
     #region 完工
-    
+
     #endregion 完工
 }
