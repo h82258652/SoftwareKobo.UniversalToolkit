@@ -15,18 +15,7 @@ namespace SoftwareKobo.UniversalToolkit.Utils.AppxManifest
             get
             {
                 string value = this["BackgroundColor"];
-                if (string.IsNullOrEmpty(value))
-                {
-                    return null;
-                }
-                if (value.StartsWith("#"))
-                {
-                    return ColorExtensions.FromHex(value);
-                }
-                else
-                {
-                    return ColorExtensions.FromName(value);
-                }
+                return ColorExtensions.TryParse(value);
             }
         }
 

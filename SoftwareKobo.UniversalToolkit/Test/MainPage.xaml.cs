@@ -5,16 +5,20 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Runtime.Serialization.Json;
+using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Background;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Graphics.Display;
 using Windows.Storage.Pickers;
 using Windows.System;
 using Windows.UI.Popups;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -40,23 +44,20 @@ namespace Test
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-           var rr= e.Parameter;
+            var rr = e.Parameter;
             base.OnNavigatedTo(e);
+
+            ApplicationView.GetForCurrentView().SuppressSystemOverlays = false;
         }
+
+        [DllImport("user32.dll")]
+        public static extern int GetSystemMetrics(SystemMetric smIndex);
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            FileSavePicker f = new FileSavePicker();
-            f.FileTypeChoices.Add("Images", new string[] { ".jpg" });
-           var r=  await f.PickSaveFileAsync();
-
-           //var application= Package.Current.Manifest().Applications.First();
-           // await new MessageDialog(application.Id).ShowAsync();
-           //var vi= application.VisualElements;
-           // await new MessageDialog(vi.ToString()).ShowAsync();
-           // await new MessageDialog(vi.BackgroundColor.ToString()).ShowAsync();
-           // var ffq = vi.SplashScreen;
-           // await new MessageDialog(ffq.ToString()).ShowAsync();
+            int w = GetSystemMetrics(SystemMetric.SM_CXSCREEN);
+            int h = GetSystemMetrics(SystemMetric.SM_CYSCREEN);
+            await new MessageDialog(w + ":" + h).ShowAsync();
         }
     }
 }

@@ -1,0 +1,2 @@
+MainPackage=D:\Projects\SoftwareKobo.UniversalToolkit3\SoftwareKobo.UniversalToolkit\Test\bin\ARM\Debug\Test_1.0.0.0_ARM_Debug.appx
+ResourcePack=D:\Projects\SoftwareKobo.UniversalToolkit3\SoftwareKobo.UniversalToolkit\Test\bin\ARM\Debug\Test_1.0.0.0_language-en.appx

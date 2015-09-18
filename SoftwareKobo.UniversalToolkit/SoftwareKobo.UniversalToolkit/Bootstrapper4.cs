@@ -312,7 +312,7 @@ namespace SoftwareKobo.UniversalToolkit
             }
         }
 
-        private void InitializeRootFrame()
+        private void InitializeRootFrame(IActivatedEventArgs args)
         {
             if (RootFrame == null)
             {
@@ -320,6 +320,12 @@ namespace SoftwareKobo.UniversalToolkit
                 {
                     Language = ApplicationLanguages.Languages[0]
                 };
+                if (args.PreviousExecutionState==ApplicationExecutionState.Terminated)
+                {
+#warning
+                    //RootFrame.SetNavigationState()
+                }
+
                 /*
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
@@ -333,8 +339,8 @@ namespace SoftwareKobo.UniversalToolkit
         private async void InternalStartAsync(IActivatedEventArgs args, AppStartInfo info)
         {
             await this.ShowExtendedSplashScreenAsync(args, info);
-
-            this.InitializeRootFrame();
+                        
+            this.InitializeRootFrame(args);
 
             this.NavigateToFirstPage(args, info);
 

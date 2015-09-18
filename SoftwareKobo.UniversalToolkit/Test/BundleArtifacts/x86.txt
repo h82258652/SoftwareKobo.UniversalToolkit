@@ -1,0 +1,1 @@
+MainPackage=D:\Projects\SoftwareKobo.UniversalToolkit3\SoftwareKobo.UniversalToolkit\Test\bin\x86\Debug\Test_1.0.0.0_x86_Debug.appx

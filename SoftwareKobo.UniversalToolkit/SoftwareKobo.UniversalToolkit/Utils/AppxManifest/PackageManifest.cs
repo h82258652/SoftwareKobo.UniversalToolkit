@@ -1,5 +1,7 @@
 ﻿using SoftwareKobo.UniversalToolkit.Extensions;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Xml.Linq;
 using Windows.ApplicationModel;
 
@@ -7,7 +9,7 @@ namespace SoftwareKobo.UniversalToolkit.Utils.AppxManifest
 {
     public sealed class PackageManifest : ManifestBase
     {
-        internal PackageManifest(XElement packageElement) : base(packageElement)
+        public PackageManifest(Package package) : base(LoadDocument(package).Root)
         {
         }
 
@@ -16,14 +18,6 @@ namespace SoftwareKobo.UniversalToolkit.Utils.AppxManifest
             get
             {
                 return Package.Current.Manifest();
-            }
-        }
-
-        public string IgnorableNamespaces
-        {
-            get
-            {
-                return this["IgnorableNamespaces"];
             }
         }
 
@@ -40,6 +34,26 @@ namespace SoftwareKobo.UniversalToolkit.Utils.AppxManifest
                     }
                 }
             }
+        }
+
+        public string IgnorableNamespaces
+        {
+            get
+            {
+                return this["IgnorableNamespaces"];
+            }
+        }
+
+        private static XDocument LoadDocument(Package package)
+        {
+            if (package == null)
+            {
+                throw new ArgumentNullException(nameof(package));
+            }
+
+            string manifestPath = Path.Combine(package.InstalledLocation.Path, "AppxManifest.xml");
+            XDocument document = XDocument.Load(manifestPath);
+            return document;
         }
     }
 }
