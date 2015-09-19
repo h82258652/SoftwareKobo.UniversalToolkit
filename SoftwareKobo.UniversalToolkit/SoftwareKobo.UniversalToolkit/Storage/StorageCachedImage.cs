@@ -111,6 +111,10 @@ namespace SoftwareKobo.UniversalToolkit.Storage
             return Path.Combine(CACHED_IMAGE_DIRECTORY, WebUtility.UrlEncode(uri.OriginalString));
         }
 
+        private void LoadImage()
+        {
+        }
+
         private static async void UriSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (DesignMode.DesignModeEnabled)
@@ -123,8 +127,8 @@ namespace SoftwareKobo.UniversalToolkit.Storage
                 return;
             }
 
-            StorageCachedImage obj = (StorageCachedImage)d;
-            while (obj.IsAutoRetry)
+            StorageCachedImage obj = (StorageCachedImage)d;            
+            while (true)
             {
                 obj.IsLoading = true;
                 try
@@ -214,6 +218,14 @@ namespace SoftwareKobo.UniversalToolkit.Storage
                     if (obj.ImageFailed != null)
                     {
                         obj.ImageFailed(obj, new ImageLoadFailedEventArgs(ex));
+                    }
+                    if (obj.IsAutoRetry)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        break;
                     }
                 }
                 finally
