@@ -53,6 +53,11 @@ namespace SoftwareKobo.UniversalToolkit.Storage
         /// </summary>
         public event EventHandler<ImageLoadFailedEventArgs> ImageFailed;
 
+        /// <summary>
+        /// 图片成功加载时触发该事件。
+        /// </summary>
+        public event RoutedEventHandler ImageOpened;
+
         public bool IsAutoRetry
         {
             get
@@ -211,6 +216,10 @@ namespace SoftwareKobo.UniversalToolkit.Storage
                         }
                     }
                     // 设置新图像成功。
+                    if (obj.ImageOpened != null)
+                    {
+                        obj.ImageOpened(obj, new RoutedEventArgs());
+                    }
                     break;
                 }
                 catch (Exception ex)
