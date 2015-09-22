@@ -29,11 +29,15 @@
     // WeakAction 和 WeakAction<T> 然后改进整个框架特别是MVVM部分，使用WeakAction
 
     // MDL2
+    // http://modernicons.io/segoe-mdl2/cheatsheet/
     // http://www.cnblogs.com/hebeiDGL/p/4386228.html
     // https://github.com/Windows-XAML/Template10/blob/master/Template10%20(Library)/Common/Mdl2.cs
 
     // AppxManifest.xml 辅助类
     // 后台任务helper or system（在Bootstrapper自动注册管理），后者否决，改为 T4 生成帮助类
+
+    // Kinds of triggers
+    // device Trigger
 
     #endregion 完全未动工
 
@@ -41,12 +45,10 @@
 
     // VisualTreeHelper 扩展
 
-    // Kinds of triggers
-
     // 改进 Bootstrapper，特别是 NavigationState
 
     // 图片缓存系统
-    // 添加 AutoRetry 属性
+    // 优化性能
 
     #endregion 大概做了一半？
 

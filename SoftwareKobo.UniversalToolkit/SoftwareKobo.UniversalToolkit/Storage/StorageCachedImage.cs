@@ -2,6 +2,7 @@
 using System.IO;
 using System.IO.IsolatedStorage;
 using System.Net;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml;
@@ -147,7 +148,7 @@ namespace SoftwareKobo.UniversalToolkit.Storage
 
                     #endregion 清空之前的图像
 
-                    BitmapImage value = e.NewValue as BitmapImage;
+                    BitmapImage value = obj.UriSource as BitmapImage;
                     if (value == null)
                     {
                         return;
@@ -167,7 +168,13 @@ namespace SoftwareKobo.UniversalToolkit.Storage
                                     // 使用本地缓存。
                                     using (var cachedImageStream = isolatedStorage.OpenFile(filePath, FileMode.Open, FileAccess.Read))
                                     {
-                                        await obj.SetSourceAsync(cachedImageStream.AsRandomAccessStream());
+                                        try
+                                        {
+                                            await obj.SetSourceAsync(cachedImageStream.AsRandomAccessStream());
+                                        }
+                                        catch (TaskCanceledException)
+                                        {
+                                        }
                                     }
                                 }
                                 else

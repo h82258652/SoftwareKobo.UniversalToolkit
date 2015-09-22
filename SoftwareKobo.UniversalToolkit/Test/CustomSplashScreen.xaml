@@ -9,6 +9,15 @@
                                      d:DesignWidth="400"
                                      xmlns:toolkit="using:SoftwareKobo.UniversalToolkit.Controls">
     <Grid Background="Transparent">
-        <ProgressRing IsActive="True" Width="100" Height="100"></ProgressRing>
+        <TextBlock Text="&#xE700;"
+                   FontFamily="Segoe MDL2 Assets"></TextBlock>
+        <!--<FontIcon FontFamily="Segoe UI Symbol"
+                  Glyph="&#xE0EB;" />-->
+        <SymbolIcon Symbol="Accept"></SymbolIcon>
+        <FontIcon Glyph="&#xE700;"
+                  FontFamily="Segoe MDL2 Assets"
+                  HorizontalAlignment="Center" VerticalAlignment="Center"></FontIcon>
+        <!--<ProgressRing IsActive="True" Width="100" Height="100"></ProgressRing>-->
+        <Button Content="加载完毕" Click="Button_Click" VerticalAlignment="Bottom" HorizontalAlignment="Center"></Button>
     </Grid>
 </toolkit:ExtendedSplashScreenContent>

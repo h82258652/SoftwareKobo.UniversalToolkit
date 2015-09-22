@@ -170,6 +170,7 @@
     <Compile Include="Utils\AppxManifest\PackageManifest.cs" />
     <Compile Include="Utils\AppxManifest\SplashScreenManifest.cs" />
     <Compile Include="Utils\AppxManifest\VisualElementsManifest.cs" />
+    <Compile Include="Utils\Mdl2.cs" />
     <Compile Include="Utils\ScreenResolution.cs" />
     <Compile Include="Validation\ModelValidation.cs" />
     <Content Include="Properties\SoftwareKobo.UniversalToolkit.rd.xml" />

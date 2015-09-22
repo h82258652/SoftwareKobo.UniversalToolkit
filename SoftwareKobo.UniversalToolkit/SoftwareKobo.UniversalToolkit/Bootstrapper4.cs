@@ -355,7 +355,10 @@ namespace SoftwareKobo.UniversalToolkit
 
         private void NavigateToFirstPage(IActivatedEventArgs args, AppStartInfo info)
         {
-            RootFrame.Navigate(info.MainPage, info.Parameter);
+            if (RootFrame.Content == null)
+            {
+                RootFrame.Navigate(info.MainPage, info.Parameter);
+            }
         }
 
         private async Task ShowExtendedSplashScreenAsync(IActivatedEventArgs args, AppStartInfo info)

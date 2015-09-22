@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using Windows.UI;
-using Windows.UI.ViewManagement;
+using Windows.UI.Xaml;
 
 namespace SoftwareKobo.UniversalToolkit.Extensions
 {
@@ -22,7 +22,7 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
         {
             get
             {
-                return new UISettings().GetColorValue(UIColorType.Accent);
+                return (Color)Application.Current.Resources["SystemAccentColor"];
             }
         }
 

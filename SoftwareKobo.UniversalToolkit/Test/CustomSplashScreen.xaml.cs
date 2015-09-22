@@ -24,11 +24,22 @@ namespace Test
         public CustomSplashScreen()
         {
             this.InitializeComponent();
-            this.Loaded += async (sender,e) =>
-            {
-                await Task.Delay(3000);
-                this.Finish();
-            };
+            //this.Loaded += async (sender,e) =>
+            //{
+            //    await Task.Delay(3000);
+            //    this.Finish();
+            //};
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Finish();
+        }
+
+        private void FontIcon_Loaded(object sender, RoutedEventArgs e)
+        {
+           var icon = (FontIcon)sender;
+            icon.Glyph = "&#xE700;";
         }
     }
 }
