@@ -113,16 +113,12 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppStartArgs.cs" />
     <Compile Include="AppStartInfo.cs" />
     <Compile Include="AwaitableUI\EventAsync.cs" />
     <Compile Include="AwaitableUI\EventHandlerTaskSource.cs" />
     <Compile Include="AwaitableUI\FrameworkElementExtensions.cs" />
     <Compile Include="AwaitableUI\RoutedEventHandlerTaskSource.cs" />
-    <Compile Include="Bootstrapper2.cs" />
-    <Compile Include="Bootstrapper3.cs" />
-    <Compile Include="Bootstrapper3.old.cs" />
-    <Compile Include="Bootstrapper4.cs" />
+    <Compile Include="Bootstrapper.cs" />
     <Compile Include="Controls\ExtendedSplashScreen.xaml.cs">
       <DependentUpon>ExtendedSplashScreen.xaml</DependentUpon>
     </Compile>
@@ -144,7 +140,6 @@
     <Compile Include="Extensions\VisualTreeHelperExtensions.cs" />
     <Compile Include="Helpers\HardwareButtonsHelper.cs" />
     <Compile Include="Helpers\NavigationBackHelper.cs" />
-    <Compile Include="Bootstrapper.cs" />
     <Compile Include="Mvvm\BindableBase.cs" />
     <Compile Include="Mvvm\DelegateCommand.cs" />
     <Compile Include="Mvvm\DelegateCommandGeneric.cs" />
@@ -160,6 +155,8 @@
     <Compile Include="Storage\ApplicationTempSettings.cs" />
     <Compile Include="Storage\ISettings.cs" />
     <Compile Include="Storage\SettingsStrategy.cs" />
+    <Compile Include="Triggers\DeviceFamily.cs" />
+    <Compile Include="Triggers\DeviceFamilyTrigger.cs" />
     <Compile Include="Triggers\Orientation.cs" />
     <Compile Include="Triggers\NetworkState.cs" />
     <Compile Include="Triggers\NetworkStateTrigger.cs" />

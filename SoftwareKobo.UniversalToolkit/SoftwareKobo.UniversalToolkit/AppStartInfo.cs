@@ -33,8 +33,8 @@ namespace SoftwareKobo.UniversalToolkit
             {
                 return new AppStartInfo()
                 {
-                    MainPage = Bootstrapper4.Current?.DefaultMainPage,
-                    ExtendedSplashScreen = Bootstrapper4.Current?.DefaultExtendedSplashScreen
+                    MainPage = Bootstrapper.Current?.DefaultMainPage,
+                    ExtendedSplashScreen = Bootstrapper.Current?.DefaultExtendedSplashScreen
                 };
             }
         }
