@@ -123,6 +123,7 @@
       <DependentUpon>ExtendedSplashScreen.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ExtendedSplashScreenContent.cs" />
+    <Compile Include="Converters\Json\UnixTimestampConverter.cs" />
     <Compile Include="Extensions\PackageExtensions.cs" />
     <Compile Include="Storage\ImageLoadFailedEventArgs.cs" />
     <Compile Include="Storage\IsolatedStorageFileExtensions.cs" />
