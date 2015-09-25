@@ -124,7 +124,13 @@
     </Compile>
     <Compile Include="Controls\ExtendedSplashScreenContent.cs" />
     <Compile Include="Converters\Json\UnixTimestampConverter.cs" />
+    <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\PackageExtensions.cs" />
+    <Compile Include="Mvvm\IIncrementalItemSource.cs" />
+    <Compile Include="Mvvm\IncrementalLoadingCollection.cs" />
+    <Compile Include="Services\LauncherServices\SystemSettingsService.cs" />
+    <Compile Include="Services\LauncherServices\StorePage.cs" />
+    <Compile Include="Services\LauncherServices\StoreService.cs" />
     <Compile Include="Storage\ImageLoadFailedEventArgs.cs" />
     <Compile Include="Storage\IsolatedStorageFileExtensions.cs" />
     <Compile Include="Storage\StorageCachedImage.cs" />
@@ -174,8 +180,7 @@
     <Content Include="Properties\SoftwareKobo.UniversalToolkit.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Async\" />
-    <Folder Include="Services\" />
+    <Folder Include="Controls\Validation\" />
   </ItemGroup>
   <ItemGroup>
     <SDKReference Include="WindowsMobile, Version=10.0.10240.0">

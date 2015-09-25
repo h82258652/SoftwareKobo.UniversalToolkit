@@ -12,6 +12,7 @@ namespace SoftwareKobo.UniversalToolkit.Utils
         /// <summary>
         /// 获取屏幕高度。
         /// </summary>
+        /// <remarks>包含虚拟导航栏高度（如果存在虚拟导航栏）。</remarks>
         public static int Height
         {
             get

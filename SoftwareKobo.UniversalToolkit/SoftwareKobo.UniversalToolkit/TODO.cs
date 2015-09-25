@@ -2,8 +2,6 @@
 {
     #region 完全未动工
 
-    // 商店 uri 帮助类 http://www.cnblogs.com/zhxilin/p/4819372.html
-
     // WrapPanel
     // DockPanel
     // AeroPanel https://github.com/JustinXinLiu/EffectsAndAnimationsWinComposition
@@ -37,11 +35,12 @@
     // 后台任务helper or system（在Bootstrapper自动注册管理），后者否决，改为 T4 生成帮助类
 
     // Kinds of triggers
-    // device Trigger
 
     #endregion 完全未动工
 
     #region 大概做了一半？
+
+    // 商店 uri 帮助类 http://www.cnblogs.com/zhxilin/p/4819372.html
 
     // VisualTreeHelper 扩展
 
