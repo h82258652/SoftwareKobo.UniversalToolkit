@@ -1,0 +1,40 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="using:SoftwareKobo.UniversalToolkit"
+                    xmlns:controls="using:SoftwareKobo.UniversalToolkit.Controls">
+    <Style TargetType="controls:ReflectionPanel">
+        <Setter Property="HorizontalAlignment"
+                Value="Center" />
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:ReflectionPanel">
+                    <Grid x:Name="RootLayout"
+                          Background="{TemplateBinding Background}">
+                        <!--#region 倒影-->
+                        <!--以控件底部中心作为变换点-->
+                        <Image x:Name="ReflectionImage"
+                               Stretch="None"
+                               RenderTransformOrigin="0.5,1">
+                            <Image.RenderTransform>
+                                <TransformGroup>
+                                    <!--以控件底部反转控件-->
+                                    <ScaleTransform ScaleY="-1" />
+                                    <!--倒影与实际内容的间距-->
+                                    <TranslateTransform x:Name="SpacingTransform"
+                                                        Y="0" />
+                                </TransformGroup>
+                            </Image.RenderTransform>
+                        </Image>
+                        <!--#endregion-->
+                        <!--#region 实际内容-->
+                        <ContentControl x:Name="ContentBorder"
+                                        Content="{TemplateBinding Content}" />
+                        <!--#endregion-->
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
