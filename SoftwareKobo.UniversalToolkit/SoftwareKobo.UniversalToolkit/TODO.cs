@@ -17,6 +17,58 @@
     // ListViewBaseExtensions
 
     // 多窗口管理 http://www.cnblogs.com/tcjiaan/p/4748697.html
+    // 多窗口管理2 http://www.cnblogs.com/lin277541/p/4835988.html
+    /*
+        private async void button2_Click(object sender, RoutedEventArgs e)
+        {
+            // 创建新的视图
+            CoreApplicationView newView  = CoreApplication.CreateNewView();
+
+            ++newWindowCount;
+            int newViewID = newWindowCount;
+
+            // 初始化视图
+            // 注意，必须在对应的线程上执行
+            await newView.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal,
+                () =>
+                {
+                    // 获取视图ID，有两种方法
+                    // 方法一：GetApplicationViewIdForWindow法，注意线程要对应
+                    // Window必须是与当前视图关联的窗口
+                    // int viewID = ApplicationView.GetApplicationViewIdForWindow(newView.CoreWindow);
+                    // 方法二：最简单
+                    // 因为当前执行的代码就在新视图的UI线程上的
+                    // 所以GetForCurrentView所返回的就是刚创建的新视图
+                    ApplicationView theView = ApplicationView.GetForCurrentView();
+
+                    // 设置一下新窗口的标题（可选）
+                    theView.Title = "new Windows" + newWindowCount.ToString();
+                    // 必须记下视图ID
+                    newViewID = theView.Id;
+                    // 初始化视图的UI
+                    MainPage newPage = new MainPage();
+                    Window.Current.Content = newPage;
+                    Window.Current.Activate();
+                    // 必须调用Activate方法，否则视图不能显示
+                    
+                    注意：
+                    在App类中，Window.Current获取的是主视图（程序刚启动时，至少要有一个视图，不然用户连毛都看不见了）所在的窗口。
+                    而因为此处的代码是在新创建的视图的UI线程上执行的，故Window.Current自然获取的是新视图所在的窗口。
+                   
+});
+            // 开始显示新视图
+            bool b = await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newViewID);
+
+            if (b)
+            {
+                // 成功显示新视图
+            }
+            else
+            {
+                // 视图显示失败
+            }
+        }
+    */
 
     // 异步方法异常捕捉 http://www.cnblogs.com/youngytj/p/4749004.html
 
