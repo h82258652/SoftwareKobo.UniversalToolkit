@@ -338,8 +338,8 @@ namespace SoftwareKobo.UniversalToolkit.Storage
                 // 本地图像。
                 if (DesignMode.DesignModeEnabled == false)
                 {
-                    StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(uri);
-                    using (var stream = await file.OpenAsync(FileAccessMode.Read))
+                    RandomAccessStreamReference reference = RandomAccessStreamReference.CreateFromUri(uri);
+                    using (var stream = await reference.OpenReadAsync())
                     {
                         try
                         {
