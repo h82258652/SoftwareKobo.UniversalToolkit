@@ -5,7 +5,6 @@ using System.Net;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
-using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
@@ -338,22 +337,22 @@ namespace SoftwareKobo.UniversalToolkit.Storage
                 // 本地图像。
                 if (DesignMode.DesignModeEnabled == false)
                 {
-                    RandomAccessStreamReference reference = RandomAccessStreamReference.CreateFromUri(uri);
-                    using (var stream = await reference.OpenReadAsync())
+                    try
                     {
-                        try
+                        RandomAccessStreamReference reference = RandomAccessStreamReference.CreateFromUri(uri);
+                        using (var stream = await reference.OpenReadAsync())
                         {
                             await this.SetStreamAsync(stream, requestTime);
                         }
-                        catch (Exception ex)
+                    }
+                    catch (Exception ex)
+                    {
+                        if (this.ImageFailed != null)
                         {
-                            if (this.ImageFailed != null)
-                            {
-                                this.ImageFailed(this, new ImageFailedEventArgs(ex));
-                            }
-                            this.IsLoading = false;
-                            return;
+                            this.ImageFailed(this, new ImageFailedEventArgs(ex));
                         }
+                        this.IsLoading = false;
+                        return;
                     }
                 }
             }
