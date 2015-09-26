@@ -289,7 +289,7 @@ namespace SoftwareKobo.UniversalToolkit.Storage
                         {
                             networkImageDatas = (await client.GetBufferAsync(uri)).ToArray();
                         }
-                        catch (WebException ex)
+                        catch (Exception ex)
                         {
                             // 下载失败。
                             if (this.ImageFailed != null)
