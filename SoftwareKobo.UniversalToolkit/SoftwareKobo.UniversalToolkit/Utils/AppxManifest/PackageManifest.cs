@@ -44,6 +44,18 @@ namespace SoftwareKobo.UniversalToolkit.Utils.AppxManifest
             }
         }
 
+        public IEnumerable<ResourceManifest> Resources
+        {
+            get
+            {
+                XElement resources = this.GetChildElement("Resources");
+                foreach (XElement resource in resources.Elements())
+                {
+                    yield return new ResourceManifest(resource);
+                }
+            }
+        }
+
         private static XDocument LoadDocument(Package package)
         {
             if (package == null)

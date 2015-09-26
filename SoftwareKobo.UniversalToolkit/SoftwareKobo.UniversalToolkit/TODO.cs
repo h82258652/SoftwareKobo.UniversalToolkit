@@ -7,7 +7,7 @@
     // AeroPanel https://github.com/JustinXinLiu/EffectsAndAnimationsWinComposition
     // 瀑布流面板 http://www.cnblogs.com/ms-uap/p/4715195.html
     // 汉堡按钮（绑定SplitView用于开关）
-    // 下拉刷新面板
+    // 下拉刷新、上推加载面板
     // CircleImage
     // Gif Image Control
     // WebP Image Control
@@ -94,6 +94,7 @@
     #region 大概做了一半？
 
     // 商店 uri 帮助类 http://www.cnblogs.com/zhxilin/p/4819372.html
+    // 需要将 Category 那两个函数改进。
 
     // VisualTreeHelper 扩展
 
