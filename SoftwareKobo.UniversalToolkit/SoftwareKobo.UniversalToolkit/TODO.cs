@@ -15,6 +15,7 @@
     // ValidationSystem
 
     // ListViewBaseExtensions
+    // 添加平滑滚动扩展方法。
 
     // 多窗口管理 http://www.cnblogs.com/tcjiaan/p/4748697.html
     // 多窗口管理2 http://www.cnblogs.com/lin277541/p/4835988.html
