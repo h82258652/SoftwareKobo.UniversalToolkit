@@ -5,9 +5,9 @@ namespace SoftwareKobo.UniversalToolkit.Storage
     /// <summary>
     /// 图片加载失败事件数据。
     /// </summary>
-    public class ImageLoadFailedEventArgs : EventArgs
+    public class ImageFailedEventArgs : EventArgs
     {
-        public ImageLoadFailedEventArgs(Exception failReason)
+        public ImageFailedEventArgs(Exception failReason)
         {
             this.FailReason = failReason;
         }

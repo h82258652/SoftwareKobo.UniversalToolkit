@@ -2,12 +2,15 @@
 using System.IO;
 using System.IO.IsolatedStorage;
 using System.Net;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
+using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
+using Windows.Web.Http;
 
 namespace SoftwareKobo.UniversalToolkit.Storage
 {
@@ -30,9 +33,10 @@ namespace SoftwareKobo.UniversalToolkit.Storage
     /// img.Source = new StorageCachedImage(uri);
     /// </code>
     /// </example>
+
     public sealed class StorageCachedImage : BitmapSource
     {
-        public static readonly DependencyProperty IsAutoRetryProperty = DependencyProperty.Register(nameof(IsAutoRetry), typeof(bool), typeof(StorageCachedImage), new PropertyMetadata(false));
+        public static readonly DependencyProperty IsAutoRetryProperty = DependencyProperty.Register(nameof(IsAutoRetry), typeof(bool), typeof(StorageCachedImage), new PropertyMetadata(false, IsAutoRetryChanged));
 
         public static readonly DependencyProperty IsLoadingProperty = DependencyProperty.Register(nameof(IsLoading), typeof(bool), typeof(StorageCachedImage), new PropertyMetadata(false));
 
@@ -40,23 +44,25 @@ namespace SoftwareKobo.UniversalToolkit.Storage
 
         private const string CACHED_IMAGE_DIRECTORY = @"CachedImages";
 
+        private EventHandler<ImageFailedEventArgs> _autoRetryHandler;
+
+        private DateTime _lastRequestTime;
+
         public StorageCachedImage()
         {
+            _autoRetryHandler = (sender, e) =>
+            {
+                UriSourceChanged();
+            };
         }
 
-        public StorageCachedImage(Uri uri)
+        public StorageCachedImage(Uri uri) : this()
         {
             this.UriSource = new BitmapImage(uri);
         }
 
-        /// <summary>
-        /// 图片加载失败时触发该事件。
-        /// </summary>
-        public event EventHandler<ImageLoadFailedEventArgs> ImageFailed;
+        public event EventHandler<ImageFailedEventArgs> ImageFailed;
 
-        /// <summary>
-        /// 图片成功加载时触发该事件。
-        /// </summary>
         public event RoutedEventHandler ImageOpened;
 
         public bool IsAutoRetry
@@ -112,143 +118,252 @@ namespace SoftwareKobo.UniversalToolkit.Storage
             return IsolatedStorageFileExtensions.GetDirectorySize(CACHED_IMAGE_DIRECTORY);
         }
 
-        private static string GetFilePath(Uri uri)
+        public static bool CachedImageExist(Uri uri)
+        {
+            string cachePath = GetCachePath(uri);
+            return IsCacheExist(cachePath);
+        }
+
+        public static void RemoveCachedImage(Uri uri)
+        {
+            string cachePath = GetCachePath(uri);
+            using (var isf = IsolatedStorageFile.GetUserStoreForApplication())
+            {
+                isf.DeleteFile(cachePath);
+            }
+        }
+
+        private static string GetCachePath(Uri uri)
         {
             return Path.Combine(CACHED_IMAGE_DIRECTORY, WebUtility.UrlEncode(uri.OriginalString));
         }
 
-        private void LoadImage()
+        private static void IsAutoRetryChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-        }
-
-        private static async void UriSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (DesignMode.DesignModeEnabled)
-            {
-                return;
-            }
-
             if (e.NewValue == e.OldValue)
             {
                 return;
             }
 
-            StorageCachedImage obj = (StorageCachedImage)d;            
-            while (true)
+            StorageCachedImage obj = (StorageCachedImage)d;
+            bool value = (bool)e.NewValue;
+            if (value)
             {
-                obj.IsLoading = true;
-                try
+                obj.ImageFailed += obj._autoRetryHandler;
+            }
+            else
+            {
+                obj.ImageFailed -= obj._autoRetryHandler;
+            }
+        }
+
+        private static bool IsCacheExist(string cachedPath)
+        {
+            if (DesignMode.DesignModeEnabled)
+            {
+                // 设计模式下，独立存储不可用，直接返回不存在。
+                return false;
+            }
+
+            using (var isf = IsolatedStorageFile.GetUserStoreForApplication())
+            {
+                return isf.FileExists(cachedPath);
+            }
+        }
+
+        private static async Task<byte[]> LoadCachedImageAsync(string cachePath)
+        {
+            using (var isf = IsolatedStorageFile.GetUserStoreForApplication())
+            {
+                using (var fs = isf.OpenFile(cachePath, FileMode.Open, FileAccess.Read, FileShare.Read))
                 {
-                    #region 清空之前的图像
-
-                    using (var streamSource = new InMemoryRandomAccessStream())
+                    using (MemoryStream stream = new MemoryStream())
                     {
-                        obj.SetSource(streamSource);
+                        await fs.CopyToAsync(stream);
+                        return stream.ToArray();
                     }
-
-                    #endregion 清空之前的图像
-
-                    BitmapImage value = obj.UriSource as BitmapImage;
-                    if (value == null)
-                    {
-                        return;
-                    }
-                    Uri uri = value.UriSource;
-                    if (uri != null && string.IsNullOrEmpty(uri.OriginalString) == false)
-                    {
-                        string scheme = uri.Scheme;
-                        if (scheme == "http" || scheme == "https")
-                        {
-                            // 网络图像。
-                            using (var isolatedStorage = IsolatedStorageFile.GetUserStoreForApplication())
-                            {
-                                var filePath = GetFilePath(uri);
-                                if (isolatedStorage.FileExists(filePath))
-                                {
-                                    // 使用本地缓存。
-                                    using (var cachedImageStream = isolatedStorage.OpenFile(filePath, FileMode.Open, FileAccess.Read))
-                                    {
-                                        try
-                                        {
-                                            await obj.SetSourceAsync(cachedImageStream.AsRandomAccessStream());
-                                        }
-                                        catch (TaskCanceledException)
-                                        {
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
-                                    request.AllowReadStreamBuffering = true;
-                                    try
-                                    {
-                                        using (WebResponse response = await request.GetResponseAsync())
-                                        {
-                                            using (var stream = response.GetResponseStream())
-                                            {
-                                                if (isolatedStorage.FileExists(filePath) == false)
-                                                {
-                                                    if (isolatedStorage.DirectoryExists(CACHED_IMAGE_DIRECTORY) == false)
-                                                    {
-                                                        isolatedStorage.CreateDirectory(CACHED_IMAGE_DIRECTORY);
-                                                    }
-
-                                                    using (var cacheImageFile = isolatedStorage.CreateFile(filePath))
-                                                    {
-                                                        stream.CopyTo(cacheImageFile);
-                                                    }
-                                                }
-
-                                                stream.Seek(0, SeekOrigin.Begin);
-                                                await obj.SetSourceAsync(stream.AsRandomAccessStream());
-                                            }
-                                        }
-                                    }
-                                    catch (WebException)
-                                    {
-                                        throw;
-                                    }
-                                }
-                            }
-                        }
-                        else
-                        {
-                            // 本地图像。
-                            var streamSourceReference = RandomAccessStreamReference.CreateFromUri(uri);
-                            using (var streamSource = await streamSourceReference.OpenReadAsync())
-                            {
-                                obj.SetSource(streamSource);
-                            }
-                        }
-                    }
-                    // 设置新图像成功。
-                    if (obj.ImageOpened != null)
-                    {
-                        obj.ImageOpened(obj, new RoutedEventArgs());
-                    }
-                    break;
-                }
-                catch (Exception ex)
-                {
-                    if (obj.ImageFailed != null)
-                    {
-                        obj.ImageFailed(obj, new ImageLoadFailedEventArgs(ex));
-                    }
-                    if (obj.IsAutoRetry)
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-                finally
-                {
-                    obj.IsLoading = false;
                 }
             }
+        }
+
+        private static async Task SaveImageAsync(string cachePath, byte[] datas)
+        {
+            if (DesignMode.DesignModeEnabled)
+            {
+                // 设计模式下，独立存储不可用。
+                return;
+            }
+
+            using (var isf = IsolatedStorageFile.GetUserStoreForApplication())
+            {
+                if (isf.FileExists(cachePath))
+                {
+                    return;
+                }
+
+                if (isf.DirectoryExists(CACHED_IMAGE_DIRECTORY) == false)
+                {
+                    isf.CreateDirectory(CACHED_IMAGE_DIRECTORY);
+                }
+
+                using (var fs = isf.CreateFile(cachePath))
+                {
+                    await fs.WriteAsync(datas, 0, datas.Length);
+                }
+            }
+        }
+
+        private static void UriSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue == e.OldValue)
+            {
+                return;
+            }
+
+            StorageCachedImage obj = (StorageCachedImage)d;
+            obj.UriSourceChanged();
+        }
+
+        private async Task SetStreamAsync(IRandomAccessStream stream, DateTime requestTime)
+        {
+            if (_lastRequestTime == requestTime)
+            {
+                // 确保为最后设置的 Uri 对应的图像。
+                await this.SetSourceAsync(stream);
+            }
+        }
+
+        public void SetUriSource(Uri uriSource)
+        {
+            this.UriSource = new BitmapImage(uriSource);
+        }
+
+        private async void UriSourceChanged()
+        {
+            this.IsLoading = true;
+
+            #region 清空之前的图像
+
+            using (var emptyStream = new InMemoryRandomAccessStream())
+            {
+                this.SetSource(emptyStream);
+            }
+
+            #endregion 清空之前的图像
+
+            // 清空图像。
+            if (UriSource == null)
+            {
+                this.IsLoading = false;
+                return;
+            }
+
+            BitmapImage bitmapImage = UriSource as BitmapImage;
+            Uri uri = bitmapImage != null ? bitmapImage.UriSource : null;
+            if (uri == null)
+            {
+                this.IsLoading = false;
+                throw new InvalidOperationException("not support image source");
+            }
+
+            var requestTime = DateTime.Now;
+            this._lastRequestTime = requestTime;
+
+            string scheme = uri.Scheme;
+            if (scheme == "http" || scheme == "https")
+            {
+                // 网络图像。
+                byte[] networkImageDatas;
+
+                // 获取本地对应的缓存路径。
+                string cachePath = GetCachePath(uri);
+
+                // 本地图片缓存文件是否存在。
+                bool isCacheExist = IsCacheExist(cachePath);
+
+                if (isCacheExist == false)
+                {
+                    // 缓存不存在，下载图像。
+                    using (HttpClient client = new HttpClient())
+                    {
+                        try
+                        {
+                            networkImageDatas = (await client.GetBufferAsync(uri)).ToArray();
+                        }
+                        catch (WebException ex)
+                        {
+                            // 下载失败。
+                            if (this.ImageFailed != null)
+                            {
+                                this.ImageFailed(this, new ImageFailedEventArgs(ex));
+                            }
+                            this.IsLoading = false;
+                            return;
+                        }
+                    }
+
+                    // 下载成功，保存到独立存储。
+                    await SaveImageAsync(cachePath, networkImageDatas);
+                }
+                else
+                {
+                    // 缓存存在，加载独立存储中的缓存图像。
+                    networkImageDatas = await LoadCachedImageAsync(cachePath);
+                }
+
+                // 加载图像。
+                using (MemoryStream stream = new MemoryStream(networkImageDatas))
+                {
+                    try
+                    {
+                        await this.SetStreamAsync(stream.AsRandomAccessStream(), requestTime);
+                    }
+                    catch (Exception ex)
+                    {
+                        if (this.ImageFailed != null)
+                        {
+                            this.ImageFailed(this, new ImageFailedEventArgs(ex));
+                        }
+
+                        // 丢弃缓存。
+                        RemoveCachedImage(uri);
+
+                        this.IsLoading = false;
+                        return;
+                    }
+                }
+            }
+            else
+            {
+                // 本地图像。
+                if (DesignMode.DesignModeEnabled == false)
+                {
+                    StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(uri);
+                    using (var stream = await file.OpenAsync(FileAccessMode.Read))
+                    {
+                        try
+                        {
+                            await this.SetStreamAsync(stream, requestTime);
+                        }
+                        catch (Exception ex)
+                        {
+                            if (this.ImageFailed != null)
+                            {
+                                this.ImageFailed(this, new ImageFailedEventArgs(ex));
+                            }
+                            this.IsLoading = false;
+                            return;
+                        }
+                    }
+                }
+            }
+
+            // 加载成功。
+            if (this.ImageOpened != null)
+            {
+                this.ImageOpened(this, new RoutedEventArgs());
+            }
+            this.IsLoading = false;
         }
     }
 }

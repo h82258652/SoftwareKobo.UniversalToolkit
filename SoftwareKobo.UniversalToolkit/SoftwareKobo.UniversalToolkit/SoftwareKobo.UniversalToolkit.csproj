@@ -133,7 +133,7 @@
     <Compile Include="Services\LauncherServices\SystemSettingsService.cs" />
     <Compile Include="Services\LauncherServices\StorePage.cs" />
     <Compile Include="Services\LauncherServices\StoreService.cs" />
-    <Compile Include="Storage\ImageLoadFailedEventArgs.cs" />
+    <Compile Include="Storage\ImageFailedEventArgs.cs" />
     <Compile Include="Storage\IsolatedStorageFileExtensions.cs" />
     <Compile Include="Storage\StorageCachedImage.cs" />
     <Compile Include="TODO.cs" />
