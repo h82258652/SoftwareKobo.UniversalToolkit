@@ -1,4 +1,4 @@
-﻿namespace SoftwareKobo.UniversalToolkit.Triggers
+﻿namespace SoftwareKobo.UniversalToolkit.Helpers
 {
     public enum DeviceFamily
     {
