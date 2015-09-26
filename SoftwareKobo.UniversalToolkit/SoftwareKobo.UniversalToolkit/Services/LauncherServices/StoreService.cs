@@ -5,7 +5,12 @@ using Windows.System;
 
 namespace SoftwareKobo.UniversalToolkit.Services.LauncherServices
 {
-    // https://msdn.microsoft.com/en-us/library/windows/apps/mt228343.aspx
+    /// <summary>
+    /// 商店服务。
+    /// </summary>
+    /// <remarks>
+    /// see https://msdn.microsoft.com/en-us/library/windows/apps/mt228343.aspx
+    /// </remarks>
     public class StoreService
     {
         public async Task OpenAppDetailPageByPFNAsync(string packageFamilyName)
@@ -48,6 +53,16 @@ namespace SoftwareKobo.UniversalToolkit.Services.LauncherServices
             await Launcher.LaunchUriAsync(new Uri("ms-windows-store://review/?ProductId=" + productId));
         }
 
+        public async Task OpenAppsPageWithCategoryAsync(string category)
+        {
+            if (category == null)
+            {
+                throw new ArgumentNullException(nameof(category));
+            }
+
+            await Launcher.LaunchUriAsync(new Uri("ms-windows-store://browse/?type=Apps&cat=" + category));
+        }
+
         public async Task OpenCurrentAppDetailPageAsync()
         {
             await OpenAppDetailPageByPFNAsync(Package.Current.Id.FamilyName);
@@ -61,6 +76,70 @@ namespace SoftwareKobo.UniversalToolkit.Services.LauncherServices
         public async Task OpenDownloadAndUpdatePageAsync()
         {
             await Launcher.LaunchUriAsync(new Uri("ms-windows-store://downloadsandupdates"));
+        }
+
+        public async Task OpenGamesPageWithCategoryAsync(string category)
+        {
+            if (category == null)
+            {
+                throw new ArgumentNullException(nameof(category));
+            }
+
+            await Launcher.LaunchUriAsync(new Uri("ms-windows-store://browse/?type=Games&cat=" + category));
+        }
+
+        public async Task OpenProductsPageByPublisherAsync(string publisher)
+        {
+            if (publisher == null)
+            {
+                throw new ArgumentNullException(nameof(publisher));
+            }
+
+            await Launcher.LaunchUriAsync(new Uri("ms-windows-store://publisher/?name=" + publisher));
+        }
+
+        public async Task OpenSearchPageByFileExtensionAsync(string fileExtension)
+        {
+            if (fileExtension == null)
+            {
+                throw new ArgumentNullException(nameof(fileExtension));
+            }
+
+            await Launcher.LaunchUriAsync(new Uri("ms-windows-store://assoc/?FileExt=" + fileExtension));
+        }
+
+        public async Task OpenSearchPageByProtocolAsync(string protocol)
+        {
+            if (protocol == null)
+            {
+                throw new ArgumentNullException(nameof(protocol));
+            }
+
+            await Launcher.LaunchUriAsync(new Uri("ms-windows-store://assoc/?Protocol=" + protocol));
+        }
+
+        public async Task OpenSearchPageByQueryAsync(string query)
+        {
+            if (query == null)
+            {
+                throw new ArgumentNullException(nameof(query));
+            }
+
+            await Launcher.LaunchUriAsync(new Uri("ms-windows-store://search/?query=" + query));
+        }
+
+        public async Task OpenSearchPageByTagsAsync(params string[] tags)
+        {
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
+            if (tags.Length == 0)
+            {
+                throw new ArgumentException("at least one tag!", nameof(tags));
+            }
+
+            await Launcher.LaunchUriAsync(new Uri("ms-windows-store://assoc/?Tags=" + string.Join(",", tags)));
         }
 
         public async Task OpenSettingsPageAsync()
