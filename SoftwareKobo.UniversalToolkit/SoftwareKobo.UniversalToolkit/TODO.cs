@@ -1,7 +1,7 @@
 ﻿namespace SoftwareKobo.UniversalToolkit
 {
     #region 完全未动工
-
+    
     // Debug 模式添加内存使用监听
     // MemoryManager.AppMemoryUsage
     // MemoryManager.AppMemoryUsageLimit
@@ -15,6 +15,7 @@
     // CircleImage
     // Gif Image Control
     // WebP Image Control
+    // FullWindowPopup
 
     // ValidationSystem
 
