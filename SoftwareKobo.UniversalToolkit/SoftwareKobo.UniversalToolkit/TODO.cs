@@ -2,6 +2,10 @@
 {
     #region 完全未动工
 
+    // Debug 模式添加内存使用监听
+    // MemoryManager.AppMemoryUsage
+    // MemoryManager.AppMemoryUsageLimit
+
     // WrapPanel
     // DockPanel
     // AeroPanel https://github.com/JustinXinLiu/EffectsAndAnimationsWinComposition
