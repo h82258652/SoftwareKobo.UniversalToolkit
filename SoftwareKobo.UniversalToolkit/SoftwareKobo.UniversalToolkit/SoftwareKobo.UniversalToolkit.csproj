@@ -119,12 +119,15 @@
     <Compile Include="AwaitableUI\FrameworkElementExtensions.cs" />
     <Compile Include="AwaitableUI\RoutedEventHandlerTaskSource.cs" />
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Controls\DisplayMemoryUsage.cs" />
     <Compile Include="Controls\ExtendedSplashScreen.xaml.cs">
       <DependentUpon>ExtendedSplashScreen.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ExtendedSplashScreenContent.cs" />
+    <Compile Include="Controls\FullWindowPopup.cs" />
     <Compile Include="Controls\ReflectionPanel.cs" />
     <Compile Include="Converters\Json\UnixTimestampConverter.cs" />
+    <Compile Include="Extensions\DebugSettingsExtensions.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\PackageExtensions.cs" />
     <Compile Include="Helpers\DeviceFamilyHelper.cs" />

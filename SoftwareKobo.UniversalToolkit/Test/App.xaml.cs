@@ -16,10 +16,11 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using System.Threading.Tasks;
+using SoftwareKobo.UniversalToolkit.Extensions;
 
 namespace Test
 {
-    sealed partial class App : Bootstrapper3
+    sealed partial class App : Bootstrapper
     {
         //public App() : base(typeof(MainPage), typeof(CustomSplashScreen))
         //{
@@ -30,7 +31,15 @@ namespace Test
         {
             this.InitializeComponent();
             this.DefaultMainPage = typeof(MainPage);
-            this.DefaultSplashScreen = () => new CustomSplashScreen();
+            this.DefaultExtendedSplashScreen = () => new CustomSplashScreen();
+
+        }
+
+        protected override Task OnPreStartAsync(IActivatedEventArgs args, AppStartInfo info)
+        {
+            this.DebugSettings.EnableFrameRateCounter = true;
+            this.DebugSettings.EnableDisplayMemoryUsage(true);
+            return Task.FromResult<object>(null);
         }
     }
 

@@ -321,11 +321,11 @@ namespace SoftwareKobo.UniversalToolkit
                 {
                     Language = ApplicationLanguages.Languages[0]
                 };
-                if (args.PreviousExecutionState == ApplicationExecutionState.Terminated)
-                {
-                    string navigationState = (string)ApplicationData.Current.LocalSettings.Values["RootFrameNavigationState"];
-                    RootFrame.SetNavigationState(navigationState);
-                }
+                //if (args.PreviousExecutionState == ApplicationExecutionState.Terminated)
+                //{
+                //    string navigationState = (string)ApplicationData.Current.LocalSettings.Values["RootFrameNavigationState"];
+                //    RootFrame.SetNavigationState(navigationState);
+                //}
 
                 /*
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
@@ -333,11 +333,11 @@ namespace SoftwareKobo.UniversalToolkit
                     //TODO: 从之前挂起的应用程序加载状态
                 }
                 */
-                RootFrame.Navigated += (sender, e) =>
-                {
-                    string navigationState = RootFrame.GetNavigationState();
-                    ApplicationData.Current.LocalSettings.Values["RootFrameNavigationState"] = navigationState;
-                };
+                //RootFrame.Navigated += (sender, e) =>
+                //{
+                //    string navigationState = RootFrame.GetNavigationState();
+                //    ApplicationData.Current.LocalSettings.Values["RootFrameNavigationState"] = navigationState;
+                //};
                 RootFrame.NavigationFailed += RootFrameNavigationFailed;
             }
         }

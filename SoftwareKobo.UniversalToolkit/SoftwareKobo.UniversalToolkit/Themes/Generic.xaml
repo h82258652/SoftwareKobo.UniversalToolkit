@@ -37,4 +37,21 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style TargetType="controls:DisplayMemoryUsage">
+        <Setter Property="Background"
+                Value="Black" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:DisplayMemoryUsage">
+                    <Grid Background="{TemplateBinding Background}">
+                        <TextBlock x:Name="txtMemoryUsage"
+                                   Margin="5"
+                                   Foreground="White"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>
