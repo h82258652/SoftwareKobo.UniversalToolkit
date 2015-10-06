@@ -100,7 +100,7 @@ namespace SoftwareKobo.UniversalToolkit
             }
             set
             {
-                VerifyDefaultMainPageType(value);
+                VerifyIsPageType(value);
                 this._defaultMainPage = value;
             }
         }
@@ -128,7 +128,7 @@ namespace SoftwareKobo.UniversalToolkit
             }
 
             Window newWindow = await CreateNewWindowAsync();
-            TaskCompletionSource<int> tcs = new TaskCompletionSource<int>();
+            int viewId = 0;
             await newWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 InitializeRootFrame(newWindow);
@@ -136,9 +136,8 @@ namespace SoftwareKobo.UniversalToolkit
                 NavigateToFirstPage(newWindow, pageType, parameter);
 
                 newWindow.Activate();
-                tcs.SetResult(ApplicationView.GetForCurrentView().Id);
+                viewId = ApplicationView.GetForCurrentView().Id;
             });
-            int viewId = await tcs.Task;
             await ApplicationViewSwitcher.TryShowAsStandaloneAsync(viewId);
             return newWindow;
         }
@@ -431,7 +430,7 @@ namespace SoftwareKobo.UniversalToolkit
         private static void NavigateToFirstPage(Window hostWindow, Type pageType, object parameter)
         {
             Frame frame = hostWindow.Content as Frame;
-            if (frame != null && frame.Content == null)
+            if (frame != null)
             {
                 frame.Navigate(pageType, parameter);
             }
@@ -441,7 +440,7 @@ namespace SoftwareKobo.UniversalToolkit
         {
             // 窗口中是否已经有内容。
             bool hadContent = false;
-            await hostWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => 
+            await hostWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 hadContent = hostWindow.Content != null;
             });
@@ -528,15 +527,15 @@ namespace SoftwareKobo.UniversalToolkit
         }
 
         /// <summary>
-        /// 验证 App 的默认页面类型是否正确。
+        /// 验证类型是否继承自 Page。
         /// </summary>
-        /// <param name="defaultMainPageType">App 的默认页面类型。</param>
+        /// <param name="type">需要验证的类型。</param>
         [Conditional("DEBUG")]
-        private static void VerifyDefaultMainPageType(Type defaultMainPageType)
+        internal static void VerifyIsPageType(Type type)
         {
-            if (defaultMainPageType != null && typeof(Page).IsAssignableFrom(defaultMainPageType) == false)
+            if (type != null && typeof(Page).IsAssignableFrom(type) == false)
             {
-                throw new ArgumentException($"parameter {nameof(DefaultMainPage)} must sub type of {nameof(Page)}", nameof(DefaultMainPage));
+                throw new ArgumentException($"parameter {nameof(type)} must sub type of {nameof(Page)}", nameof(type));
             }
         }
 

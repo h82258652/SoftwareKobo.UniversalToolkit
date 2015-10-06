@@ -17,7 +17,7 @@ namespace Test
 
         protected override Task OnProtocolStartAsync(ProtocolActivatedEventArgs protocolArgs, AppStartInfo info)
         {
-            if (protocolArgs.Uri.AbsolutePath== "nosplash")
+            if (protocolArgs.Uri.AbsolutePath == "nosplash")
             {
                 info.ExtendedSplashScreen = null;
                 info.Parameter = "协议启动（不要扩展启动屏幕）";
@@ -27,7 +27,7 @@ namespace Test
                 info.Parameter = "协议启动（带扩展启动屏幕）";
             }
 
-            info.IsShowInNewWindow = true;
+            //info.IsShowInNewWindow = true;
             return Task.FromResult<object>(null);
         }
     }

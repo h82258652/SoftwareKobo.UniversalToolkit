@@ -11,17 +11,18 @@
                    x:Name="txtMessage"
                    Text="Hello World"
                    Foreground="Red" />
-        <StackPanel HorizontalAlignment="Stretch"
-                    VerticalAlignment="Bottom"
-                    Orientation="Horizontal">
-            <Button Content="打开新窗口"
-                    Click="BtnNewWindow_Click" />
-            <Button Content="携带参数打开新窗口"
-                    Click="BtnNewWindowWithParameter_Click" />
-            <Button Content="协议启动"
-                    Click="ProtocolLaunch_Click" />
-            <Button Content="协议启动（但不要扩展启动屏幕）"
-                    Click="ProtocolLaunchWithoutExtendedSplashScreen_Click" />
-        </StackPanel>
+        <ScrollViewer HorizontalAlignment="Stretch"
+                      VerticalAlignment="Bottom">
+            <StackPanel Orientation="Horizontal">
+                <Button Content="打开新窗口"
+                        Click="BtnNewWindow_Click" />
+                <Button Content="携带参数打开新窗口"
+                        Click="BtnNewWindowWithParameter_Click" />
+                <Button Content="协议启动"
+                        Click="ProtocolLaunch_Click" />
+                <Button Content="协议启动（但不要扩展启动屏幕）"
+                        Click="ProtocolLaunchWithoutExtendedSplashScreen_Click" />
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>

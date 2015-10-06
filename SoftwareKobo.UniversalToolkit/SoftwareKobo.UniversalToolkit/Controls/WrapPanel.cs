@@ -8,8 +8,14 @@ using Windows.UI.Xaml.Controls;
 
 namespace SoftwareKobo.UniversalToolkit.Controls
 {
-   public  class WrapPanel:Panel
+    public class WrapPanel : Panel
     {
+        public Orientation Orientation
+        {
+            get;
+            set;
+        }
+
         protected override Size ArrangeOverride(Size finalSize)
         {
             return base.ArrangeOverride(finalSize);

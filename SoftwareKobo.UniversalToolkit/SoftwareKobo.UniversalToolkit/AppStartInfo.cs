@@ -5,6 +5,8 @@ namespace SoftwareKobo.UniversalToolkit
 {
     public sealed class AppStartInfo
     {
+        private Type _mainPage;
+
         private AppStartInfo()
         {
         }
@@ -15,19 +17,26 @@ namespace SoftwareKobo.UniversalToolkit
             set;
         }
 
-        public Type MainPage
+        public bool IsShowInNewWindow
         {
             get;
             set;
+        }
+
+        public Type MainPage
+        {
+            get
+            {
+                return this._mainPage;
+            }
+            set
+            {
+                Bootstrapper.VerifyIsPageType(value);
+                this._mainPage = value;
+            }
         }
 
         public object Parameter
-        {
-            get;
-            set;
-        }
-
-        public bool IsShowInNewWindow
         {
             get;
             set;
