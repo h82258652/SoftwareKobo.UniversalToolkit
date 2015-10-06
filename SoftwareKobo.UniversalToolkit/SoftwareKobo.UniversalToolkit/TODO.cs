@@ -5,6 +5,7 @@
     // Debug 模式添加内存使用监听
     // MemoryManager.AppMemoryUsage
     // MemoryManager.AppMemoryUsageLimit
+    // 优化以使可以在app构造函数中设置。
 
     // WrapPanel
     // DockPanel

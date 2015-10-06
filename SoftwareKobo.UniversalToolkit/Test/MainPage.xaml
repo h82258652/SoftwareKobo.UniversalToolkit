@@ -4,25 +4,24 @@
       xmlns:local="using:Test"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:controls="using:SoftwareKobo.UniversalToolkit.Controls"
       mc:Ignorable="d">
-    <controls:FullWindowPopup.AttachedPopup>
-        <controls:FullWindowPopup IsLightDismissEnabled="True">
-            <Grid VerticalAlignment="Bottom"
-                  Height="150"
-                  Background="Red" />
-            <controls:FullWindowPopup.ChildTransitions>
-                <TransitionCollection>
-                    <PopupThemeTransition FromHorizontalOffset="0"
-                                          FromVerticalOffset="150" />
-                </TransitionCollection>
-            </controls:FullWindowPopup.ChildTransitions>
-        </controls:FullWindowPopup>
-    </controls:FullWindowPopup.AttachedPopup>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Button HorizontalAlignment="Center"
-                VerticalAlignment="Bottom"
-                Content="Test"
-                Click="Button_Click"></Button>
+        <TextBlock HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   x:Name="txtMessage"
+                   Text="Hello World"
+                   Foreground="Red" />
+        <StackPanel HorizontalAlignment="Stretch"
+                    VerticalAlignment="Bottom"
+                    Orientation="Horizontal">
+            <Button Content="打开新窗口"
+                    Click="BtnNewWindow_Click" />
+            <Button Content="携带参数打开新窗口"
+                    Click="BtnNewWindowWithParameter_Click" />
+            <Button Content="协议启动"
+                    Click="ProtocolLaunch_Click" />
+            <Button Content="协议启动（但不要扩展启动屏幕）"
+                    Click="ProtocolLaunchWithoutExtendedSplashScreen_Click" />
+        </StackPanel>
     </Grid>
 </Page>

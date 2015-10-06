@@ -27,6 +27,12 @@ namespace SoftwareKobo.UniversalToolkit
             set;
         }
 
+        public bool IsShowInNewWindow
+        {
+            get;
+            set;
+        }
+
         internal static AppStartInfo Default
         {
             get

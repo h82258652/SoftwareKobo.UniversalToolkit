@@ -1,44 +1,33 @@
 ﻿using SoftwareKobo.UniversalToolkit;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.ApplicationModel;
-using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using System.Threading.Tasks;
 using SoftwareKobo.UniversalToolkit.Extensions;
+using System.Threading.Tasks;
+using Windows.ApplicationModel.Activation;
 
 namespace Test
 {
     sealed partial class App : Bootstrapper
     {
-        //public App() : base(typeof(MainPage), typeof(CustomSplashScreen))
-        //{
-        //    this.InitializeComponent();
-        //}
-
-        public App()// : base(typeof(MainPage), typeof(CustomSplashScreen))
+        public App()
         {
-            this.InitializeComponent();
             this.DefaultMainPage = typeof(MainPage);
-            this.DefaultExtendedSplashScreen = () => new CustomSplashScreen();
+            this.DefaultExtendedSplashScreen = () => new CustomExtendedSplashScreen();
 
+            this.DebugSettings.EnableDisplayMemoryUsage();
         }
 
-        protected override Task OnPreStartAsync(IActivatedEventArgs args, AppStartInfo info)
+        protected override Task OnProtocolStartAsync(ProtocolActivatedEventArgs protocolArgs, AppStartInfo info)
         {
-            this.DebugSettings.EnableFrameRateCounter = true;
-            this.DebugSettings.EnableDisplayMemoryUsage(true);
+            if (protocolArgs.Uri.AbsolutePath== "nosplash")
+            {
+                info.ExtendedSplashScreen = null;
+                info.Parameter = "协议启动（不要扩展启动屏幕）";
+            }
+            else
+            {
+                info.Parameter = "协议启动（带扩展启动屏幕）";
+            }
+
+            info.IsShowInNewWindow = true;
             return Task.FromResult<object>(null);
         }
     }
@@ -65,7 +54,6 @@ namespace Test
     //        /// <param name="e">有关启动请求和过程的详细信息。</param>
     //        protected override void OnLaunched(LaunchActivatedEventArgs e)
     //        {
-
     //#if DEBUG
     //            if (System.Diagnostics.Debugger.IsAttached)
     //            {

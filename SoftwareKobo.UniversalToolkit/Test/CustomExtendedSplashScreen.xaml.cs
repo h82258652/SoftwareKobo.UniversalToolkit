@@ -19,27 +19,18 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Test
 {
-    public sealed partial class CustomSplashScreen : ExtendedSplashScreenContent
+    public sealed partial class CustomExtendedSplashScreen : ExtendedSplashScreenContent
     {
-        public CustomSplashScreen()
+        public CustomExtendedSplashScreen()
         {
             this.InitializeComponent();
-            //this.Loaded += async (sender,e) =>
-            //{
-            //    await Task.Delay(3000);
-            //    this.Finish();
-            //};
+            this.Loaded += CustomExtendedSplashScreen_Loaded;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void CustomExtendedSplashScreen_Loaded(object sender, RoutedEventArgs e)
         {
-            Finish();
-        }
-
-        private void FontIcon_Loaded(object sender, RoutedEventArgs e)
-        {
-           var icon = (FontIcon)sender;
-            icon.Glyph = "&#xE700;";
+            await Task.Delay(2000);
+            this.Finish();
         }
     }
 }

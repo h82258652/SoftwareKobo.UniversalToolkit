@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -41,11 +42,29 @@ namespace SoftwareKobo.UniversalToolkit.Controls
             {
                 this.IsOpen = false;
             };
-            Window.Current.SizeChanged += delegate
+
+            Action keepPopupSize = () =>
             {
+                Window.Current.SizeChanged += delegate
+                {
+                    this.ReSize();
+                };
                 this.ReSize();
             };
-            this.ReSize();
+
+            Bootstrapper app = Bootstrapper.Current;
+            if (app != null && app.IsInConstructing)
+            {
+                app._waitForConstructedActions.Add(() =>
+                {
+                    keepPopupSize.Invoke();
+                    return Task.FromResult<object>(null);
+                });
+            }
+            else
+            {
+                keepPopupSize.Invoke();
+            }
         }
 
         public event EventHandler<object> Closed

@@ -1,3 +1,0 @@
-MainPackage=D:\Projects\SoftwareKobo.UniversalToolkit3\SoftwareKobo.UniversalToolkit\Test\bin\ARM\Release\Upload\Test_1.1.3.0_ARM.appx
-SymbolPackage=D:\Projects\SoftwareKobo.UniversalToolkit3\SoftwareKobo.UniversalToolkit\Test\AppPackages\Test_1.1.3.0\Test_1.1.3.0_ARM.appxsym
-ResourcePack=D:\Projects\SoftwareKobo.UniversalToolkit3\SoftwareKobo.UniversalToolkit\Test\_language-en.appx

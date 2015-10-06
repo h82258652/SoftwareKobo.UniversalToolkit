@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Windows.Phone.UI.Input;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
@@ -8,22 +9,65 @@ namespace SoftwareKobo.UniversalToolkit.Helpers
 {
     public static class NavigationBackHelper
     {
-        private static readonly Dictionary<Frame, EventHandler<BackRequestedEventArgs>> _backRequestedHandlers = new Dictionary<Frame, EventHandler<BackRequestedEventArgs>>();
         private static readonly Dictionary<Frame, EventHandler<BackPressedEventArgs>> _backPressedHandlers = new Dictionary<Frame, EventHandler<BackPressedEventArgs>>();
+        private static readonly Dictionary<Frame, EventHandler<BackRequestedEventArgs>> _backRequestedHandlers = new Dictionary<Frame, EventHandler<BackRequestedEventArgs>>();
 
-        public static void RegisterNavigateBack(this Frame frame)
+        public static void RegisterNavigateBack(this Frame frame, Func<Task> asyncAction)
         {
-            var systemNavigationManager = SystemNavigationManager.GetForCurrentView();
+            SystemNavigationManager systemNavigationManager = SystemNavigationManager.GetForCurrentView();
             systemNavigationManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
 
-            if (_backRequestedHandlers.ContainsKey(frame) == false)
+            if (_backPressedHandlers.ContainsKey(frame) == false)
+            {
+                EventHandler<BackRequestedEventArgs> backRequestedHandler = async (sender, e) =>
+                {
+                    if (frame.CanGoBack)
+                    {
+                        e.Handled = true;
+                        if (asyncAction != null)
+                        {
+                            await asyncAction.Invoke();
+                        }
+                    }
+                };
+                _backRequestedHandlers.Add(frame, backRequestedHandler);
+                systemNavigationManager.BackRequested += backRequestedHandler;
+            }
+
+            if (HardwareButtonsHelper.IsUseable && _backPressedHandlers.ContainsKey(frame) == false)
+            {
+                EventHandler<BackPressedEventArgs> backPressedHandler = async (sender, e) =>
+                {
+                    if (frame.CanGoBack)
+                    {
+                        e.Handled = true;
+                        if (asyncAction != null)
+                        {
+                            await asyncAction.Invoke();
+                        }
+                    }
+                };
+                _backPressedHandlers.Add(frame, backPressedHandler);
+                HardwareButtons.BackPressed += backPressedHandler;
+            }
+        }
+
+        public static void RegisterNavigateBack(this Frame frame, Action action)
+        {
+            SystemNavigationManager systemNavigationManager = SystemNavigationManager.GetForCurrentView();
+            systemNavigationManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+
+            if (_backPressedHandlers.ContainsKey(frame) == false)
             {
                 EventHandler<BackRequestedEventArgs> backRequestedHandler = (sender, e) =>
                 {
                     if (frame.CanGoBack)
                     {
                         e.Handled = true;
-                        frame.GoBack();
+                        if (action != null)
+                        {
+                            action.Invoke();
+                        }
                     }
                 };
                 _backRequestedHandlers.Add(frame, backRequestedHandler);
@@ -37,12 +81,21 @@ namespace SoftwareKobo.UniversalToolkit.Helpers
                     if (frame.CanGoBack)
                     {
                         e.Handled = true;
-                        frame.GoBack();
+                        if (action != null)
+                        {
+                            action.Invoke();
+                        }
                     }
                 };
                 _backPressedHandlers.Add(frame, backPressedHandler);
                 HardwareButtons.BackPressed += backPressedHandler;
             }
+        }
+
+        public static void RegisterNavigateBack(this Frame frame)
+        {
+            Action action = frame.GoBack;
+            RegisterNavigateBack(frame, action);
         }
 
         public static void UnRegisterNavigateBack(this Frame frame)

@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="18174h82258652.36821D577DB6D" Publisher="CN=D8CBB42C-5DD4-4A02-8424-31AF9627DADA" Version="1.1.3.0" />
-  <mp:PhoneIdentity PhoneProductId="6519a48b-4aa6-49de-afab-e6b74281abc1" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Identity Name="23a9a2d0-e78a-4ebf-97e8-a3bd46854f15" Publisher="CN=h8225" Version="1.0.0.0" />
+  <mp:PhoneIdentity PhoneProductId="23a9a2d0-e78a-4ebf-97e8-a3bd46854f15" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>周公解梦 for WP8.1</DisplayName>
-    <PublisherDisplayName>h82258652</PublisherDisplayName>
+    <DisplayName>Test</DisplayName>
+    <PublisherDisplayName>h8225</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>
@@ -15,17 +15,16 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Test.App">
-      <uap:VisualElements DisplayName="周公解梦 for WP8.1" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="Test" BackgroundColor="transparent">
+      <uap:VisualElements DisplayName="Test" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="Test" BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png">
         </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
-        <uap:InitialRotationPreference>
-          <uap:Rotation Preference="portrait" />
-          <uap:Rotation Preference="landscape" />
-          <uap:Rotation Preference="portraitFlipped" />
-          <uap:Rotation Preference="landscapeFlipped" />
-        </uap:InitialRotationPreference>
       </uap:VisualElements>
+      <Extensions>
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="softwarekobo" />
+        </uap:Extension>
+      </Extensions>
     </Application>
   </Applications>
   <Capabilities>

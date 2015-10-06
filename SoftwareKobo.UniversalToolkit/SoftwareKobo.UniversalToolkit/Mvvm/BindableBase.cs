@@ -29,5 +29,16 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        public bool Set<T>(ref T oldValue, T newValue, [CallerMemberName] string propertyName = null)
+        {
+            if (object.ReferenceEquals(oldValue, newValue))
+            {
+                return false;
+            }
+            oldValue = newValue;
+            this.RaisePropertyChanged(propertyName);
+            return true;
+        }
     }
 }

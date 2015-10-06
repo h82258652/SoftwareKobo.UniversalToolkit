@@ -37,7 +37,7 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
         /// <example>
         /// public App()
         /// {
-        ///     // 错误使用。
+        ///     // 正确使用。
         ///     // this.DebugSettings.EnableDisplayMemoryUsage();
         /// }
         /// 
