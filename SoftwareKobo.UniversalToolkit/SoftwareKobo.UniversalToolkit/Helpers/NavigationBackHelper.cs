@@ -21,13 +21,10 @@ namespace SoftwareKobo.UniversalToolkit.Helpers
             {
                 EventHandler<BackRequestedEventArgs> backRequestedHandler = async (sender, e) =>
                 {
-                    if (frame.CanGoBack)
+                    e.Handled = true;
+                    if (asyncAction != null)
                     {
-                        e.Handled = true;
-                        if (asyncAction != null)
-                        {
-                            await asyncAction.Invoke();
-                        }
+                        await asyncAction.Invoke();
                     }
                 };
                 _backRequestedHandlers.Add(frame, backRequestedHandler);
@@ -38,13 +35,10 @@ namespace SoftwareKobo.UniversalToolkit.Helpers
             {
                 EventHandler<BackPressedEventArgs> backPressedHandler = async (sender, e) =>
                 {
-                    if (frame.CanGoBack)
+                    e.Handled = true;
+                    if (asyncAction != null)
                     {
-                        e.Handled = true;
-                        if (asyncAction != null)
-                        {
-                            await asyncAction.Invoke();
-                        }
+                        await asyncAction.Invoke();
                     }
                 };
                 _backPressedHandlers.Add(frame, backPressedHandler);
@@ -61,13 +55,10 @@ namespace SoftwareKobo.UniversalToolkit.Helpers
             {
                 EventHandler<BackRequestedEventArgs> backRequestedHandler = (sender, e) =>
                 {
-                    if (frame.CanGoBack)
+                    e.Handled = true;
+                    if (action != null)
                     {
-                        e.Handled = true;
-                        if (action != null)
-                        {
-                            action.Invoke();
-                        }
+                        action.Invoke();
                     }
                 };
                 _backRequestedHandlers.Add(frame, backRequestedHandler);
@@ -78,13 +69,10 @@ namespace SoftwareKobo.UniversalToolkit.Helpers
             {
                 EventHandler<BackPressedEventArgs> backPressedHandler = (sender, e) =>
                 {
-                    if (frame.CanGoBack)
+                    e.Handled = true;
+                    if (action != null)
                     {
-                        e.Handled = true;
-                        if (action != null)
-                        {
-                            action.Invoke();
-                        }
+                        action.Invoke();
                     }
                 };
                 _backPressedHandlers.Add(frame, backPressedHandler);
@@ -94,7 +82,13 @@ namespace SoftwareKobo.UniversalToolkit.Helpers
 
         public static void RegisterNavigateBack(this Frame frame)
         {
-            Action action = frame.GoBack;
+            Action action = () =>
+            {
+                if (frame.CanGoBack)
+                {
+                    frame.GoBack();
+                }
+            };
             RegisterNavigateBack(frame, action);
         }
 
