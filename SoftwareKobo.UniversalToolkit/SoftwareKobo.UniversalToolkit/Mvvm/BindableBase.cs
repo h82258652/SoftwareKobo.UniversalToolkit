@@ -18,7 +18,7 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
         /// </summary>
         protected virtual void RaiseAllPropertiesChanged()
         {
-            RaisePropertyChanged(string.Empty);
+            this.RaisePropertyChanged(string.Empty);
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
         /// <param name="propertyName">属性名称。</param>
         protected virtual void RaisePropertyChanged([CallerMemberName]string propertyName = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public bool Set<T>(ref T oldValue, T newValue, [CallerMemberName] string propertyName = null)

@@ -172,5 +172,10 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
             }
             return color;
         }
+
+        public static Color Inverse(Color value)
+        {
+            return Color.FromArgb(value.A, (byte)(255 - value.R), (byte)(255 - value.G), (byte)(255 - value.B));
+        }
     }
 }

@@ -139,6 +139,10 @@
     <Compile Include="Helpers\DeviceFamilyHelper.cs" />
     <Compile Include="Mvvm\IIncrementalItemSource.cs" />
     <Compile Include="Mvvm\IncrementalLoadingCollection.cs" />
+    <Compile Include="Mvvm\IView.cs" />
+    <Compile Include="Mvvm\Messenger.cs" />
+    <Compile Include="Mvvm\ReceiveFromViewModelHandler.cs" />
+    <Compile Include="Mvvm\ViewExtensions.cs" />
     <Compile Include="Services\LauncherServices\SystemSettingsService.cs" />
     <Compile Include="Services\LauncherServices\StorePage.cs" />
     <Compile Include="Services\LauncherServices\StoreService.cs" />
