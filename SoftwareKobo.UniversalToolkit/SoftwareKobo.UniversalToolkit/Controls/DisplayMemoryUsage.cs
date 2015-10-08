@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+﻿using System.Diagnostics;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Documents;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 
 namespace SoftwareKobo.UniversalToolkit.Controls
 {
     public sealed class DisplayMemoryUsage : Control
     {
+        private TextBlock _txtMemoryUsage;
+
         public DisplayMemoryUsage()
         {
             this.DefaultStyleKey = typeof(DisplayMemoryUsage);
@@ -21,15 +16,18 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 
         protected override void OnApplyTemplate()
         {
-            TextBlock txtMemoryUsage = (TextBlock)GetTemplateChild("txtMemoryUsage");
+            this._txtMemoryUsage = (TextBlock)GetTemplateChild("txtMemoryUsage");
             DispatcherTimer timer = new DispatcherTimer();
-            timer.Tick += delegate
-            {
-                string usage = (MemoryManager.AppMemoryUsage / 1024.0 / 1024.0).ToString("f2") + "MB";
-                string limit = (MemoryManager.AppMemoryUsageLimit / 1024.0 / 1024.0).ToString("f2") + "MB";
-                txtMemoryUsage.Text = usage + "/" + limit;
-            };
+            timer.Tick += Timer_Tick;
             timer.Start();
+        }
+
+        [DebuggerNonUserCode]
+        private void Timer_Tick(object sender, object e)
+        {
+            string usage = (MemoryManager.AppMemoryUsage / 1024.0 / 1024.0).ToString("f2") + "MB";
+            string limit = (MemoryManager.AppMemoryUsageLimit / 1024.0 / 1024.0).ToString("f2") + "MB";
+            this._txtMemoryUsage.Text = usage + "/" + limit;
         }
     }
 }
