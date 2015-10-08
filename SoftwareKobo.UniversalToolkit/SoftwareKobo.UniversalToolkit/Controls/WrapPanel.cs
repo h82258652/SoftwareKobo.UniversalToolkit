@@ -51,12 +51,12 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 
         protected override Size ArrangeOverride(Size finalSize)
         {
-            return base.ArrangeOverride(finalSize);
+            throw new NotImplementedException();
         }
 
         protected override Size MeasureOverride(Size availableSize)
         {
-            return base.MeasureOverride(availableSize);
+            throw new NotImplementedException();
         }
 
         private static bool IsItemWidthHeightValid(double value)
