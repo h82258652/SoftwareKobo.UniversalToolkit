@@ -59,19 +59,19 @@ namespace Test
             await Launcher.LaunchUriAsync(new Uri("softwarekobo:nosplash"));
         }
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //GV.ScrollIntoViewSmooth(GV.Items[new Random().Next(GV.Items.Count)]);
+            GV.ScrollIntoViewSmoothly(GV.Items[new Random().Next(GV.Items.Count)]);
 
-            if (SoftwareKobo.UniversalToolkit.Storage.ApplicationLocalSettings.Exists("Test"))
-            {
-                var dt = SoftwareKobo.UniversalToolkit.Storage.ApplicationLocalSettings.Read<DateTime>("Test");
-                await new MessageDialog(dt.ToString()).ShowAsync();
-            }
-            else
-            {
-                await new MessageDialog("no").ShowAsync();
-            }
+            //if (SoftwareKobo.UniversalToolkit.Storage.ApplicationLocalSettings.Exists("Test"))
+            //{
+            //    var dt = SoftwareKobo.UniversalToolkit.Storage.ApplicationLocalSettings.Read<DateTime>("Test");
+            //    await new MessageDialog(dt.ToString()).ShowAsync();
+            //}
+            //else
+            //{
+            //    await new MessageDialog("no").ShowAsync();
+            //}
         }
     }
 }

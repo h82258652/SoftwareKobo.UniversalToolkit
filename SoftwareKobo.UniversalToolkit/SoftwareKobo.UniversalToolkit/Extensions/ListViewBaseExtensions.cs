@@ -6,12 +6,12 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
 {
     public static class ListViewBaseExtensions
     {
-        public static void ScrollIntoViewSmooth(this ListViewBase listViewBase, object item)
+        public static void ScrollIntoViewSmoothly(this ListViewBase listViewBase, object item)
         {
-            ScrollIntoViewSmooth(listViewBase, item, ScrollIntoViewAlignment.Default);
+            ScrollIntoViewSmoothly(listViewBase, item, ScrollIntoViewAlignment.Default);
         }
 
-        public static void ScrollIntoViewSmooth(this ListViewBase listViewBase, object item, ScrollIntoViewAlignment alignment)
+        public static void ScrollIntoViewSmoothly(this ListViewBase listViewBase, object item, ScrollIntoViewAlignment alignment)
         {
             if (listViewBase == null)
             {
