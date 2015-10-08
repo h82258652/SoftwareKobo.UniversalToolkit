@@ -2,6 +2,11 @@
 using SoftwareKobo.UniversalToolkit.Extensions;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel;
+using System;
+using Windows.ApplicationModel.ExtendedExecution;
+using System.Diagnostics;
+using SoftwareKobo.UniversalToolkit.Storage;
 
 namespace Test
 {
@@ -29,6 +34,32 @@ namespace Test
 
             //info.IsShowInNewWindow = true;
             return Task.FromResult<object>(null);
+        }
+
+        private bool isBackground = false;
+
+        protected override void OnResuming(object sender, object e)
+        {
+            isBackground = false;
+        }
+
+        protected override async Task OnSuspendingAsync(object sender, SuspendingEventArgs e)
+        {
+            isBackground = true;
+            //using (var session = new ExtendedExecutionSession())
+            //{
+            //    session.Reason = ExtendedExecutionReason.SavingData;
+            //    session.Description = "Need to continue run";
+            //    var result = await session.RequestExtensionAsync();
+            //    if (result == ExtendedExecutionResult.Allowed)
+            //    {
+            //        while (isBackground)
+            //        {
+            //            ApplicationLocalSettings.Write("Test", DateTime.Now);
+            //            await Task.Delay(3000);
+            //        }
+            //    }
+            //}
         }
     }
 

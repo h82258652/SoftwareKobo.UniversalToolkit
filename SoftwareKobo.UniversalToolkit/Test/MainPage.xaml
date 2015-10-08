@@ -6,23 +6,21 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d">
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   x:Name="txtMessage"
-                   Text="Hello World"
-                   Foreground="Red" />
-        <ScrollViewer HorizontalAlignment="Stretch"
-                      VerticalAlignment="Bottom">
-            <StackPanel Orientation="Horizontal">
-                <Button Content="打开新窗口"
-                        Click="BtnNewWindow_Click" />
-                <Button Content="携带参数打开新窗口"
-                        Click="BtnNewWindowWithParameter_Click" />
-                <Button Content="协议启动"
-                        Click="ProtocolLaunch_Click" />
-                <Button Content="协议启动（但不要扩展启动屏幕）"
-                        Click="ProtocolLaunchWithoutExtendedSplashScreen_Click" />
-            </StackPanel>
-        </ScrollViewer>
+        <GridView x:Name="GV">
+            <GridView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Width="250"
+                          Height="250">
+                        <ContentControl HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Content="{Binding}" />
+                    </Grid>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>
+        <Button Content="Test"
+                Click="Button_Click"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom" />
     </Grid>
 </Page>

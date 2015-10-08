@@ -132,7 +132,10 @@
     <Compile Include="Converters\Json\UnixTimestampConverter.cs" />
     <Compile Include="Extensions\DebugSettingsExtensions.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
+    <Compile Include="Extensions\ListViewBaseExtensions.cs" />
     <Compile Include="Extensions\PackageExtensions.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
+    <Compile Include="Extensions\WriteableBitmapExtensions.cs" />
     <Compile Include="Helpers\DeviceFamilyHelper.cs" />
     <Compile Include="Mvvm\IIncrementalItemSource.cs" />
     <Compile Include="Mvvm\IncrementalLoadingCollection.cs" />
