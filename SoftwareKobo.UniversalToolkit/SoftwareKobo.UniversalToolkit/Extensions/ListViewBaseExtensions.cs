@@ -23,10 +23,10 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
             double originHorizontalOffset = scrollViewer.HorizontalOffset;
             double originVerticalOffset = scrollViewer.VerticalOffset;
 
-            EventHandler<object> handler = null;
-            handler = delegate
+            EventHandler<object> layoutUpdatedHandler = null;
+            layoutUpdatedHandler = delegate
             {
-                listViewBase.LayoutUpdated -= handler;
+                listViewBase.LayoutUpdated -= layoutUpdatedHandler;
 
                 double targetHorizontalOffset = scrollViewer.HorizontalOffset;
                 double targetVerticalOffset = scrollViewer.VerticalOffset;
@@ -42,7 +42,7 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
 
                 scrollViewer.ChangeView(originHorizontalOffset, originVerticalOffset, null, true);
             };
-            listViewBase.LayoutUpdated += handler;
+            listViewBase.LayoutUpdated += layoutUpdatedHandler;
 
             listViewBase.ScrollIntoView(item, alignment);
         }
