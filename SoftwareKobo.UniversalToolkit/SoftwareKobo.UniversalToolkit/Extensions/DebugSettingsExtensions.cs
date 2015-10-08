@@ -37,8 +37,8 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
         /// <example>
         /// public App()
         /// {
-        ///     // 正确使用。
-        ///     // this.DebugSettings.EnableDisplayMemoryUsage();
+        ///     // 正确使用，会延迟至 OnPreStartAsync 进行定位。
+        ///     this.DebugSettings.EnableDisplayMemoryUsage();
         /// }
         /// 
         /// protected override Task OnPreStartAsync(IActivatedEventArgs args, AppStartInfo info)
