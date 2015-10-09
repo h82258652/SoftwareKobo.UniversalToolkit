@@ -7,9 +7,18 @@
       xmlns:controls="using:SoftwareKobo.UniversalToolkit.Controls"
       mc:Ignorable="d">
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <controls:ReflectionPanel>
+        <controls:ReflectionPanel x:Name="RF">
             <Image Source="http://ww2.sinaimg.cn/large/69019c4egw1euxxlyqp9zj20qo06yq4v.jpg"
                    Width="250" />
+            <controls:FullWindowPopup.AttachedPopup>
+                <controls:FullWindowPopup x:Name="F">
+                    <Grid Width="100"
+                          Height="100"
+                          Background="Red">
+                        <ContentControl Content="{Binding}"></ContentControl>
+                    </Grid>
+                </controls:FullWindowPopup>
+            </controls:FullWindowPopup.AttachedPopup>
         </controls:ReflectionPanel>
         <Button Content="Test"
                 Click="Button_Click"

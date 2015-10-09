@@ -15,7 +15,7 @@ namespace SoftwareKobo.UniversalToolkit.Controls
     [ContentProperty(Name = nameof(Child))]
     public sealed class FullWindowPopup : DependencyObject
     {
-        public static readonly DependencyProperty AttachedPopupProperty = DependencyProperty.RegisterAttached("AttachedPopup", typeof(FullWindowPopup), typeof(FullWindowPopup), new PropertyMetadata(null));
+        public static readonly DependencyProperty AttachedPopupProperty = DependencyProperty.RegisterAttached("AttachedPopup", typeof(FullWindowPopup), typeof(FullWindowPopup), new PropertyMetadata(null, AttachedPopupChanged));
 
         public static readonly DependencyProperty ChildProperty = DependencyProperty.Register(nameof(Child), typeof(UIElement), typeof(FullWindowPopup), new PropertyMetadata(null, ChildChanged));
 
@@ -25,6 +25,7 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 
         public static readonly DependencyProperty IsOpenProperty = DependencyProperty.Register(nameof(IsOpen), typeof(bool), typeof(FullWindowPopup), new PropertyMetadata(false, IsOpenChanged));
 
+        private TypedEventHandler<FrameworkElement, DataContextChangedEventArgs> _attachedObjectDataContextChangedHandler;
         private ContentControl _contentControl;
 
         private Popup _popup;
@@ -143,6 +144,21 @@ namespace SoftwareKobo.UniversalToolkit.Controls
             }
         }
 
+        private TypedEventHandler<FrameworkElement, DataContextChangedEventArgs> AttachedObjectDataContextChangedHandler
+        {
+            get
+            {
+                if (_attachedObjectDataContextChangedHandler == null)
+                {
+                    _attachedObjectDataContextChangedHandler = (sender, e) =>
+                    {
+                        this._popup.DataContext = e.NewValue;
+                    };
+                }
+                return _attachedObjectDataContextChangedHandler;
+            }
+        }
+
         public static FullWindowPopup GetAttachedPopup(FrameworkElement obj)
         {
             return (FullWindowPopup)obj.GetValue(AttachedPopupProperty);
@@ -156,6 +172,25 @@ namespace SoftwareKobo.UniversalToolkit.Controls
         public static void SetAttachedPopup(FrameworkElement obj, FullWindowPopup value)
         {
             obj.SetValue(AttachedPopupProperty, value);
+        }
+
+        private static void AttachedPopupChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            FrameworkElement obj = d as FrameworkElement;
+            if (obj != null)
+            {
+                FullWindowPopup oldPopup = (FullWindowPopup)e.OldValue;
+                if (oldPopup != null)
+                {
+                    obj.DataContextChanged -= oldPopup.AttachedObjectDataContextChangedHandler;
+                }
+
+                FullWindowPopup newPopup = (FullWindowPopup)e.NewValue;
+                if (newPopup != null)
+                {
+                    obj.DataContextChanged += newPopup.AttachedObjectDataContextChangedHandler;
+                }
+            }
         }
 
         private static void ChildChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

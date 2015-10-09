@@ -17,8 +17,10 @@ namespace Test
         public MainPage()
         {
             this.InitializeComponent();
-            this.DataContext = new MainPageModel();
+            this.DataContext = count;
         }
+
+        private int count = 0;
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -32,12 +34,15 @@ namespace Test
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            this.SendToViewModel("hello, view model.");
+            F.IsOpen = true;
+            count++;
+            this.DataContext = count;
         }
 
         public async void ReceiveFromViewModel(ViewModelBase originSourceViewModel, object parameter)
         {
             await new MessageDialog((parameter as string) ?? "").ShowAsync();
         }
+
     }
 }
