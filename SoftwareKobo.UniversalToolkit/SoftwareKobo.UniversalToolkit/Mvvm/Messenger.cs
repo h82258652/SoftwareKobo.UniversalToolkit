@@ -1,24 +1,53 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.UI.Xaml;
 
 namespace SoftwareKobo.UniversalToolkit.Mvvm
 {
+    /// <summary>
+    /// View 和 ViewModel 通信管理器。
+    /// </summary>
     public static class Messenger
     {
         private static List<WeakReference<ViewModelBase>> _viewModels = new List<WeakReference<ViewModelBase>>();
 
         private static Dictionary<WeakReference<FrameworkElement>, WeakReference<ReceiveFromViewModelHandler>> _views = new Dictionary<WeakReference<FrameworkElement>, WeakReference<ReceiveFromViewModelHandler>>();
 
+        /// <summary>
+        /// 将 View 注册到通信管理器中。
+        /// </summary>
+        /// <typeparam name="TView">实现了 IView 接口的类型。</typeparam>
+        /// <param name="view">需要注册到通信管理器的 View。</param>
+        /// <example>
+        /// protected override void OnNavigatedTo(NavigationEventArgs e)
+        /// {
+        ///     Messenger.Register(this);
+        /// }
+        /// </example>
         public static void Register<TView>(TView view) where TView : FrameworkElement, IView
         {
             Register(view, view.ReceiveFromViewModel);
         }
 
+        /// <summary>
+        /// 将 View 注册到通信管理器中。
+        /// </summary>
+        /// <param name="view">需要注册到通信管理器的 View。</param>
+        /// <param name="handler">处理来自 ViewModel 的消息的方法。</param>
+        /// <exception cref="ArgumentNullException">view 或者 handler 为 null。</exception>
         public static void Register(FrameworkElement view, ReceiveFromViewModelHandler handler)
         {
+            if (view == null)
+            {
+                throw new ArgumentNullException(nameof(view));
+            }
+
+            if (handler == null)
+            {
+                throw new ArgumentNullException(nameof(handler));
+            }
+
             for (int i = 0; i < _views.Count; i++)
             {
                 KeyValuePair<WeakReference<FrameworkElement>, WeakReference<ReceiveFromViewModelHandler>> keyValue = _views.ElementAt(i);
@@ -37,8 +66,17 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
             _views.Add(new WeakReference<FrameworkElement>(view), new WeakReference<ReceiveFromViewModelHandler>(handler));
         }
 
+        /// <summary>
+        /// 将 View 从通信管理器中注销。
+        /// </summary>
+        /// <param name="view">需要注销的 View。</param>
         public static void Unregister(FrameworkElement view)
         {
+            if (view == null)
+            {
+                throw new ArgumentNullException(nameof(view));
+            }
+
             for (int i = 0; i < _views.Count; i++)
             {
                 KeyValuePair<WeakReference<FrameworkElement>, WeakReference<ReceiveFromViewModelHandler>> keyValue = _views.ElementAt(i);
