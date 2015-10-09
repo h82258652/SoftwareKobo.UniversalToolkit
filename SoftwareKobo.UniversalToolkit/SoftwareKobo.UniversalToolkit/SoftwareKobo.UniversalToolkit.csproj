@@ -190,6 +190,7 @@
     <Compile Include="Utils\AppxManifest\ResourceManifest.cs" />
     <Compile Include="Utils\AppxManifest\SplashScreenManifest.cs" />
     <Compile Include="Utils\AppxManifest\VisualElementsManifest.cs" />
+    <Compile Include="Utils\DisposableObject.cs" />
     <Compile Include="Utils\Mdl2.cs" />
     <Compile Include="Utils\ExpressionResolver.cs" />
     <Compile Include="Utils\ScreenResolution.cs" />

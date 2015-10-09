@@ -1,5 +1,6 @@
 ﻿using SoftwareKobo.UniversalToolkit.Utils;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -13,10 +14,8 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
     /// <summary>
     /// 可绑定模型基类。
     /// </summary>
-    public abstract class BindableBase : INotifyPropertyChanged
+    public abstract class BindableBase : DisposableObject, INotifyPropertyChanged
     {
-        private string[] _propertyNames;
-
         /// <summary>
         /// 在属性值时被更改时发生。
         /// </summary>
@@ -37,7 +36,10 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
         protected virtual void RaisePropertyChanged([CallerMemberName]string propertyName = null)
         {
             this.VerifyPropertyName(propertyName);
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            if (this.PropertyChanged != null)
+            {
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
 
         protected virtual void RaisePropertyChanged<T>(Expression<Func<T>> propertyExpression)
@@ -58,7 +60,7 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
 
         protected bool Set<T>(Expression<Func<T>> propertyExpression, ref T oldValue, T newValue)
         {
-            return Set(ref oldValue, newValue, ExpressionResolver.ResolvePropertyName(propertyExpression));
+            return this.Set(ref oldValue, newValue, ExpressionResolver.ResolvePropertyName(propertyExpression));
         }
 
         /// <summary>
@@ -70,23 +72,20 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
         {
             if (propertyName == null)
             {
-                throw new ArgumentException("property could not be null.", nameof(propertyName));
+                throw new ArgumentNullException(nameof(propertyName));
             }
 
-            if (propertyName.Length == 0)
+            if (propertyName.Length <= 0)
             {
                 // Raise all properties changed.
                 return;
             }
 
-            if (this._propertyNames == null)
-            {
-                this._propertyNames = this.GetType().GetProperties().Select(temp => temp.Name).ToArray();
-            }
+            var propertiesNames = this.GetType().GetRuntimeProperties().Select(temp => temp.Name);
 
-            if (this._propertyNames.Contains(propertyName) == false)
+            if (propertiesNames.Contains(propertyName) == false)
             {
-                throw new ArgumentException("property is not exist", nameof(propertyName));
+                throw new ArgumentException("property is not exist.", nameof(propertyName));
             }
         }
     }

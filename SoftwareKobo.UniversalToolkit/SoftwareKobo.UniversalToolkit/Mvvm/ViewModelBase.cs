@@ -8,8 +8,6 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
     /// </summary>
     public abstract class ViewModelBase : BindableBase
     {
-        private string _name;
-
         protected ViewModelBase()
         {
             Messenger.Register(this);
@@ -26,10 +24,9 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
             }
         }
 
-        internal string GetName()
+        protected override void DisposeManagedObjects()
         {
-            this._name = this._name ?? this.GetType().Name;
-            return this._name;
+            Messenger.Unregister(this);
         }
 
         protected internal virtual void ReceiveFromView(FrameworkElement originSourceView, object parameter)

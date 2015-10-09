@@ -17,14 +17,14 @@ namespace SoftwareKobo.UniversalToolkit.Utils
 
             if (body == null)
             {
-                throw new ArgumentException("not support expression", nameof(propertyExpression));
+                throw new ArgumentException("not support expression.", nameof(propertyExpression));
             }
 
             var property = body.Member as PropertyInfo;
 
             if (property == null)
             {
-                throw new ArgumentException("member is not property", nameof(propertyExpression));
+                throw new ArgumentException("member is not property.", nameof(propertyExpression));
             }
 
             return property.Name;

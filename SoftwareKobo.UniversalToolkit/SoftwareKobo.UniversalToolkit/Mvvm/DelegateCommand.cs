@@ -10,7 +10,9 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
     public class DelegateCommand : ICommand
     {
         private readonly Func<Task> _asyncExecute;
+
         private readonly Func<bool> _canExecute;
+
         private readonly Action _execute;
 
         /// <summary>
@@ -95,9 +97,12 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
         /// <summary>
         /// 通知命令是否允许执行发生变更。
         /// </summary>
-        public virtual void RaiseCanExecuteChanged()
+        public void RaiseCanExecuteChanged()
         {
-            this.CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+            if (this.CanExecuteChanged != null)
+            {
+                this.CanExecuteChanged(this, EventArgs.Empty);
+            }
         }
     }
 }

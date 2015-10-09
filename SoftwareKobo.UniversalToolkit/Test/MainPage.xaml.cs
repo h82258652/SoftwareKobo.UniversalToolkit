@@ -27,7 +27,7 @@ namespace Test
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            Messenger.UnRegister(this);
+            Messenger.Unregister(this);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

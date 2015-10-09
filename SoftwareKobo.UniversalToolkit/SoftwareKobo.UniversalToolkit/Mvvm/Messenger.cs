@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.UI.Xaml;
@@ -9,7 +10,7 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
     {
         private static List<WeakReference<ViewModelBase>> _viewModels = new List<WeakReference<ViewModelBase>>();
 
-        private static Dictionary<WeakReference<FrameworkElement>, ReceiveFromViewModelHandler> _views = new Dictionary<WeakReference<FrameworkElement>, ReceiveFromViewModelHandler>();
+        private static Dictionary<WeakReference<FrameworkElement>, WeakReference<ReceiveFromViewModelHandler>> _views = new Dictionary<WeakReference<FrameworkElement>, WeakReference<ReceiveFromViewModelHandler>>();
 
         public static void Register<TView>(TView view) where TView : FrameworkElement, IView
         {
@@ -20,73 +21,69 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
         {
             for (int i = 0; i < _views.Count; i++)
             {
-                KeyValuePair<WeakReference<FrameworkElement>, ReceiveFromViewModelHandler> keyValue = _views.ElementAt(i);
-                WeakReference<FrameworkElement> reference = keyValue.Key;
+                KeyValuePair<WeakReference<FrameworkElement>, WeakReference<ReceiveFromViewModelHandler>> keyValue = _views.ElementAt(i);
+                WeakReference<FrameworkElement> viewReference = keyValue.Key;
                 FrameworkElement temp;
-                if (reference.TryGetTarget(out temp))
+                if (viewReference.TryGetTarget(out temp))
                 {
                     throw new ArgumentException("this view had registered.", nameof(view));
                 }
                 else
                 {
-                    _views.Remove(reference);
+                    _views.Remove(viewReference);
                     i--;
                 }
             }
-            _views.Add(new WeakReference<FrameworkElement>(view), handler);
+            _views.Add(new WeakReference<FrameworkElement>(view), new WeakReference<ReceiveFromViewModelHandler>(handler));
         }
 
-        public static void UnRegister(FrameworkElement view)
+        public static void Unregister(FrameworkElement view)
         {
             for (int i = 0; i < _views.Count; i++)
             {
-                KeyValuePair<WeakReference<FrameworkElement>, ReceiveFromViewModelHandler> keyValue = _views.ElementAt(i);
-                WeakReference<FrameworkElement> reference = keyValue.Key;
+                KeyValuePair<WeakReference<FrameworkElement>, WeakReference<ReceiveFromViewModelHandler>> keyValue = _views.ElementAt(i);
+                WeakReference<FrameworkElement> viewReference = keyValue.Key;
                 FrameworkElement temp;
-                if (reference.TryGetTarget(out temp))
+                if (viewReference.TryGetTarget(out temp))
                 {
                     if (temp == view)
                     {
-                        _views.Remove(reference);
+                        _views.Remove(viewReference);
                         return;
                     }
                 }
                 else
                 {
-                    _views.Remove(reference);
-                    i--;
+                    if (_views.Remove(viewReference))
+                    {
+                        i--;
+                    }
                 }
             }
         }
 
-        internal static void Process(ViewModelBase viewModel, object parameter)
+        internal static void Register(ViewModelBase viewModel)
         {
-            string viewModelName = viewModel.GetName();
-            if (viewModelName.EndsWith("Model") == false)
-            {
-                throw new ArgumentException("view model name should ends with model");
-            }
-            string targetViewName = viewModelName.Substring(0, viewModelName.LastIndexOf("Model"));
+            _viewModels.Add(new WeakReference<ViewModelBase>(viewModel));
+        }
 
-            for (int i = 0; i < _views.Count; i++)
+        internal static void Unregister(ViewModelBase viewModel)
+        {
+            for (int i = 0; i < _viewModels.Count; i++)
             {
-                KeyValuePair<WeakReference<FrameworkElement>, ReceiveFromViewModelHandler> keyValue = _views.ElementAt(i);
-                WeakReference<FrameworkElement> reference = keyValue.Key;
-                FrameworkElement view;
-                if (reference.TryGetTarget(out view))
+                WeakReference<ViewModelBase> reference = _viewModels[i];
+                ViewModelBase temp;
+                if (reference.TryGetTarget(out temp))
                 {
-                    if (view.GetType().Name == targetViewName)
+                    if (temp == viewModel)
                     {
-                        var handler = keyValue.Value;
-                        if (handler != null)
-                        {
-                            keyValue.Value.Invoke(viewModel, parameter);
-                        }
+                        _viewModels.Remove(reference);
+                        return;
                     }
                 }
                 else
                 {
-                    _views.Remove(reference);
+                    _viewModels.Remove(reference);
                     i--;
                 }
             }
@@ -94,22 +91,14 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
 
         internal static void Process(FrameworkElement view, object parameter)
         {
-            string viewName = null;
-            string targetViewModelName = null;
-
+            string targetViewModelName = view.GetType().Name + "Model";
             for (int i = 0; i < _viewModels.Count; i++)
             {
                 WeakReference<ViewModelBase> reference = _viewModels[i];
                 ViewModelBase viewModel;
                 if (reference.TryGetTarget(out viewModel))
                 {
-                    if (viewName == null)
-                    {
-                        viewName = view.GetType().Name;
-                        targetViewModelName = viewName + "Model";
-                    }
-
-                    if (viewModel.GetName() == targetViewModelName)
+                    if (viewModel.GetType().Name == targetViewModelName)
                     {
                         viewModel.ReceiveFromView(view, parameter);
                     }
@@ -122,10 +111,51 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
             }
         }
 
-        internal static void Register(ViewModelBase viewModel)
+        internal static void Process(ViewModelBase viewModel, object parameter)
         {
-            WeakReference<ViewModelBase> reference = new WeakReference<ViewModelBase>(viewModel);
-            _viewModels.Add(reference);
+            string viewModelName = viewModel.GetType().Name;
+            int index = viewModelName.LastIndexOf("Model");
+            if (index < 0)
+            {
+                throw new ArgumentException("view model name should ends with model.", nameof(viewModel));
+            }
+            string targetViewName = viewModelName.Substring(0, index);
+
+            for (int i = 0; i < _views.Count; i++)
+            {
+                KeyValuePair<WeakReference<FrameworkElement>, WeakReference<ReceiveFromViewModelHandler>> keyValue = _views.ElementAt(i);
+                WeakReference<FrameworkElement> viewReference = keyValue.Key;
+                FrameworkElement view;
+                bool isNeedToRemove = false;
+                if (viewReference.TryGetTarget(out view))
+                {
+                    if (view.GetType().Name == targetViewName)
+                    {
+                        WeakReference<ReceiveFromViewModelHandler> handlerReference = keyValue.Value;
+                        ReceiveFromViewModelHandler handler;
+                        if (handlerReference.TryGetTarget(out handler))
+                        {
+                            handler(viewModel, parameter);
+                        }
+                        else
+                        {
+                            isNeedToRemove = true;
+                        }
+                    }
+                }
+                else
+                {
+                    isNeedToRemove = true;
+                }
+
+                if (isNeedToRemove)
+                {
+                    if (_views.Remove(viewReference))
+                    {
+                        i--;
+                    }
+                }
+            }
         }
     }
 }
