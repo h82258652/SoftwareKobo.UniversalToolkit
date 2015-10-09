@@ -9,6 +9,9 @@ using Windows.UI.Xaml.Media.Animation;
 
 namespace SoftwareKobo.UniversalToolkit.Controls
 {
+    /// <summary>
+    /// 一个占满当前线程窗口的 Popup。
+    /// </summary>
     [ContentProperty(Name = nameof(Child))]
     public sealed class FullWindowPopup : DependencyObject
     {
@@ -55,6 +58,7 @@ namespace SoftwareKobo.UniversalToolkit.Controls
             Bootstrapper app = Bootstrapper.Current;
             if (app != null && app.IsInConstructing)
             {
+                // 应用程序的 App 类继承自 Bootstrapper，并且当前处于 App 类的构造函数中，将保持 Popup 大小的方法放至构造函数执行完成后再执行。
                 app._waitForConstructedActions.Add(() =>
                 {
                     keepPopupSize.Invoke();
@@ -144,6 +148,11 @@ namespace SoftwareKobo.UniversalToolkit.Controls
             return (FullWindowPopup)obj.GetValue(AttachedPopupProperty);
         }
 
+        /// <summary>
+        /// 将一个 FullWindowPopup 附加到一个 FrameworkElement 上。
+        /// </summary>
+        /// <param name="obj">被附加的 FrameworkElement。</param>
+        /// <param name="value">附加的 FullWindowPopup。</param>
         public static void SetAttachedPopup(FrameworkElement obj, FullWindowPopup value)
         {
             obj.SetValue(AttachedPopupProperty, value);

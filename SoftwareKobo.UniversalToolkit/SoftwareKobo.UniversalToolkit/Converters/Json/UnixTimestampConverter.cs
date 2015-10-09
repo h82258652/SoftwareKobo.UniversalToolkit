@@ -20,13 +20,13 @@ namespace SoftwareKobo.UniversalToolkit.Converters.Json
                     throw new JsonException(string.Format("could not convert unix timestamp", reader.Value));
                 }
             }
-            else if (reader.Value is int)
-            {
-                unixTimestamp = (int)reader.Value;
-            }
             else if (reader.Value is long)
             {
                 unixTimestamp = (long)reader.Value;
+            }
+            else if (reader.Value is int)
+            {
+                unixTimestamp = (int)reader.Value;
             }
 
             return new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(unixTimestamp).ToLocalTime();

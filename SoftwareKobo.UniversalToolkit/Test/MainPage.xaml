@@ -4,20 +4,13 @@
       xmlns:local="using:Test"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:controls="using:SoftwareKobo.UniversalToolkit.Controls"
       mc:Ignorable="d">
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <GridView x:Name="GV">
-            <GridView.ItemTemplate>
-                <DataTemplate>
-                    <Grid Width="250"
-                          Height="250">
-                        <ContentControl HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Content="{Binding}" />
-                    </Grid>
-                </DataTemplate>
-            </GridView.ItemTemplate>
-        </GridView>
+        <controls:ReflectionPanel>
+            <Image Source="http://ww2.sinaimg.cn/large/69019c4egw1euxxlyqp9zj20qo06yq4v.jpg"
+                   Width="250" />
+        </controls:ReflectionPanel>
         <Button Content="Test"
                 Click="Button_Click"
                 HorizontalAlignment="Center"

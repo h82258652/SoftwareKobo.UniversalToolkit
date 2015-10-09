@@ -37,7 +37,7 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
         /// <example>
         /// public App()
         /// {
-        ///     // 正确使用，会延迟至 OnPreStartAsync 进行定位。
+        ///     // 仅在你的 App 类继承自 Bootstrapper 下正确。
         ///     this.DebugSettings.EnableDisplayMemoryUsage();
         /// }
         /// 

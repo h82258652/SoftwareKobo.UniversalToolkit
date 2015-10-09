@@ -95,6 +95,11 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
             return Color.FromArgb(255, r, g, b);
         }
 
+        public static Color Inverse(Color value)
+        {
+            return Color.FromArgb(value.A, (byte)(255 - value.R), (byte)(255 - value.G), (byte)(255 - value.B));
+        }
+
         public static Color Parse(string value)
         {
             if (value == null)
@@ -171,11 +176,6 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
                 color = TryFromName(value);
             }
             return color;
-        }
-
-        public static Color Inverse(Color value)
-        {
-            return Color.FromArgb(value.A, (byte)(255 - value.R), (byte)(255 - value.G), (byte)(255 - value.B));
         }
     }
 }
