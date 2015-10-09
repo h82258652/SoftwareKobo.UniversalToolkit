@@ -158,8 +158,7 @@ namespace SoftwareKobo.UniversalToolkit
                 case ActivationKind.Search:
                 case ActivationKind.ShareTarget:
                 case ActivationKind.File:
-                    await this.OnOtherStartAsync(args, info);
-                    break;
+                    goto default;
 
                 case ActivationKind.Protocol:
                     ProtocolActivatedEventArgs protocolArgs = (ProtocolActivatedEventArgs)args;
@@ -177,8 +176,7 @@ namespace SoftwareKobo.UniversalToolkit
                 case ActivationKind.AppointmentsProvider:
                 case ActivationKind.Contact:
                 case ActivationKind.LockScreenCall:
-                    await this.OnOtherStartAsync(args, info);
-                    break;
+                    goto default;
 
                 case ActivationKind.VoiceCommand:
                     VoiceCommandActivatedEventArgs voiceCommandArgs = (VoiceCommandActivatedEventArgs)args;
