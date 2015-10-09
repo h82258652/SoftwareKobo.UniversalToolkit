@@ -4,6 +4,7 @@ using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media.Animation;
 
@@ -13,7 +14,7 @@ namespace SoftwareKobo.UniversalToolkit.Controls
     /// 一个占满当前线程窗口的 Popup。
     /// </summary>
     [ContentProperty(Name = nameof(Child))]
-    public sealed class FullWindowPopup : DependencyObject
+    public sealed class FullWindowPopup : FrameworkElement
     {
         public static readonly DependencyProperty AttachedPopupProperty = DependencyProperty.RegisterAttached("AttachedPopup", typeof(FullWindowPopup), typeof(FullWindowPopup), new PropertyMetadata(null, AttachedPopupChanged));
 
@@ -23,9 +24,10 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 
         public static readonly DependencyProperty IsLightDismissEnabledProperty = DependencyProperty.Register(nameof(IsLightDismissEnabled), typeof(bool), typeof(FullWindowPopup), new PropertyMetadata(false, IsLightDismissEnabledChanged));
 
-        public static readonly DependencyProperty IsOpenProperty = DependencyProperty.Register(nameof(IsOpen), typeof(bool), typeof(FullWindowPopup), new PropertyMetadata(false, IsOpenChanged));
+        public static readonly DependencyProperty IsOpenProperty = DependencyProperty.Register(nameof(IsOpen), typeof(bool), typeof(FullWindowPopup), new PropertyMetadata(false));
 
         private TypedEventHandler<FrameworkElement, DataContextChangedEventArgs> _attachedObjectDataContextChangedHandler;
+
         private ContentControl _contentControl;
 
         private Popup _popup;
@@ -38,14 +40,17 @@ namespace SoftwareKobo.UniversalToolkit.Controls
                 VerticalContentAlignment = VerticalAlignment.Stretch
             };
 
-            _popup = new Popup()
+            this._popup = new Popup()
             {
                 Child = _contentControl
             };
-            _popup.Closed += delegate
+            Binding binding = new Binding()
             {
-                this.IsOpen = false;
+                Source = this,
+                Path = new PropertyPath(nameof(IsOpen)),
+                Mode = BindingMode.TwoWay
             };
+            this._popup.SetBinding(Popup.IsOpenProperty, binding);
 
             Action keepPopupSize = () =>
             {
@@ -152,6 +157,7 @@ namespace SoftwareKobo.UniversalToolkit.Controls
                 {
                     _attachedObjectDataContextChangedHandler = (sender, e) =>
                     {
+                        this.DataContext = e.NewValue;
                         this._popup.DataContext = e.NewValue;
                     };
                 }
@@ -212,13 +218,6 @@ namespace SoftwareKobo.UniversalToolkit.Controls
             FullWindowPopup obj = (FullWindowPopup)d;
             bool value = (bool)e.NewValue;
             obj._popup.IsLightDismissEnabled = value;
-        }
-
-        private static void IsOpenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            FullWindowPopup obj = (FullWindowPopup)d;
-            bool value = (bool)e.NewValue;
-            obj._popup.IsOpen = value;
         }
 
         private void ReSize()

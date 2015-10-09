@@ -3,6 +3,7 @@ using System;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Navigation;
 
 //“空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 上有介绍
@@ -17,10 +18,10 @@ namespace Test
         public MainPage()
         {
             this.InitializeComponent();
-            this.DataContext = count;
+            this.DataContext = vm;
         }
 
-        private int count = 0;
+        private MainPageModel vm = new MainPageModel();
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -34,9 +35,7 @@ namespace Test
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            F.IsOpen = true;
-            count++;
-            this.DataContext = count;
+            F.IsOpen = !F.IsOpen;
         }
 
         public async void ReceiveFromViewModel(ViewModelBase originSourceViewModel, object parameter)
