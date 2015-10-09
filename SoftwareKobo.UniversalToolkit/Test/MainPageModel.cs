@@ -7,9 +7,9 @@ namespace Test
 {
     public class MainPageModel : ViewModelBase
     {
-        private bool _isOpen;
+        private bool? _isOpen = false;
 
-        public bool IsOpen
+        public bool? IsOpen
         {
             get
             {
@@ -18,6 +18,14 @@ namespace Test
             set
             {
                 Set(ref _isOpen, value);
+            }
+        }
+
+        public string Name
+        {
+            get
+            {
+                return "Hello world";
             }
         }
 
