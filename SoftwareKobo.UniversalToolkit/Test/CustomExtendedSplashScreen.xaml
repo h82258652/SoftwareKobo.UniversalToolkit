@@ -15,7 +15,7 @@
                        FontSize="{ThemeResource TextStyleExtraLargeFontSize}" />
             <ProgressRing IsActive="True" />
             <TextBlock Text="正在启动..."
-                       TextAlignment="Center" />
+                       TextAlignment="Center" VerticalAlignment="Bottom"/>
         </StackPanel>
     </Grid>
 </controls:ExtendedSplashScreenContent>
