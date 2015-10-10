@@ -92,7 +92,7 @@ namespace SoftwareKobo.UniversalToolkit.Helpers
             RegisterNavigateBack(frame, action);
         }
 
-        public static void UnRegisterNavigateBack(this Frame frame)
+        public static void UnregisterNavigateBack(this Frame frame)
         {
             var systemNavigationManager = SystemNavigationManager.GetForCurrentView();
             systemNavigationManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;

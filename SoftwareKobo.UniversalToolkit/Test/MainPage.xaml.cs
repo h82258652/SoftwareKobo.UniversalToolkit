@@ -1,4 +1,5 @@
-﻿using SoftwareKobo.UniversalToolkit.Mvvm;
+﻿using SoftwareKobo.UniversalToolkit.Helpers;
+using SoftwareKobo.UniversalToolkit.Mvvm;
 using System;
 using System.Diagnostics;
 using Windows.UI.Popups;
