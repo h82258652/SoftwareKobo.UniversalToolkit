@@ -16,7 +16,7 @@
 5. VisualTreeHelper 扩展；
 6. 一个小型的 MVVM 框架；
 7. 简化多语言的 T4 模板；
-8. 7.其它乱七八糟的东西，具体可以参见每个文件夹下的 README.md。（但仍然在编写中，请原谅）
+8. 其它乱七八糟的东西，具体可以参见每个文件夹下的 README.md。（但仍然在编写中，请原谅）
 
 ## 兼容其它库吗？
 ### [Template10](https://github.com/Windows-XAML/Template10)
