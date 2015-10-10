@@ -1,7 +1,7 @@
 > # 若无特别说明，则不兼容其它 MVVM 框架。
 
 ## BindableBase
-一个继承自 Utils.DisposableObject 且实现 INotifyPropertyChanged 接口的抽象类。
+一个继承自 [Utils.DisposableObject](https://github.com/h82258652/SoftwareKobo.UniversalToolkit3/blob/master/SoftwareKobo.UniversalToolkit/SoftwareKobo.UniversalToolkit/Utils/README.md) 且实现 INotifyPropertyChanged 接口的抽象类。
 与 MVVMLight 中的 ObserableObject 使用上无大区别。
 
 ## DelegateCommand

@@ -1,6 +1,8 @@
 ## DisposableObject
 可释放对象。
+
 重写 DisposeManagedObjects 方法释放托管对象。
+
 重写 DisposeUnmanagedObjects 方法释放非托管对象。
 
 ## ExpressionResolver
