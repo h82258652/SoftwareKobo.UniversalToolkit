@@ -3,7 +3,6 @@
 
 ## DockPanel
 参见 WPF 的 DockPanel。
-#未完成。
 
 ## ExtendedSplashScreenContent
 > 不兼容 Template10。
