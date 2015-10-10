@@ -58,7 +58,9 @@ protected override async Task OnPreStartAsync(IActivatedEventArgs args, AppStart
 }
 ```
 > 在扩展启动屏幕初始化与在 PreStartAsync 方法中初始化的区别：
+> 
 > **扩展启动屏幕初始化是仅在显示扩展启动屏幕是才会执行，而 PreStartAsync 则是每次应用程序启动激活都会执行。**
+> 
 > **但为了确保用户体验，请尽量使用扩展启动屏幕初始化。**
 
 ### 显示内存使用量
