@@ -56,6 +56,9 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 
         protected override Size MeasureOverride(Size availableSize)
         {
+            Orientation orientation = this.Orientation;
+
+
             throw new NotImplementedException();
         }
 
