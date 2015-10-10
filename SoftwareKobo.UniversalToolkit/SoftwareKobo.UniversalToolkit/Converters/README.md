@@ -12,7 +12,7 @@
 	<Page.Resources>
 		<conv:StringFormatConverter x:Key="StringFormatConverter"/>
 	</Page.Resources>
-	<TextBlock Text="{Binding Path=Time,Converter={StaticResource StringFormatConverter},ConverterParameter={}{yyyy-MM-dd}}" />
+	<TextBlock Text="{Binding Path=Time,Converter={StaticResource StringFormatConverter},ConverterParameter='{}{0:yyyy-MM-dd}'}" />
 </Page>
 ```
 

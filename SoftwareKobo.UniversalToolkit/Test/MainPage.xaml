@@ -28,6 +28,6 @@ xmlns:conv="using:SoftwareKobo.UniversalToolkit.Converters"
                 Click="Button_Click"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Bottom" />
-        <TextBlock Text="{Binding Converter={StaticResource StringFormatConverter},ConverterParameter={}{yyyy-MM-dd}}"/>
+        <TextBlock Text="{Binding Converter={StaticResource StringFormatConverter},ConverterParameter='{}{0:yyyy-MM-dd}'}"/>
     </Grid>
 </Page>
