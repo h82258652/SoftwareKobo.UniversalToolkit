@@ -24,6 +24,20 @@ namespace SoftwareKobo.UniversalToolkit.Utils
         }
 
         /// <summary>
+        /// 释放托管对象。
+        /// </summary>
+        protected virtual void DisposeManagedObjects()
+        {
+        }
+
+        /// <summary>
+        /// 释放非托管对象。将对象的引用设置为 null 即可。
+        /// </summary>
+        protected virtual void DisposeUnmanagedObjects()
+        {
+        }
+
+        /// <summary>
         /// 执行与释放或重置非托管资源关联的应用程序定义的任务。
         /// </summary>
         /// <param name="isDisposingByDispose">true 为由 Dispose 方法调用，false 为析构函数调用。</param>
@@ -40,20 +54,6 @@ namespace SoftwareKobo.UniversalToolkit.Utils
 
                 this._hadDisposed = true;
             }
-        }
-
-        /// <summary>
-        /// 释放托管对象。
-        /// </summary>
-        protected virtual void DisposeManagedObjects()
-        {
-        }
-
-        /// <summary>
-        /// 释放非托管对象。将对象的引用设置为 null 即可。
-        /// </summary>
-        protected virtual void DisposeUnmanagedObjects()
-        {
         }
     }
 }

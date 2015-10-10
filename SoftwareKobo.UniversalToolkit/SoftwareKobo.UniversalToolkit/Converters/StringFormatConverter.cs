@@ -27,16 +27,16 @@ namespace SoftwareKobo.UniversalToolkit.Converters
         }
 
         /// <summary>
-        /// 返回格式化后的字符串。
+        /// 未实现。
         /// </summary>
-        /// <param name="value">格式化后的字符串。</param>
+        /// <param name="value">未使用该参数。</param>
         /// <param name="targetType">未使用该参数。</param>
         /// <param name="parameter">未使用该参数。</param>
         /// <param name="language">未使用该参数。</param>
-        /// <returns>格式化后的字符串。</returns>
+        /// <returns>未实现。</returns>
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            return value;
+            throw new NotImplementedException();
         }
     }
 }
