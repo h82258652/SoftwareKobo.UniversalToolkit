@@ -1,12 +1,9 @@
 ﻿using SoftwareKobo.UniversalToolkit;
 using SoftwareKobo.UniversalToolkit.Extensions;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel;
-using System;
-using Windows.ApplicationModel.ExtendedExecution;
-using System.Diagnostics;
-using SoftwareKobo.UniversalToolkit.Storage;
+using Windows.ApplicationModel.Activation;
+using Windows.UI.Xaml;
 
 namespace Test
 {
@@ -17,7 +14,19 @@ namespace Test
             this.DefaultMainPage = typeof(MainPage);
             this.DefaultExtendedSplashScreen = () => new CustomExtendedSplashScreen();
 
+            Application.Current.DebugSettings.EnableDisplayMemoryUsage();
+
             this.DebugSettings.EnableDisplayMemoryUsage();
+        }
+
+        protected override Task OnPrimaryStartAsync(LaunchActivatedEventArgs args, AppStartInfo info)
+        {
+            return base.OnPrimaryStartAsync(args, info);
+        }
+
+        protected override Task OnPreStartAsync(IActivatedEventArgs args, AppStartInfo info)
+        {
+            return base.OnPreStartAsync(args, info);
         }
 
         protected override Task OnProtocolStartAsync(ProtocolActivatedEventArgs protocolArgs, AppStartInfo info)
