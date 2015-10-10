@@ -17,7 +17,7 @@ namespace SoftwareKobo.UniversalToolkit.Converters.Json
             {
                 if (long.TryParse((string)reader.Value, out unixTimestamp) == false)
                 {
-                    throw new JsonException(string.Format("could not convert unix timestamp", reader.Value));
+                    throw new JsonException(string.Format("could not convert unix timestamp {0} to DateTime.", reader.Value));
                 }
             }
             else if (reader.Value is long)

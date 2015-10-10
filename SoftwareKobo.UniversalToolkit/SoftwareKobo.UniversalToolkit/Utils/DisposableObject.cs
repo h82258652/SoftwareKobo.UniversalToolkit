@@ -14,13 +14,32 @@ namespace SoftwareKobo.UniversalToolkit.Utils
 
         ~DisposableObject()
         {
-            this.InternalDispose(false);
+            this.Dispose(false);
         }
 
         public void Dispose()
         {
-            this.InternalDispose(true);
+            this.Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// 执行与释放或重置非托管资源关联的应用程序定义的任务。
+        /// </summary>
+        /// <param name="isDisposingByDispose">true 为由 Dispose 方法调用，false 为析构函数调用。</param>
+        private void Dispose(bool isDisposingByDispose)
+        {
+            if (this._hadDisposed == false)
+            {
+                if (isDisposingByDispose)
+                {
+                    this.DisposeManagedObjects();
+                }
+
+                this.DisposeUnmanagedObjects();
+
+                this._hadDisposed = true;
+            }
         }
 
         /// <summary>
@@ -35,25 +54,6 @@ namespace SoftwareKobo.UniversalToolkit.Utils
         /// </summary>
         protected virtual void DisposeUnmanagedObjects()
         {
-        }
-
-        /// <summary>
-        /// 执行与释放或重置非托管资源关联的应用程序定义的任务。
-        /// </summary>
-        /// <param name="isDisposingByDispose">true 为由 Dispose 方法调用，false 为析构函数调用。</param>
-        private void InternalDispose(bool isDisposingByDispose)
-        {
-            if (this._hadDisposed == false)
-            {
-                if (isDisposingByDispose)
-                {
-                    this.DisposeManagedObjects();
-                }
-
-                this.DisposeUnmanagedObjects();
-
-                this._hadDisposed = true;
-            }
         }
     }
 }

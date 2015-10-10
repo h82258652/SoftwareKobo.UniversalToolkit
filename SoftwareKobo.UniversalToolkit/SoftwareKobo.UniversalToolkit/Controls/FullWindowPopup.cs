@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI.Xaml;
@@ -77,6 +78,7 @@ namespace SoftwareKobo.UniversalToolkit.Controls
             }
         }
 
+        [SuppressMessage("Microsoft.Design", "CA1009")]
         public event EventHandler<object> Closed
         {
             add
@@ -89,6 +91,7 @@ namespace SoftwareKobo.UniversalToolkit.Controls
             }
         }
 
+        [SuppressMessage("Microsoft.Design", "CA1009")]
         public event EventHandler<object> Opened
         {
             add

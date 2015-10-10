@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.IO.IsolatedStorage;
 using System.Net;
@@ -61,7 +62,8 @@ namespace SoftwareKobo.UniversalToolkit.Storage
         }
 
         public event EventHandler<ImageFailedEventArgs> ImageFailed;
-
+        
+        [SuppressMessage("Microsoft.Design", "CA1009")]
         public event RoutedEventHandler ImageOpened;
 
         public bool IsAutoRetry

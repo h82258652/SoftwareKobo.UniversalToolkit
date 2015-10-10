@@ -43,9 +43,10 @@ namespace Test
             isBackground = false;
         }
 
-        protected override async Task OnSuspendingAsync(object sender, SuspendingEventArgs e)
+        protected override Task OnSuspendingAsync(object sender, SuspendingEventArgs e)
         {
             isBackground = true;
+            return Task.FromResult<object>(null);
             //using (var session = new ExtendedExecutionSession())
             //{
             //    session.Reason = ExtendedExecutionReason.SavingData;
