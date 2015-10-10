@@ -18,7 +18,7 @@ DelegateCommand 的泛型实现。
 # 暂未完成。
 
 ## 如何在 App 中使用该 MVVM 框架：
-> **本 MVVM 框架需要视图 View 与视图模型 ViewModel 名称遵守**
+> **本 MVVM 框架需要视图 View 与视图模型 ViewModel 名称必须遵守**
 
 > **ViewName + "Model" 等于 ViewModelName**
 
@@ -59,7 +59,7 @@ public sealed class MainView : Page, IView
 }
 ```
 ViewModel 代码：
-```XAML
+```C#
 public class MainViewModel : ViewModelBase
 {
 	protected override void ReceiveFromView(FrameworkElement originSourceView, object parameter)
