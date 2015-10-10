@@ -5,7 +5,11 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:controls="using:SoftwareKobo.UniversalToolkit.Controls"
+xmlns:conv="using:SoftwareKobo.UniversalToolkit.Converters"
       mc:Ignorable="d">
+    <Page.Resources>
+        <conv:StringFormatConverter x:Key="StringFormatConverter"></conv:StringFormatConverter>
+    </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <controls:ReflectionPanel x:Name="RF">
             <Image Source="http://ww2.sinaimg.cn/large/69019c4egw1euxxlyqp9zj20qo06yq4v.jpg"
@@ -24,5 +28,6 @@
                 Click="Button_Click"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Bottom" />
+        <TextBlock Text="{Binding Converter={StaticResource StringFormatConverter},ConverterParameter={}{yyyy-MM-dd}}"/>
     </Grid>
 </Page>
