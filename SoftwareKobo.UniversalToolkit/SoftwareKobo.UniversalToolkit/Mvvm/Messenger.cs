@@ -55,7 +55,10 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
                 FrameworkElement temp;
                 if (viewReference.TryGetTarget(out temp))
                 {
-                    throw new ArgumentException("this view had registered.", nameof(view));
+                    if (temp == view)
+                    {
+                        throw new ArgumentException("this view had registered.", nameof(view));
+                    }
                 }
                 else
                 {
