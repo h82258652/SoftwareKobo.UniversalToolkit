@@ -1,5 +1,6 @@
 ﻿using SoftwareKobo.UniversalToolkit.Mvvm;
 using System;
+using System.Diagnostics;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -40,6 +41,7 @@ namespace Test
 
         public async void ReceiveFromViewModel(ViewModelBase originSourceViewModel, object parameter)
         {
+            Debug.WriteLine(parameter);
             await new MessageDialog((parameter as string) ?? "").ShowAsync();
         }
 

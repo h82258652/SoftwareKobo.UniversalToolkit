@@ -62,7 +62,7 @@ protected override async Task OnPreStartAsync(IActivatedEventArgs args, AppStart
 > **但为了确保用户体验，请尽量使用扩展启动屏幕初始化。**
 
 ### 显示内存使用量
-> 1. 可兼容 Template10，参见下面。
+> 1. 可兼容 Template10，但是需要在构造函数以外的地方调用，具体参见下面。
 > 2. 仅在 DEBUG 模式下显示。
 
 修改 App.xaml.cs
