@@ -5,6 +5,10 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using Windows.UI;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Markup;
+using Windows.UI.Xaml.Media;
 
 namespace SoftwareKobo.UniversalToolkit.Extensions
 {
@@ -13,7 +17,27 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
     /// </summary>
     public static class ColorExtensions
     {
+        private static bool _hadInitAccentColorChanged = false;
+
         private static IDictionary<string, Color> _knownColors;
+
+        /// <summary>
+        /// 用户主题色发生了变化。
+        /// </summary>
+        public static event EventHandler<Color> AccentColorChanged
+        {
+            add
+            {
+                InitAccentColorChanged();
+                _accentColorChanged += value;
+            }
+            remove
+            {
+                _accentColorChanged -= value;
+            }
+        }
+
+        private static event EventHandler<Color> _accentColorChanged;
 
         /// <summary>
         /// 获取用户主题色。
@@ -176,6 +200,31 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
                 color = TryFromName(value);
             }
             return color;
+        }
+
+        private static void InitAccentColorChanged()
+        {
+            if (_hadInitAccentColorChanged == false)
+            {
+                ContentControl control = (ContentControl)XamlReader.Load("<ContentControl xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\" Background =\"{ThemeResource SystemControlBackgroundAccentBrush}\" Visibility=\"Collapsed\" />");
+                SolidColorBrush accentColorBrush = (SolidColorBrush)control.Background;
+                accentColorBrush.RegisterPropertyChangedCallback(SolidColorBrush.ColorProperty, (sender, dp) =>
+                {
+                    if (_accentColorChanged != null)
+                    {
+                        Color accentColor = (Color)sender.GetValue(dp);
+                        _accentColorChanged(sender, accentColor);
+                    }
+                });
+
+                Popup popup = new Popup()
+                {
+                    Child = control,
+                    IsOpen = true
+                };
+
+                _hadInitAccentColorChanged = true;
+            }
         }
     }
 }
