@@ -54,6 +54,7 @@ protected override Task OnProtocolStartAsync(ProtocolActivatedEventArgs protocol
 ```C#
 protected override async Task OnPreStartAsync(IActivatedEventArgs args, AppStartInfo info)
 {
+	// 模拟初始化。
     Task.Delay(1000);
 }
 ```
@@ -91,7 +92,7 @@ Application.Current.DebugSettings.EnableDisplayMemoryUsage();
 ```
 
 ### 使用扩展启动屏幕
-参考 Controls.ExtendedSplashScreenContent 一节。
+参考 [Controls.ExtendedSplashScreenContent](https://github.com/h82258652/SoftwareKobo.UniversalToolkit3/blob/master/SoftwareKobo.UniversalToolkit/SoftwareKobo.UniversalToolkit/Controls/README.md) 一节。
 
 ----------
 ## AppStartInfo

@@ -24,6 +24,7 @@ public sealed class DetailPage : Page
 }
 ```
 那么在 Desktop 下，窗口左上角将会出现后退按钮，Mobile 下按后退键将会后退。
+
 另外也可以自己定义后退键的逻辑：
 ```C#
 using SoftwareKobo.UniversalToolkit.Helpers;
