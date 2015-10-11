@@ -61,7 +61,42 @@ namespace SoftwareKobo.UniversalToolkit.Controls
             OrientedSize totalSize = new OrientedSize(orientation);
             OrientedSize maximumSize = new OrientedSize(orientation, constraint.Width, constraint.Height);
 
-            throw new NotImplementedException();
+            double itemWidth = this.ItemWidth;
+            double itemHeight = this.ItemHeight;
+            bool hasFixedWidth = double.IsNaN(itemWidth) == false;
+            bool hasFixedHeihgt = double.IsNaN(itemHeight) == false;
+            Size itemSize = new Size(hasFixedWidth ? itemWidth : constraint.Width, hasFixedHeihgt ? itemHeight : constraint.Height);
+
+            foreach (UIElement element in Children)
+            {
+                element.Measure(itemSize);
+                OrientedSize elementSize = new OrientedSize(orientation, hasFixedWidth ? itemWidth : element.DesiredSize.Width, hasFixedHeihgt ? itemHeight : element.DesiredSize.Height);
+
+                if (lineSize.Direct + elementSize.Direct > maximumSize.Direct)
+                {
+                    totalSize.Direct = Math.Max(lineSize.Direct, totalSize.Direct);
+                    totalSize.Indirect += lineSize.Indirect;
+
+                    lineSize = elementSize;
+
+                    if (elementSize.Direct>maximumSize.Direct)
+                    {
+                        totalSize.Direct = Math.Max(elementSize.Direct, totalSize.Direct);
+                        totalSize.Indirect += elementSize.Indirect;
+
+                        lineSize = new OrientedSize(orientation);
+                    }
+                }
+                else{
+                    lineSize.Direct += elementSize.Direct;
+                    lineSize.Indirect = Math.Max(lineSize.Indirect, elementSize.Indirect);
+                }
+            }
+
+            totalSize.Direct = Math.Max(lineSize.Direct, totalSize.Direct);
+            totalSize.Indirect += lineSize.Indirect;
+
+            return new Size(totalSize.Width, totalSize.Height);
         }
 
         private static bool IsItemWidthHeightValid(double value)
