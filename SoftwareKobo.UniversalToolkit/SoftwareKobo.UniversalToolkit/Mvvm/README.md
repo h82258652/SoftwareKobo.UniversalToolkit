@@ -14,7 +14,8 @@ DelegateCommand 的泛型实现。
 继承自 BindableBase，视图模型基类。
 
 ## ViewModelLocatorBase
-视图模型定位器基类。
+> 在计划中。
+
 # 暂未完成。
 
 ## 如何在 App 中使用该 MVVM 框架：
@@ -73,14 +74,16 @@ public class MainViewModel : ViewModelBase
 ```
 ----------
 ## VerifiableBase
+> 预留给将来的 ValidationSystem。
+
 # 暂未完成。
 
 ## IncrementalLoadingCollection
-> 兼容其它 MVVM 框架。
+> 兼容其它 MVVM 框架。仍需调整其实现。
 
 # 暂未完成。
 
 ## IIncrementalItemSource
-> 兼容其它 MVVM 框架。
+> 兼容其它 MVVM 框架。仍需调整其实现。
 
 # 暂未完成。

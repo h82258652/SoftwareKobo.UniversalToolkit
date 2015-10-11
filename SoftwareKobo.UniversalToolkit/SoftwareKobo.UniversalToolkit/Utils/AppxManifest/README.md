@@ -7,4 +7,7 @@ Package.Current.Manifest()
 ```C#
 PackageManifest.Current
 ```
+> 目前不是所有节点都编写完毕。
+
+
 节点结构参见 https://msdn.microsoft.com/zh-cn/library/windows/apps/dn934760.aspx

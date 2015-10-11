@@ -33,7 +33,7 @@ namespace SoftwareKobo.UniversalToolkit.Storage
     /// img.Source = new StorageCachedImage(uri);
     /// </code>
     /// </example>
-
+    [Obsolete]
     public sealed class StorageCachedImage : BitmapSource
     {
         public static readonly DependencyProperty IsAutoRetryProperty = DependencyProperty.Register(nameof(IsAutoRetry), typeof(bool), typeof(StorageCachedImage), new PropertyMetadata(false, IsAutoRetryChanged));
