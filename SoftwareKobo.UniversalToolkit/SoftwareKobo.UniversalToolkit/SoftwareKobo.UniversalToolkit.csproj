@@ -119,7 +119,6 @@
     <Compile Include="AwaitableUI\FrameworkElementExtensions.cs" />
     <Compile Include="AwaitableUI\RoutedEventHandlerTaskSource.cs" />
     <Compile Include="AwaitableUI\StoryboardExtensions.cs" />
-    <Compile Include="BootstrapperOld.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Controls\DisplayMemoryUsage.cs" />
     <Compile Include="Controls\Dock.cs" />
@@ -198,7 +197,6 @@
     <Compile Include="Utils\Mdl2.cs" />
     <Compile Include="Utils\ExpressionResolver.cs" />
     <Compile Include="Utils\ScreenResolution.cs" />
-    <Compile Include="Validation\ModelValidation.cs" />
     <Content Include="Properties\SoftwareKobo.UniversalToolkit.rd.xml" />
   </ItemGroup>
   <ItemGroup>
