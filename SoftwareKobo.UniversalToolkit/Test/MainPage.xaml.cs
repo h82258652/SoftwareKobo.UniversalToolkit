@@ -37,7 +37,7 @@ namespace Test
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            F.IsOpen = !F.IsOpen;
+            //F.IsOpen = !F.IsOpen;
         }
 
         public async void ReceiveFromViewModel(ViewModelBase originSourceViewModel, object parameter)

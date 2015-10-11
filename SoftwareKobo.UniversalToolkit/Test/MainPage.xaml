@@ -14,7 +14,7 @@ xmlns:conv="using:SoftwareKobo.UniversalToolkit.Converters"
         <controls:ReflectionPanel x:Name="RF">
             <Image Source="http://ww2.sinaimg.cn/large/69019c4egw1euxxlyqp9zj20qo06yq4v.jpg"
                    Width="250" />
-            <controls:FullWindowPopup.AttachedPopup>
+            <!--<controls:FullWindowPopup.AttachedPopup>
                 <controls:FullWindowPopup x:Name="F" IsLightDismissEnabled="True" IsOpen="True">
                     <Grid Width="300"
                           Height="300"
@@ -22,7 +22,7 @@ xmlns:conv="using:SoftwareKobo.UniversalToolkit.Converters"
                         <ContentControl Content="{Binding Path=Name}"></ContentControl>
                     </Grid>
                 </controls:FullWindowPopup>
-            </controls:FullWindowPopup.AttachedPopup>
+            </controls:FullWindowPopup.AttachedPopup>-->
         </controls:ReflectionPanel>
         <Button Content="Test"
                 Click="Button_Click"
