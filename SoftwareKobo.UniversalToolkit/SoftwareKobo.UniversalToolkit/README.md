@@ -29,7 +29,7 @@ namespace YourAppNamespace
 ```
 
 ### 处理应用程序启动与激活
-重写对应的虚方法。
+重写对应的虚方法。  
 例如主启动（从主要磁贴或者应用程序列表等启动），可以重写 OnPrimaryStartAsync 方法：
 ```C#  
 protected override Task OnPrimaryStartAsync(LaunchActivatedEventArgs args, AppStartInfo info)
@@ -60,10 +60,8 @@ protected override async Task OnPreStartAsync(IActivatedEventArgs args, AppStart
     Task.Delay(1000);
 }
 ```
-> 在扩展启动屏幕初始化与在 PreStartAsync 方法中初始化的区别：
->
-> **扩展启动屏幕初始化是仅在显示扩展启动屏幕是才会执行，而 PreStartAsync 则是每次应用程序启动激活都会执行。**
->
+> 在扩展启动屏幕初始化与在 PreStartAsync 方法中初始化的区别：  
+> **扩展启动屏幕初始化是仅在显示扩展启动屏幕是才会执行，而 PreStartAsync 则是每次应用程序启动激活都会执行。**  
 > **但为了确保用户体验，请尽量使用扩展启动屏幕初始化。**
 
 ### 显示内存使用量
@@ -106,19 +104,19 @@ Application.Current.DebugSettings.EnableDisplayMemoryUsage();
 存放一些启动、激活相关的参数。各个 Start 方法都会包含该参数。
 
 ### NavigatePage 属性
-获取或设置该次启动、激活应该导航到哪个页面。
-初始值为 Bootstrapper.Current.DefaultNavigatePage。
-你可以修改为其它页面类型来使该次启动、激活导航到哪个页面。
+获取或设置该次启动、激活应该导航到哪个页面。  
+初始值为 Bootstrapper.Current.DefaultNavigatePage。  
+你可以修改为其它页面类型来使该次启动、激活导航到哪个页面。  
 **若设置为 null，则该次启动、激活不进行导航。**
 
 ### ExtendedSplashScreen 属性
-获取或设置该次启动、激活应该使用哪个扩展启动屏幕。
-初始值为 Bootstrapper.Current.DefaultExtendedSplashScreen。
+获取或设置该次启动、激活应该使用哪个扩展启动屏幕。  
+初始值为 Bootstrapper.Current.DefaultExtendedSplashScreen。  
 若设置为 null 或者该方法返回 null 的时候，那么该次启动、激活不使用扩展启动屏幕。
 
 ### Parameter 属性
 启动时的参数。
 
 ### IsShowInNewWindow 属性
-设置该次启动、激活是否使用一个新窗口来显示内容。
+设置该次启动、激活是否使用一个新窗口来显示内容。  
 默认值为 false。
