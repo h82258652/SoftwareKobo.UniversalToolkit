@@ -25,7 +25,7 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 
         public static readonly DependencyProperty IsLightDismissEnabledProperty = DependencyProperty.Register(nameof(IsLightDismissEnabled), typeof(bool), typeof(FullWindowPopup), new PropertyMetadata(false, IsLightDismissEnabledChanged));
 
-        public static readonly DependencyProperty IsOpenProperty = DependencyProperty.Register(nameof(IsOpen), typeof(bool), typeof(FullWindowPopup), new PropertyMetadata(false));
+        public static readonly DependencyProperty IsOpenProperty = DependencyProperty.Register(nameof(IsOpen), typeof(bool), typeof(FullWindowPopup), new PropertyMetadata(false, IsOpenChanged));
 
         private TypedEventHandler<FrameworkElement, DataContextChangedEventArgs> _attachedObjectDataContextChangedHandler;
 
@@ -221,6 +221,13 @@ namespace SoftwareKobo.UniversalToolkit.Controls
             FullWindowPopup obj = (FullWindowPopup)d;
             bool value = (bool)e.NewValue;
             obj._popup.IsLightDismissEnabled = value;
+        }
+
+        private static void IsOpenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            FullWindowPopup obj = (FullWindowPopup)d;
+            bool value = (bool)e.NewValue;
+            obj._popup.IsOpen = value;
         }
 
         private void ReSize()
