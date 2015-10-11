@@ -18,10 +18,8 @@ DelegateCommand 的泛型实现。
 # 暂未完成。
 
 ## 如何在 App 中使用该 MVVM 框架：
-> **本 MVVM 框架需要视图 View 与视图模型 ViewModel 名称必须遵守**
-
-> **ViewName + "Model" 等于 ViewModelName**
-
+> **本 MVVM 框架需要视图 View 与视图模型 ViewModel 名称必须遵守**  
+> **ViewName + "Model" 等于 ViewModelName**  
 > **即假设有 View 叫 MainView，则 ViewModel 必须叫 MainViewModel。**
 
 View 代码：
