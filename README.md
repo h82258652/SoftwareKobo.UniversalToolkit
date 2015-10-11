@@ -16,7 +16,7 @@
 5. VisualTreeHelper 扩展；
 6. 一个小型的 MVVM 框架；
 7. 简化多语言的 T4 模板；
-8. 其它乱七八糟的东西，具体可以参见每个文件夹下的 README.md。（但仍然在编写中，请原谅）
+8. 其它乱七八糟的东西，具体可以参见每个文件夹下的 README.md。
 
 ## 兼容其它库吗？
 ### [Template10](https://github.com/Windows-XAML/Template10)
@@ -28,13 +28,14 @@
 ### [WinRTXamlToolkit](http://winrtxamltoolkit.codeplex.com/)
 完全兼容。
 
+> 如果你不清楚其它库是否与本库兼容的话，可以在 issue 中提问。
+
 ## 请问能去掉 Json.NET 的依赖吗？
 抱歉，这点不会，因为 Json.NET 已经是 .NET 平台下大家公认的 Json 实现。对比起 .NET Framework 里各个平台不一样的 Json 实现，Json.NET 统一的 API 你觉得不更好吗？
-> 目前本工具库还依赖 Unity，但以后会尽量移除掉。
 
 ## 我在使用过程中遇到问题，怎么办？
 你可以在这个项目的 issue 里提出，我会尽量解答。
 > 另外有好的建议也可以在 issue 提出或者 pull request。但是我会视乎是否有用来决定是否改进或合并。
 
 ## 最后说一下使用注意
-### 由于本项目目前还不稳定，因此不建议在生产环境中使用，并且本项目中的 API 可能会在以后发生改变。
+### 由于本项目目前还不稳定，请审慎考虑是否需要在你的项目中使用，并且本项目中的 API 可能会在以后发生改变。
