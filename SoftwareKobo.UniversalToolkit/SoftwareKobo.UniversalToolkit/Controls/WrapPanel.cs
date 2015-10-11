@@ -54,10 +54,12 @@ namespace SoftwareKobo.UniversalToolkit.Controls
             throw new NotImplementedException();
         }
 
-        protected override Size MeasureOverride(Size availableSize)
+        protected override Size MeasureOverride(Size constraint)
         {
             Orientation orientation = this.Orientation;
-
+            OrientedSize lineSize = new OrientedSize(orientation);
+            OrientedSize totalSize = new OrientedSize(orientation);
+            OrientedSize maximumSize = new OrientedSize(orientation, constraint.Width, constraint.Height);
 
             throw new NotImplementedException();
         }

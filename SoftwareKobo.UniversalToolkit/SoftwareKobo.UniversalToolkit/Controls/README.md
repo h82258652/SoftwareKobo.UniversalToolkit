@@ -32,7 +32,7 @@ public sealed partial class CustomExtendedSplashScreen : ExtendedSplashScreenCon
 	{
 		this.InitializeComponent();
 		this.Loaded += async (sender, e) => {
-			// 初始化。
+			// 模拟初始化。
 			await Task.Delay(1000);
 
 			// 完成后调用 Finish 方法以结束扩展启动屏幕。
@@ -57,6 +57,8 @@ public sealed partial class App : Bootstrapper
 
 ## FullWindowPopup
 一个占据满当前窗口的 Popup。
+> 注意：请勿手动修改 FullWindowPopup 的 DataContext 属性。
+
 ### FullWindowPopup.AttachedPopup 附加属性
 能够附着到一个 XAML 元素上，便于编写。
 例子：
@@ -71,7 +73,6 @@ public sealed partial class App : Bootstrapper
 	</controls:FullWindowPopup.AttachedPopup>
 </Grid>
 ```
-> 注意：请勿修改该形式下的 FullWindowPopup 的 DataContext 属性。
 
 ## ReflectionPanel
 参见 http://www.cnblogs.com/h82258652/p/4839649.html

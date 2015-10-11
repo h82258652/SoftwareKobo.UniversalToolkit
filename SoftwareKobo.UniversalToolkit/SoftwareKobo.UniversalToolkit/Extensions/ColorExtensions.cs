@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -24,6 +25,7 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
         /// <summary>
         /// 用户主题色发生了变化。
         /// </summary>
+        [SuppressMessage("Microsoft.Design", "CA1009")]
         public static event EventHandler<Color> AccentColorChanged
         {
             add

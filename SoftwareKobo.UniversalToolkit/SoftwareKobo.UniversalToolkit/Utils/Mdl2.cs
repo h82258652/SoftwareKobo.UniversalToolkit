@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace SoftwareKobo.UniversalToolkit.Utils
 {
-#warning
     // TODO
+    [Obsolete]
     public static class Mdl2
     {
         public static string Account => "&xEA8C;";

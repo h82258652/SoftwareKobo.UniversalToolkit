@@ -27,7 +27,7 @@ namespace Test2
         {
             this.InitializeComponent();
 
-            this.DefaultMainPage = typeof(MainView);
+            this.DefaultNavigatePage = typeof(MainView);
             this.DefaultExtendedSplashScreen = () => new CustomExtendedSplashScreen();
 
             this.DebugSettings.EnableDisplayMemoryUsage();
