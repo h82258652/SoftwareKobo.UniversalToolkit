@@ -11,7 +11,7 @@ namespace Test
     {
         public App()
         {
-            this.DefaultMainPage = typeof(MainPage);
+            this.DefaultNavigatePage = typeof(MainPage);
             this.DefaultExtendedSplashScreen = () => new CustomExtendedSplashScreen();
 
             //Application.Current.DebugSettings.EnableDisplayMemoryUsage();

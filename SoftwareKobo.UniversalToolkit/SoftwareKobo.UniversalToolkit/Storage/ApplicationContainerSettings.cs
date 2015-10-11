@@ -24,18 +24,35 @@ namespace SoftwareKobo.UniversalToolkit.Storage
         {
             try
             {
-                if (IsPrimitive<T>())
+                Type type = typeof(T);
+                // 存储的值。
+                object storeObject = _container.Values[key];
+                if (IsSupportType(type))
                 {
-                    return (T)_container.Values[key];
-                }
-                else if (IsEnum<T>())
-                {
-                    return (T)Enum.Parse(typeof(T), _container.Values[key].ToString());
+                    return (T)storeObject;
                 }
                 else
                 {
-                    string json = (string)_container.Values[key];
-                    return JsonConvert.DeserializeObject<T>(json);
+                    if (type.IsEnum())
+                    {
+                        // 枚举类型。
+                        Type underlyingType = Enum.GetUnderlyingType(type);
+                        if (IsSupportType(underlyingType))
+                        {
+                            // 枚举类型基类支持直接存储，从基类型转换为枚举类型。
+                            return (T)Enum.Parse(typeof(T), storeObject.ToString());
+                        }
+                        else
+                        {
+                            // 枚举类型基类不支持直接存储，使用 Json 反序列化。
+                            return JsonConvert.DeserializeObject<T>((string)storeObject);
+                        }
+                    }
+                    else
+                    {
+                        // 不支持直接存储，使用 Json 反序列化。
+                        return JsonConvert.DeserializeObject<T>((string)storeObject);
+                    }
                 }
             }
             catch
@@ -51,47 +68,60 @@ namespace SoftwareKobo.UniversalToolkit.Storage
 
         public void Write<T>(string key, T value)
         {
-            if (IsPrimitive<T>())
+            Type type = typeof(T);
+            // 即将存储的值。
+            object storeObject;
+            if (IsSupportType(type))
             {
-                _container.Values[key] = value;
-            }
-            else if (IsEnum<T>())
-            {
-                Type underlyingType = Enum.GetUnderlyingType(typeof(T));
-                _container.Values[key] = Convert.ChangeType(value, underlyingType);
+                // 支持直接存储。
+                storeObject = value;
             }
             else
             {
-                string json = JsonConvert.SerializeObject(value);
-                _container.Values[key] = json;
+                if (type.IsEnum())
+                {
+                    // 枚举类型。
+                    Type underlyingType = Enum.GetUnderlyingType(type);
+                    if (IsSupportType(underlyingType))
+                    {
+                        // 枚举类型基类支持直接存储，转换为基类型。
+                        storeObject = Convert.ChangeType(value, underlyingType);
+                    }
+                    else
+                    {
+                        // 枚举类型基类不支持直接存储，使用 Json 序列化。
+                        storeObject = JsonConvert.SerializeObject(value);
+                    }
+                }
+                else
+                {
+                    // 不支持直接存储，使用 Json 序列化。
+                    storeObject = JsonConvert.SerializeObject(value);
+                }
             }
+            
+            _container.Values[key] = storeObject;
         }
 
-        private bool IsPrimitive<T>()
+        private bool IsSupportType(Type type)
         {
-            Type type = typeof(T);
             if (type == typeof(bool)
-                || type == typeof(sbyte)
                 || type == typeof(byte)
                 || type == typeof(short)
+                || type == typeof(ushort)
                 || type == typeof(int)
                 || type == typeof(uint)
                 || type == typeof(long)
                 || type == typeof(ulong)
                 || type == typeof(float)
                 || type == typeof(double)
-                || type == typeof(decimal)
                 || type == typeof(char)
                 || type == typeof(string))
             {
+                // 不支持 sbyte 和 decimal
                 return true;
             }
             return false;
-        }
-
-        private bool IsEnum<T>()
-        {
-            return typeof(T).IsEnum();
         }
     }
 }
