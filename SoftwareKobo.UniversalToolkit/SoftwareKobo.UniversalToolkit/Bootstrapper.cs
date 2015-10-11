@@ -24,7 +24,7 @@ namespace SoftwareKobo.UniversalToolkit
         /// </summary>
         internal List<Func<Task>> _waitForConstructedActions = new List<Func<Task>>();
 
-        private Type _defaultMainPage;
+        private Type _defaultNavigatePage;
 
         /// <summary>
         /// 初始化 Bootstrapper 类的新实例。
@@ -90,18 +90,18 @@ namespace SoftwareKobo.UniversalToolkit
         }
 
         /// <summary>
-        /// 设置或获取 App 的默认页面。
+        /// 设置或获取 App 默认的导航页面。
         /// </summary>
-        protected internal Type DefaultMainPage
+        protected internal Type DefaultNavigatePage
         {
             get
             {
-                return this._defaultMainPage;
+                return this._defaultNavigatePage;
             }
             set
             {
                 VerifyIsPageType(value);
-                this._defaultMainPage = value;
+                this._defaultNavigatePage = value;
             }
         }
 
@@ -706,7 +706,7 @@ namespace SoftwareKobo.UniversalToolkit
 
             await InitializeRootFrameAsync(hostWindow, args, isMainWindow);
 
-            await NavigateToFirstPageAsync(hostWindow, info.MainPage, info.Parameter);
+            await NavigateToFirstPageAsync(hostWindow, info.NavigatePage, info.Parameter);
 
             await hostWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {

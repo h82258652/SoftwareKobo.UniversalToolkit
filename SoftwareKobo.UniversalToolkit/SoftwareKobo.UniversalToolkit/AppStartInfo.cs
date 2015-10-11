@@ -34,7 +34,7 @@ namespace SoftwareKobo.UniversalToolkit
         /// 该启动方式导航到哪个页面。
         /// </summary>
         /// <remarks>若设置为 null，则不对当前窗口进行导航。</remarks>
-        public Type MainPage
+        public Type NavigatePage
         {
             get
             {
@@ -62,7 +62,7 @@ namespace SoftwareKobo.UniversalToolkit
             {
                 return new AppStartInfo()
                 {
-                    MainPage = Bootstrapper.Current?.DefaultMainPage,
+                    NavigatePage = Bootstrapper.Current?.DefaultNavigatePage,
                     ExtendedSplashScreen = Bootstrapper.Current?.DefaultExtendedSplashScreen
                 };
             }

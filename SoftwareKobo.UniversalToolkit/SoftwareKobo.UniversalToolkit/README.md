@@ -22,7 +22,7 @@ namespace YourAppNamespace
         public App()
         {
             // 设置默认导航页面。
-            this.DefaultMainPage = typeof(MainView);
+            this.DefaultNavigatePage = typeof(MainView);
         }
     }
 }
@@ -43,6 +43,8 @@ protected override Task OnPrimaryStartAsync(LaunchActivatedEventArgs args, AppSt
 protected override Task OnProtocolStartAsync(ProtocolActivatedEventArgs protocolArgs, AppStartInfo info)
 {
 	Debug.WriteLine("Protocol Start");
+	// 修改协议启动导航的页面为 ProtocolPage。
+	info.NavigatePage = typeof(ProtocolPage);
 	return Task.FromResult<object>(null);
 }
 ```
@@ -94,15 +96,20 @@ Application.Current.DebugSettings.EnableDisplayMemoryUsage();
 ### 使用扩展启动屏幕
 参考 [Controls.ExtendedSplashScreenContent](https://github.com/h82258652/SoftwareKobo.UniversalToolkit3/blob/master/SoftwareKobo.UniversalToolkit/SoftwareKobo.UniversalToolkit/Controls/README.md) 一节。
 
+### 显示新窗口
+使用```ShowNewWindowAsync```方法来显示新窗口，并指定导航到哪个页面。
+该方法为异步方法，返回```Task<Window>```。
+若要调用方需要操作该窗口，请调用Window.Dispatcher来进行操作。
+
 ----------
 ## AppStartInfo
 存放一些启动、激活相关的参数。各个 Start 方法都会包含该参数。
 
-### MainPage 属性
+### NavigatePage 属性
 获取或设置该次启动、激活应该导航到哪个页面。
-初始值为 Bootstrapper.Current.DefaultMainPage。
+初始值为 Bootstrapper.Current.DefaultNavigatePage。
 你可以修改为其它页面类型来使该次启动、激活导航到哪个页面。
-# 还在设计该属性中。
+**若设置为 null，则该次启动、激活不进行导航。**
 
 ### ExtendedSplashScreen 属性
 获取或设置该次启动、激活应该使用哪个扩展启动屏幕。
