@@ -97,8 +97,8 @@ Application.Current.DebugSettings.EnableDisplayMemoryUsage();
 参考 [Controls.ExtendedSplashScreenContent](https://github.com/h82258652/SoftwareKobo.UniversalToolkit3/blob/master/SoftwareKobo.UniversalToolkit/SoftwareKobo.UniversalToolkit/Controls/README.md) 一节。
 
 ### 显示新窗口
-使用```ShowNewWindowAsync```方法来显示新窗口，并指定导航到哪个页面。
-该方法为异步方法，返回```Task<Window>```。
+使用```ShowNewWindowAsync```方法来显示新窗口，并指定导航到哪个页面。  
+该方法为异步方法，返回```Task<Window>```。  
 若要调用方需要操作该窗口，请调用Window.Dispatcher来进行操作。
 
 ----------
