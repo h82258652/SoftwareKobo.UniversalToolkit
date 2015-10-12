@@ -12,4 +12,4 @@
 > ApplicationLocalSettings、ApplicationRoamingSettings、ApplicationTempSettings 参照上面。
 
 ## StorageCachedImage
-# 暂未完成。
+> 暂未完成，请勿使用。

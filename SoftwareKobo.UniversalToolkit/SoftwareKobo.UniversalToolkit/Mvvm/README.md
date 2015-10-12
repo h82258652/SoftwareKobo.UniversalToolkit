@@ -16,10 +16,8 @@ DelegateCommand 的泛型实现。
 ## ViewModelLocatorBase
 > 在计划中。
 
-# 暂未完成。
-
 ## 如何在 App 中使用该 MVVM 框架：
-> **本 MVVM 框架需要视图 View 与视图模型 ViewModel 名称必须遵守**  
+> **本 MVVM 框架需要视图 View 与视图模型 ViewModel 名称必须严格遵守**  
 > **ViewName + "Model" 等于 ViewModelName**  
 > **即假设有 View 叫 MainView，则 ViewModel 必须叫 MainViewModel。**
 
@@ -74,16 +72,10 @@ public class MainViewModel : ViewModelBase
 ```
 ----------
 ## VerifiableBase
-> 预留给将来的 ValidationSystem。
-
-# 暂未完成。
+> 预留给将来的 ValidationSystem，暂时请勿使用。
 
 ## IncrementalLoadingCollection
-> 兼容其它 MVVM 框架。仍需调整其实现。
-
-# 暂未完成。
+> 预计兼容其它 MVVM 框架。但仍需调整其实现，暂时请勿使用。
 
 ## IIncrementalItemSource
-> 兼容其它 MVVM 框架。仍需调整其实现。
-
-# 暂未完成。
+> 预计兼容其它 MVVM 框架。但仍需调整其实现，暂时请勿使用。
