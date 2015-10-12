@@ -523,23 +523,6 @@ namespace SoftwareKobo.UniversalToolkit
             return hadContent;
         }
 
-        private static async Task InitializeRootFrameAsync(Window hostWindow, IActivatedEventArgs args, bool isMainWindow)
-        {
-            await InitializeRootFrameAsync(hostWindow);
-            if (isMainWindow && args.PreviousExecutionState == ApplicationExecutionState.Terminated)
-            {
-                // 初启动窗口且上次是崩溃等非正常原因结束，尝试恢复导航。
-                await hostWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    Frame rootFrame = hostWindow.Content as Frame;
-                    if (rootFrame != null)
-                    {
-#warning TODO
-                    }
-                });
-            }
-        }
-
         private static async Task InitializeRootFrameAsync(Window hostWindow)
         {
             await hostWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
@@ -704,7 +687,7 @@ namespace SoftwareKobo.UniversalToolkit
 
             await ShowExtendedSplashScreenAsync(hostWindow, isNewWindow, args, info);
 
-            await InitializeRootFrameAsync(hostWindow, args, isMainWindow);
+            await InitializeRootFrameAsync(hostWindow);
 
             await NavigateToFirstPageAsync(hostWindow, info.NavigatePage, info.Parameter);
 

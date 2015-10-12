@@ -51,7 +51,56 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 
         protected override Size ArrangeOverride(Size finalSize)
         {
-            throw new NotImplementedException();
+            Orientation orientation = this.Orientation;
+            OrientedSize lineSize = new OrientedSize(orientation);
+            OrientedSize maximumSize = new OrientedSize(orientation, finalSize.Width, finalSize.Height);
+
+            double itemWidth = this.ItemWidth;
+            double itemHeight = this.ItemHeight;
+            bool hasFixedWidth = double.IsNaN(itemWidth) == false;
+            bool hasFixedHeight = double.IsNaN(itemHeight) == false;
+            double indirectOffset = 0.0d;
+            double? directDelta = (orientation == Orientation.Horizontal) ? (hasFixedWidth ? (double?)itemWidth : null) : (hasFixedHeight ? (double?)itemHeight : null);
+
+            UIElementCollection children = this.Children;
+            int count = children.Count;
+            int lineStart = 0;
+            for (int lineEnd = 0; lineEnd < count; lineEnd++)
+            {
+                UIElement element = children[lineEnd];
+
+                OrientedSize elementSize = new OrientedSize(orientation, hasFixedWidth ? itemWidth : element.DesiredSize.Width, hasFixedHeight ? itemHeight : element.DesiredSize.Height);
+
+                if (lineSize.Direct + elementSize.Direct > maximumSize.Direct)
+                {
+                    ArrangeLine(lineStart, lineEnd, directDelta, indirectOffset, lineSize.Indirect);
+
+                    indirectOffset += lineSize.Indirect;
+                    lineSize = elementSize;
+
+                    if (elementSize.Direct > maximumSize.Direct)
+                    {
+                        ArrangeLine(lineEnd, ++lineEnd, directDelta, indirectOffset, elementSize.Indirect);
+
+                        indirectOffset += lineSize.Indirect;
+                        lineSize = new OrientedSize(orientation);
+                    }
+
+                    lineStart = lineEnd;
+                }
+                else
+                {
+                    lineSize.Direct += elementSize.Direct;
+                    lineSize.Indirect = Math.Max(lineSize.Indirect, elementSize.Indirect);
+                }
+            }
+
+            if (lineStart < count)
+            {
+                ArrangeLine(lineStart, count, directDelta, indirectOffset, lineSize.Indirect);
+            }
+
+            return finalSize;
         }
 
         protected override Size MeasureOverride(Size constraint)
@@ -79,7 +128,7 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 
                     lineSize = elementSize;
 
-                    if (elementSize.Direct>maximumSize.Direct)
+                    if (elementSize.Direct > maximumSize.Direct)
                     {
                         totalSize.Direct = Math.Max(elementSize.Direct, totalSize.Direct);
                         totalSize.Indirect += elementSize.Indirect;
@@ -87,7 +136,8 @@ namespace SoftwareKobo.UniversalToolkit.Controls
                         lineSize = new OrientedSize(orientation);
                     }
                 }
-                else{
+                else
+                {
                     lineSize.Direct += elementSize.Direct;
                     lineSize.Indirect = Math.Max(lineSize.Indirect, elementSize.Indirect);
                 }
@@ -128,6 +178,28 @@ namespace SoftwareKobo.UniversalToolkit.Controls
             }
 
             obj.InvalidateMeasure();
+        }
+
+        private void ArrangeLine(int lineStart, int lineEnd, double? directDelta, double indirectOffset, double indirectGrowth)
+        {
+            double directOffset = 0.0d;
+
+            Orientation orientation = this.Orientation;
+            bool isHorizontal = orientation == Orientation.Horizontal;
+
+            UIElementCollection children = this.Children;
+            for (int index = lineStart; index < lineEnd; index++)
+            {
+                UIElement element = children[index];
+                OrientedSize elementSize = new OrientedSize(orientation, element.DesiredSize.Width, element.DesiredSize.Height);
+
+                double directGrowth = directDelta != null ? directDelta.Value : elementSize.Direct;
+
+                Rect bounds = isHorizontal ? new Rect(directOffset, indirectOffset, directGrowth, indirectGrowth) : new Rect(indirectOffset, directOffset, indirectGrowth, directGrowth);
+                element.Arrange(bounds);
+
+                directOffset += directGrowth;
+            }
         }
     }
 }

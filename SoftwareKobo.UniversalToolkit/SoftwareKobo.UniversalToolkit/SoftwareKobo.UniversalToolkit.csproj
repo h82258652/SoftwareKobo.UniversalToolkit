@@ -200,6 +200,7 @@
     <Content Include="Properties\SoftwareKobo.UniversalToolkit.rd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Behaviors\" />
     <Folder Include="Controls\Validation\" />
   </ItemGroup>
   <ItemGroup>
