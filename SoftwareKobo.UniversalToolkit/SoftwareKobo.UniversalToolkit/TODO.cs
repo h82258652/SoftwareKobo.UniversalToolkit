@@ -1,8 +1,7 @@
 ﻿namespace SoftwareKobo.UniversalToolkit
 {
     #region 完全未动工
-
-    // WrapPanel
+    
     // AeroPanel https://github.com/JustinXinLiu/EffectsAndAnimationsWinComposition
     // 瀑布流面板 http://www.cnblogs.com/ms-uap/p/4715195.html
     // 瀑布流面板2 http://higan.sinaapp.com/?p=45
@@ -26,6 +25,8 @@
 
     // 后台任务helper or system（在Bootstrapper自动注册管理），后者否决，改为 T4 生成帮助类
     
+    // Behaviors
+
     #endregion 完全未动工
 
     #region 大概做了一半？
@@ -34,9 +35,7 @@
     // 需要将 Category 那两个函数改进。
 
     // VisualTreeHelper 扩展
-
-    // 改进 Bootstrapper 的 NavigationState
-
+    
     // 图片缓存系统
     // 优化性能
 

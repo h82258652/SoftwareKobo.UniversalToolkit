@@ -14,6 +14,9 @@
                 <Button Content="刷新时间（实际上这点应该用命令来做）"
                         Click="BtnRefreshTime_Click"></Button>
             </StackPanel>
+            <Button Content="显示新窗口"
+                    Click="BtnNewWindow_Click"
+                    Margin="0,25,0,0"></Button>
         </StackPanel>
     </Grid>
 </Page>

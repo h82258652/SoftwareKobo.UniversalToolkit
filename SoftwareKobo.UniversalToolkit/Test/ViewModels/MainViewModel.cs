@@ -31,7 +31,7 @@ namespace Test.ViewModels
             {
                 Time = DateTime.Now;
             }
-            else if((parameter as string)== "gotonext")
+            else if ((parameter as string) == "gotonext")
             {
                 this.SendToView(Time);
             }

@@ -42,14 +42,17 @@ namespace Test.Views
 
         private void BtnNextPage_Click(object sender, RoutedEventArgs e)
         {
-            long i = 15432;
-            Frame.Navigate(typeof(DetailPage));
-         //   this.SendToViewModel("gotonext");
+            this.SendToViewModel("gotonext");
         }
 
         private void BtnRefreshTime_Click(object sender, RoutedEventArgs e)
         {
             this.SendToViewModel("refresh");
+        }
+
+        private void BtnNewWindow_Click(object sender, RoutedEventArgs e)
+        {
+            App.Current.ShowNewWindowAsync<NewWindowPage>(Guid.NewGuid());
         }
     }
 }

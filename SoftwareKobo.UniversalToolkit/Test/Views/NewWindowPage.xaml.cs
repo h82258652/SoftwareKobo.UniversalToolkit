@@ -1,5 +1,4 @@
-﻿using SoftwareKobo.UniversalToolkit.Helpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -21,26 +20,16 @@ namespace Test.Views
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
-    public sealed partial class DetailPage : Page
+    public sealed partial class NewWindowPage : Page
     {
-        public DetailPage()
+        public NewWindowPage()
         {
             this.InitializeComponent();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            this.Frame.RegisterNavigateBack();
-
-            if (e.Parameter != null)
-            {
-                txt.Text = e.Parameter.ToString();
-            }
-        }
-
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            this.Frame.UnregisterNavigateBack();
+            txt.Text = e.Parameter == null ? string.Empty : e.Parameter.ToString();
         }
     }
 }

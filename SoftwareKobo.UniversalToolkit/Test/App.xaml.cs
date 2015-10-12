@@ -33,12 +33,6 @@ namespace Test
 
             this.DebugSettings.EnableDisplayMemoryUsage();
         }
-
-        protected override Task OnPreStartAsync(IActivatedEventArgs args, AppStartInfo info)
-        {
-            info.Parameter = "thanks";
-            return Task.FromResult<object>(null);
-        }
     }
 
 //    /// <summary>
