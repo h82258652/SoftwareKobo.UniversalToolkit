@@ -79,4 +79,3 @@ public sealed partial class App : Bootstrapper
 
 ## WrapPanel
 参见 WPF 的 DockPanel。
-#未完成。
