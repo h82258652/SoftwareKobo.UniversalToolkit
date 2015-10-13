@@ -55,6 +55,7 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
         /// <summary>
         /// 获取 <see cref="Colors"/> 中已经声明的 <see cref="Color"/>。
         /// </summary>
+        [SuppressMessage("Microsoft.Compiler", "CS0419")]
         public static IDictionary<string, Color> KnownColors
         {
             get
