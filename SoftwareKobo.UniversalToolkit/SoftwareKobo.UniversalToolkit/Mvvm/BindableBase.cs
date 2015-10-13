@@ -1,6 +1,5 @@
 ﻿using SoftwareKobo.UniversalToolkit.Utils;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -14,19 +13,29 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
     /// <summary>
     /// 可绑定模型基类。
     /// </summary>
-    public abstract class BindableBase : DisposableObject, INotifyPropertyChanged
+    public abstract class BindableBase : DisposableObject, INotifyPropertyChanging, INotifyPropertyChanged
     {
         /// <summary>
-        /// 在属性值时被更改时发生。
+        /// 在属性值更改后发生。
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        /// 通知该对象所有属性发生变化。
+        /// 在属性值更改前发生。
+        /// </summary>
+        public event PropertyChangingEventHandler PropertyChanging;
+
+        /// <summary>
+        /// 通知该对象所有属性发生了变化。
         /// </summary>
         protected virtual void RaiseAllPropertiesChanged()
         {
             this.RaisePropertyChanged(string.Empty);
+        }
+
+        protected virtual void RaiseAllPropertiesChanging()
+        {
+            this.RaisePropertyChanging(string.Empty);
         }
 
         /// <summary>
@@ -47,12 +56,27 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
             this.RaisePropertyChanged(ExpressionResolver.ResolvePropertyName(propertyExpression));
         }
 
+        protected virtual void RaisePropertyChanging([CallerMemberName]string propertyName = null)
+        {
+            this.VerifyPropertyName(propertyName);
+            if (this.PropertyChanging != null)
+            {
+                this.PropertyChanging(this, new PropertyChangingEventArgs(propertyName));
+            }
+        }
+
+        protected virtual void RaisePropertyChanging<T>(Expression<Func<T>> propertyExpression)
+        {
+            this.RaisePropertyChanging(ExpressionResolver.ResolvePropertyName(propertyExpression));
+        }
+
         protected bool Set<T>(ref T oldValue, T newValue, [CallerMemberName] string propertyName = null)
         {
             if (EqualityComparer<T>.Default.Equals(oldValue, newValue))
             {
                 return false;
             }
+            this.RaisePropertyChanging(propertyName);
             oldValue = newValue;
             this.RaisePropertyChanged(propertyName);
             return true;
