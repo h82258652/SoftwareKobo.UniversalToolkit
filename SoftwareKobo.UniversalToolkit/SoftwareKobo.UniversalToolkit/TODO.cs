@@ -25,6 +25,8 @@
 
     // Behaviors
 
+    // InputDeviceTypeStateTrigger
+
     #endregion 完全未动工
 
     #region 大概做了一半？
