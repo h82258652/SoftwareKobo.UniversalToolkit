@@ -134,6 +134,7 @@
     <Compile Include="Controls\FullWindowPopup.cs" />
     <Compile Include="Controls\OrientedSize.cs" />
     <Compile Include="Controls\ReflectionPanel.cs" />
+    <Compile Include="Controls\WaterfallPanel.cs" />
     <Compile Include="Controls\WrapPanel.cs" />
     <Compile Include="Converters\Json\UnixTimestampConverter.cs" />
     <Compile Include="Extensions\DebugSettingsExtensions.cs" />
