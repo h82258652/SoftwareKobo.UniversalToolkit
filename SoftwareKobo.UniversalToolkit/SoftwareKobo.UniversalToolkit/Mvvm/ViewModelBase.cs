@@ -34,7 +34,7 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
         /// </summary>
         /// <param name="originSourceView">发送消息的 View。</param>
         /// <param name="parameter">消息内容。</param>
-        protected internal virtual void ReceiveFromView(FrameworkElement originSourceView, object parameter)
+        protected internal virtual void ReceiveFromView(FrameworkElement originSourceView, dynamic parameter)
         {
         }
 
