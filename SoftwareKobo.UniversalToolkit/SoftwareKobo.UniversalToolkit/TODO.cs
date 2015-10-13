@@ -3,8 +3,6 @@
     #region 完全未动工
 
     // AeroPanel https://github.com/JustinXinLiu/EffectsAndAnimationsWinComposition
-    // 瀑布流面板 http://www.cnblogs.com/ms-uap/p/4715195.html
-    // 瀑布流面板2 http://higan.sinaapp.com/?p=45
     // 汉堡按钮（绑定SplitView用于开关）
     // 下拉刷新、上推加载面板
     // CircleImage
