@@ -57,7 +57,7 @@ protected override Task OnProtocolStartAsync(ProtocolActivatedEventArgs protocol
 protected override async Task OnPreStartAsync(IActivatedEventArgs args, AppStartInfo info)
 {
 	// 模拟初始化。
-    Task.Delay(1000);
+    await Task.Delay(1000);
 }
 ```
 > 在扩展启动屏幕初始化与在 PreStartAsync 方法中初始化的区别：  
