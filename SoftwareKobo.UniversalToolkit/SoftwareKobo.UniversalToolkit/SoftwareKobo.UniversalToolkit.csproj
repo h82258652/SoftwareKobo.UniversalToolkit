@@ -124,6 +124,9 @@
     <Compile Include="AwaitableUI\RoutedEventHandlerTaskSource.cs" />
     <Compile Include="AwaitableUI\StoryboardExtensions.cs" />
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Controls\AdaptiveCollectionView.cs" />
+    <Compile Include="Controls\AdaptiveCollectionViewItem.cs" />
+    <Compile Include="Controls\AdaptiveCollectionViewMode.cs" />
     <Compile Include="Controls\DisplayMemoryUsage.cs" />
     <Compile Include="Controls\Dock.cs" />
     <Compile Include="Controls\DockPanel.cs" />
