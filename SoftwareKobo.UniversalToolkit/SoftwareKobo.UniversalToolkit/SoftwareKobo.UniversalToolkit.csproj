@@ -147,6 +147,7 @@
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Extensions\WriteableBitmapExtensions.cs" />
     <Compile Include="Helpers\DeviceFamilyHelper.cs" />
+    <Compile Include="Helpers\StatusBarHelper.cs" />
     <Compile Include="Mvvm\IIncrementalItemSource.cs" />
     <Compile Include="Mvvm\IncrementalLoadingCollection.cs" />
     <Compile Include="Mvvm\IView.cs" />
