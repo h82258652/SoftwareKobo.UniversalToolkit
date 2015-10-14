@@ -41,7 +41,7 @@ public sealed class MainView : Page, IView
         Messenger.Unregister(this);
     }
 
-    public void ReceiveFromViewModel(ViewModelBase originSourceViewModel, object parameter)
+    public void ReceiveFromViewModel(ViewModelBase originSourceViewModel, dynamic parameter)
     {
 		// 该方法实现 IView 接口，以接收从 ViewModel 发送过来的消息。
 		// originSourceViewModel 参数应该尽量不用，仅在特殊情况下，例如程序运行时存在多个该 View 所对应的 ViewModel 的实例时需要用作检查才使用。
@@ -59,7 +59,7 @@ ViewModel 代码：
 ```C#
 public class MainViewModel : ViewModelBase
 {
-	protected override void ReceiveFromView(FrameworkElement originSourceView, object parameter)
+	protected override void ReceiveFromView(FrameworkElement originSourceView, dynamic parameter)
     {
 		// 重写该方法以接收来自 View 的消息。
 		// originSourceView 同上面 View 的情况，应尽量不用。
