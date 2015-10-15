@@ -6,6 +6,7 @@ ListView、GridView 的平滑滚动扩展方法。
 
 ## PackageExtensions
 用于访问当前应用程序包的 Package.appxmanifest 文件。
+参见 https://github.com/h82258652/SoftwareKobo.UniversalToolkit/blob/master/SoftwareKobo.UniversalToolkit/SoftwareKobo.UniversalToolkit/Utils/AppxManifest/README.md
 
 ## VisualTreeHelperExtensions
 VisualTreeHelper 扩展。
