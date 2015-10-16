@@ -7,7 +7,7 @@
 ## DelegateCommand
 与 MVVMLight 中的 DelegateCommand 使用上无大区别。
 
-## DelegateCommand<T>
+## DelegateCommand&lt;T&gt;
 DelegateCommand 的泛型实现。
 
 ## ViewModelBase
