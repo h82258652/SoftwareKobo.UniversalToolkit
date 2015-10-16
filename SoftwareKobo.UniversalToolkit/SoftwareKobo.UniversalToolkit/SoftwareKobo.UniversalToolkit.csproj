@@ -150,8 +150,10 @@
     <Compile Include="Helpers\StatusBarHelper.cs" />
     <Compile Include="Mvvm\IIncrementalItemSource.cs" />
     <Compile Include="Mvvm\IncrementalLoadingCollection.cs" />
+    <Compile Include="Mvvm\IoC.cs" />
     <Compile Include="Mvvm\IView.cs" />
     <Compile Include="Mvvm\Messenger.cs" />
+    <Compile Include="Mvvm\PreferredConstructorAttribute.cs" />
     <Compile Include="Mvvm\ReceiveFromViewModelHandler.cs" />
     <Compile Include="Mvvm\ViewExtensions.cs" />
     <Compile Include="Services\LauncherServices\KnownFolderService.cs" />
