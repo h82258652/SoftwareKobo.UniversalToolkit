@@ -4,10 +4,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Windows.UI;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 
@@ -18,6 +17,8 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
     /// </summary>
     public static class ColorExtensions
     {
+        private static readonly DependencyProperty AccentColorBrushProperty = DependencyProperty.RegisterAttached("AccentColorBrush", typeof(SolidColorBrush), typeof(ColorExtensions), new PropertyMetadata(null));
+
         private static bool _hadInitAccentColorChanged = false;
 
         private static IDictionary<string, Color> _knownColors;
@@ -25,6 +26,7 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
         /// <summary>
         /// 用户主题色发生了变化。
         /// </summary>
+        /// <remarks>特别感谢 @韦恩卑鄙 的帮助。</remarks>
         [SuppressMessage("Microsoft.Design", "CA1009")]
         public static event EventHandler<Color> AccentColorChanged
         {
@@ -209,22 +211,32 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
         {
             if (_hadInitAccentColorChanged == false)
             {
-                ContentControl control = (ContentControl)XamlReader.Load("<ContentControl xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\" Background =\"{ThemeResource SystemControlBackgroundAccentBrush}\" Visibility=\"Collapsed\" />");
-                SolidColorBrush accentColorBrush = (SolidColorBrush)control.Background;
-                accentColorBrush.RegisterPropertyChangedCallback(SolidColorBrush.ColorProperty, (sender, dp) =>
+                SolidColorBrush accentColorBrush = (SolidColorBrush)XamlReader.Load("<SolidColorBrush xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\" Color=\"{ThemeResource SystemAccentColor}\" />");
+                accentColorBrush.RegisterPropertyChangedCallback(SolidColorBrush.ColorProperty, (obj, dp) =>
                 {
                     if (_accentColorChanged != null)
                     {
-                        Color accentColor = (Color)sender.GetValue(dp);
-                        _accentColorChanged(sender, accentColor);
+                        Color accentColor = (Color)obj.GetValue(dp);
+                        _accentColorChanged(obj, accentColor);
                     }
                 });
 
-                Popup popup = new Popup()
+                Action attachToWindowContent = () =>
                 {
-                    Child = control,
-                    IsOpen = true
+                    Window.Current.Content.SetValue(AccentColorBrushProperty, accentColorBrush);
                 };
+                if (Bootstrapper.Current.IsInConstructing || Window.Current.Content == null)
+                {
+                    Bootstrapper._waitForRootFrameCreatedActions.Add(() =>
+                    {
+                        attachToWindowContent();
+                        return Task.FromResult<object>(null);
+                    });
+                }
+                else
+                {
+                    attachToWindowContent();
+                }
 
                 _hadInitAccentColorChanged = true;
             }
