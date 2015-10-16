@@ -26,6 +26,8 @@
     // Behaviors
 
     // InputDeviceTypeStateTrigger
+    
+    // Tab 和 Pivot 控件。https://msdn.microsoft.com/en-us/library/windows/apps/dn997788.aspx
 
     #endregion 完全未动工
 
