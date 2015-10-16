@@ -124,6 +124,9 @@
     <Compile Include="AwaitableUI\RoutedEventHandlerTaskSource.cs" />
     <Compile Include="AwaitableUI\StoryboardExtensions.cs" />
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Controls\AdaptiveCollectionView.cs" />
+    <Compile Include="Controls\AdaptiveCollectionViewItem.cs" />
+    <Compile Include="Controls\AdaptiveCollectionViewMode.cs" />
     <Compile Include="Controls\DisplayMemoryUsage.cs" />
     <Compile Include="Controls\Dock.cs" />
     <Compile Include="Controls\DockPanel.cs" />
@@ -144,10 +147,13 @@
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Extensions\WriteableBitmapExtensions.cs" />
     <Compile Include="Helpers\DeviceFamilyHelper.cs" />
+    <Compile Include="Helpers\StatusBarHelper.cs" />
     <Compile Include="Mvvm\IIncrementalItemSource.cs" />
     <Compile Include="Mvvm\IncrementalLoadingCollection.cs" />
+    <Compile Include="Mvvm\IoC.cs" />
     <Compile Include="Mvvm\IView.cs" />
     <Compile Include="Mvvm\Messenger.cs" />
+    <Compile Include="Mvvm\PreferredConstructorAttribute.cs" />
     <Compile Include="Mvvm\ReceiveFromViewModelHandler.cs" />
     <Compile Include="Mvvm\ViewExtensions.cs" />
     <Compile Include="Services\LauncherServices\KnownFolderService.cs" />

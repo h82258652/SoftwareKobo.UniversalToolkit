@@ -13,9 +13,6 @@ DelegateCommand 的泛型实现。
 ## ViewModelBase
 继承自 BindableBase，视图模型基类。
 
-## ViewModelLocatorBase
-> 在计划中。
-
 ## 如何在 App 中使用该 MVVM 框架：
 > **本 MVVM 框架需要视图 View 与视图模型 ViewModel 名称必须严格遵守**  
 > **ViewName + "Model" 等于 ViewModelName**  
@@ -41,7 +38,7 @@ public sealed class MainView : Page, IView
         Messenger.Unregister(this);
     }
 
-    public void ReceiveFromViewModel(ViewModelBase originSourceViewModel, object parameter)
+    public void ReceiveFromViewModel(ViewModelBase originSourceViewModel, dynamic parameter)
     {
 		// 该方法实现 IView 接口，以接收从 ViewModel 发送过来的消息。
 		// originSourceViewModel 参数应该尽量不用，仅在特殊情况下，例如程序运行时存在多个该 View 所对应的 ViewModel 的实例时需要用作检查才使用。
@@ -59,7 +56,7 @@ ViewModel 代码：
 ```C#
 public class MainViewModel : ViewModelBase
 {
-	protected override void ReceiveFromView(FrameworkElement originSourceView, object parameter)
+	protected override void ReceiveFromView(FrameworkElement originSourceView, dynamic parameter)
     {
 		// 重写该方法以接收来自 View 的消息。
 		// originSourceView 同上面 View 的情况，应尽量不用。
@@ -70,6 +67,14 @@ public class MainViewModel : ViewModelBase
 	}
 } 
 ```
+
+## IoC
+一个简易的 IoC 容器。
+> 若注入的对象有多个构造函数，请使用 ```PreferredConstructorAttribute``` 标注其中一个构造函数，以指示 IoC 容器应该如何创建对象。
+
+## ViewModelLocatorBase
+内部包含 IoC 容器的视图模型定位器。
+
 ----------
 ## VerifiableBase
 > 预留给将来的 ValidationSystem，暂时请勿使用。

@@ -3,8 +3,6 @@
     #region 完全未动工
 
     // AeroPanel https://github.com/JustinXinLiu/EffectsAndAnimationsWinComposition
-    // 瀑布流面板 http://www.cnblogs.com/ms-uap/p/4715195.html
-    // 瀑布流面板2 http://higan.sinaapp.com/?p=45
     // 汉堡按钮（绑定SplitView用于开关）
     // 下拉刷新、上推加载面板
     // CircleImage
@@ -26,6 +24,10 @@
     // 后台任务helper or system（在Bootstrapper自动注册管理），后者否决，改为 T4 生成帮助类
 
     // Behaviors
+
+    // InputDeviceTypeStateTrigger
+    
+    // Tab 和 Pivot 控件。https://msdn.microsoft.com/en-us/library/windows/apps/dn997788.aspx
 
     #endregion 完全未动工
 

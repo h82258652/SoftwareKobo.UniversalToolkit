@@ -24,6 +24,11 @@ namespace SoftwareKobo.UniversalToolkit
         /// </summary>
         internal List<Func<Task>> _waitForConstructedActions = new List<Func<Task>>();
 
+        /// <summary>
+        /// 存放所有需要 RootFrame 创造后执行的方法。
+        /// </summary>
+        internal static List<Func<Task>> _waitForRootFrameCreatedActions = new List<Func<Task>>();
+
         private Type _defaultNavigatePage;
 
         /// <summary>
@@ -525,7 +530,8 @@ namespace SoftwareKobo.UniversalToolkit
 
         private static async Task InitializeRootFrameAsync(Window hostWindow)
         {
-            await hostWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            TaskCompletionSource<object> tcs = new TaskCompletionSource<object>();
+            await hostWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
             {
                 if (hostWindow.Content == null)
                 {
@@ -535,7 +541,10 @@ namespace SoftwareKobo.UniversalToolkit
                     };
                     hostWindow.Content = frame;
                 }
+                await HandleWaitForRootFrameCreatedActionsAsync();
+                tcs.SetResult(null);
             });
+            await tcs.Task;
         }
 
         private static async Task NavigateToFirstPageAsync(Window hostWindow, Type pageType, object parameter)
@@ -644,6 +653,16 @@ namespace SoftwareKobo.UniversalToolkit
                 newWindow = Window.Current;
             });
             return newWindow;
+        }
+
+        private static async Task HandleWaitForRootFrameCreatedActionsAsync()
+        {
+            while (_waitForRootFrameCreatedActions.Count > 0)
+            {
+                Func<Task> asyncAction = _waitForRootFrameCreatedActions[0];
+                await asyncAction();
+                _waitForRootFrameCreatedActions.RemoveAt(0);
+            }
         }
 
         private async Task HandleWaitForConstructedActionsAsync()

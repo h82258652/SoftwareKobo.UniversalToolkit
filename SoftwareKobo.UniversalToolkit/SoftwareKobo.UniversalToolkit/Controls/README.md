@@ -1,3 +1,53 @@
+## AdaptiveCollectionView
+一个能在 ListView、GridView 变换的面板。
+例子：
+```XAML
+<Grid xmlns:controls="using:SoftwareKobo.UniversalToolkit.Controls">
+	<VisualStateManager.VisualStateGroups>
+		<VisualStateGroup>
+			<VisualState x:Name="narrow">
+				<VisualState.Setters>
+					<Setter Target="View.Mode"
+							Value="List" />
+				</VisualState.Setters>
+				<VisualState.StateTriggers>
+					<AdaptiveTrigger MinWindowWidth="0" />
+				</VisualState.StateTriggers>
+			</VisualState>
+			<VisualState x:Name="wide">
+				<VisualState.Setters>
+					<Setter Target="View.Mode"
+							Value="Grid" />
+				</VisualState.Setters>
+				<VisualState.StateTriggers>
+					<AdaptiveTrigger MinWindowWidth="800" />
+				</VisualState.StateTriggers>
+			</VisualState>
+		</VisualStateGroup>
+	</VisualStateManager.VisualStateGroups>  
+	<controls:AdaptiveCollectionView x:Name="View"
+	    							 ItemsSource="{Binding Path=YourCollection}"
+	    							 Mode="List">
+	    <controls:AdaptiveCollectionView.ItemTemplate>
+			<DataTemplate>
+				<Grid Width="150"
+					  Height="150"
+                      Background="SkyBlue">
+					<ContentControl Content="{Binding}"/>
+				</Grid>
+			</DataTemplate>
+		</controls:AdaptiveCollectionView.ItemTemplate>
+		<controls:AdaptiveCollectionView.ItemContainerStyle>
+			<Style TargetType="controls:AdaptiveCollectionViewItem">
+            	<Setter Property="Margin"
+                	    Value="10" />
+            </Style>
+        </controls:AdaptiveCollectionView.ItemContainerStyle>
+    </controls:AdaptiveCollectionView>
+</Grid>
+```
+那么在窗口宽度小于 800 的时候，将会使用 ListView 模式，而大于等于 800 时，则使用 GridView 模式。
+
 ## DisplayMemoryUsage
 显示内存使用量。
 
