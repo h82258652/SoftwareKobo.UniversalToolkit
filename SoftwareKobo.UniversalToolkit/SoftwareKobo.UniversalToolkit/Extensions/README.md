@@ -1,5 +1,6 @@
 ## ColorExtensions
 主要是将 #FFFFFF 这种格式的字符串转换为 Color。
+> 对于 AccentColorChanged 事件，请勿在运行时再次设置 Window.Current.Content 对象。
 
 ## ListViewBaseExtensions
 ListView、GridView 的平滑滚动扩展方法。
