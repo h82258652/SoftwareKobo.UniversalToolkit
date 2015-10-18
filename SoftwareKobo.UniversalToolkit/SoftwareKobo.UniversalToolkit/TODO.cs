@@ -10,6 +10,8 @@
     // WebP Image Control
     // AnimatedTextBlock
 
+    // 扩展标题栏。
+
     // ValidationSystem
 
     // 模板选择器 http://www.cnblogs.com/ms-uap/p/4201334.html
@@ -28,6 +30,8 @@
     // InputDeviceTypeStateTrigger
     
     // Tab 和 Pivot 控件。https://msdn.microsoft.com/en-us/library/windows/apps/dn997788.aspx
+
+    // 去除 VM 复用机制。
 
     #endregion 完全未动工
 
