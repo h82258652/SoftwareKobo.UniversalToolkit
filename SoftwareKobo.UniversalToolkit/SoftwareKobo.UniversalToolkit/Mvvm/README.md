@@ -75,12 +75,16 @@ public class MainViewModel : ViewModelBase
 ## ViewModelLocatorBase
 内部包含 IoC 容器的视图模型定位器。
 
+## IncrementalLoadingCollection
+> 兼容其它 MVVM 框架。
+
+一个增量加载的集合，构造函数中需要传递一个 ```IncrementalItemSourceBase``` 对象。
+
+## IncrementalItemSourceBase
+> 兼容其它 MVVM 框架。
+
+用于 ```IncrementalLoadingCollection```，指示应该如何加载数据和添加数据到集合当中。
+
 ----------
 ## VerifiableBase
 > 预留给将来的 ValidationSystem，暂时请勿使用。
-
-## IncrementalLoadingCollection
-> 预计兼容其它 MVVM 框架。但仍需调整其实现，暂时请勿使用。
-
-## IIncrementalItemSource
-> 预计兼容其它 MVVM 框架。但仍需调整其实现，暂时请勿使用。
