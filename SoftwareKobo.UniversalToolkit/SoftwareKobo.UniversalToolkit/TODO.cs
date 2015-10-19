@@ -10,7 +10,7 @@
     // WebP Image Control
     // AnimatedTextBlock
 
-    // 扩展标题栏。
+    // 扩展标题栏（控件）。
 
     // ValidationSystem
 
@@ -26,12 +26,10 @@
     // 后台任务helper or system（在Bootstrapper自动注册管理），后者否决，改为 T4 生成帮助类
 
     // Behaviors
-
-    // InputDeviceTypeStateTrigger
     
     // Tab 和 Pivot 控件。https://msdn.microsoft.com/en-us/library/windows/apps/dn997788.aspx
-
-    // 去除 VM 复用机制。
+    
+    // 修复扩展启动屏幕中无法使用 AccentColorChanged 的 bug。
 
     #endregion 完全未动工
 

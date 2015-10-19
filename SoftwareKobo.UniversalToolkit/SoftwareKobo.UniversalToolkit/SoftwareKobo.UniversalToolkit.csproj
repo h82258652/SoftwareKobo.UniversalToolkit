@@ -148,7 +148,7 @@
     <Compile Include="Extensions\WriteableBitmapExtensions.cs" />
     <Compile Include="Helpers\DeviceFamilyHelper.cs" />
     <Compile Include="Helpers\StatusBarHelper.cs" />
-    <Compile Include="Mvvm\IIncrementalItemSource.cs" />
+    <Compile Include="Mvvm\IncrementalItemSourceBase.cs" />
     <Compile Include="Mvvm\IncrementalLoadingCollection.cs" />
     <Compile Include="Mvvm\IoC.cs" />
     <Compile Include="Mvvm\IView.cs" />
@@ -193,6 +193,7 @@
     <Compile Include="Storage\SettingsStrategy.cs" />
     <Compile Include="Helpers\DeviceFamily.cs" />
     <Compile Include="Triggers\DeviceFamilyTrigger.cs" />
+    <Compile Include="Triggers\InputDeviceTypeTrigger.cs" />
     <Compile Include="Triggers\Orientation.cs" />
     <Compile Include="Triggers\NetworkState.cs" />
     <Compile Include="Triggers\NetworkStateTrigger.cs" />
