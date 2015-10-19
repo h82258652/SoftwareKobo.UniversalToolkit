@@ -9,7 +9,7 @@ using Windows.UI.Xaml.Data;
 
 namespace SoftwareKobo.UniversalToolkit.Mvvm
 {
-    public class IncrementalLoadingCollection2<TItem, TItemSource> : ObservableCollection<TItem>, ISupportIncrementalLoading where TItemSource : IncrementalItemSourceBase<TItem>
+    public class IncrementalLoadingCollection<TItem, TItemSource> : ObservableCollection<TItem>, ISupportIncrementalLoading where TItemSource : IncrementalItemSourceBase<TItem>
     {
         private readonly TItemSource _itemSource;
 
@@ -19,7 +19,7 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
 
         private DateTime _lastLoadedTime;
 
-        public IncrementalLoadingCollection2(TItemSource itemSource)
+        public IncrementalLoadingCollection(TItemSource itemSource)
         {
             if (itemSource == null)
             {
