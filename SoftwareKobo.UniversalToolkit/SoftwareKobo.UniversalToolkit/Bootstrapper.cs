@@ -3,6 +3,7 @@ using SoftwareKobo.UniversalToolkit.Utils.AppxManifest;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -54,6 +55,7 @@ namespace SoftwareKobo.UniversalToolkit
             this.UnhandledException += this.OnUnhandledException;
         }
 
+        [SuppressMessage("Microsoft.Design", "CA1009")]
         public event EventHandler<WindowCreatedEventArgs> WindowCreated;
 
         /// <summary>
