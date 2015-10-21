@@ -1,3 +1,8 @@
+Function GetNuget
+{
+    return [System.IO.Directory]::GetFiles("..\..\packages","nuget.exe",[System.IO.SearchOption]::AllDirectories)[0]
+}
+
 $path = "..\bin\Release\"
 
 $dll = [System.IO.Path]::Combine($path,"SoftwareKobo.UniversalToolkit.dll")
@@ -11,7 +16,8 @@ $versionElement = $doc.GetElementsByTagName("version")[0]
 $versionElement.InnerText = $version
 $doc.Save($outNuspacName)
 
-$cmd = "nuget pack " + $outNuspacName
+$nuget = GetNuget
+$cmd = $nuget + " pack " + $outNuspacName
 
 cmd /c $cmd
 

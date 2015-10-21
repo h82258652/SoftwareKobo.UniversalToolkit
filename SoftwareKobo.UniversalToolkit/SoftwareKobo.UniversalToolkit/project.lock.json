@@ -217,6 +217,7 @@
           "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.dll": {}
         }
       },
+      "NuGet.CommandLine/2.8.6": {},
       "System.AppContext/4.0.0": {
         "dependencies": {
           "System.Collections": "[4.0.0, )",
@@ -1811,6 +1812,7 @@
           "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.dll": {}
         }
       },
+      "NuGet.CommandLine/2.8.6": {},
       "System.AppContext/4.0.0": {
         "dependencies": {
           "System.Collections": "[4.0.0, )",
@@ -3438,6 +3440,7 @@
           "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.dll": {}
         }
       },
+      "NuGet.CommandLine/2.8.6": {},
       "System.AppContext/4.0.0": {
         "dependencies": {
           "System.Collections": "[4.0.0, )",
@@ -5070,6 +5073,7 @@
           "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.dll": {}
         }
       },
+      "NuGet.CommandLine/2.8.6": {},
       "System.AppContext/4.0.0": {
         "dependencies": {
           "System.Collections": "[4.0.0, )",
@@ -6697,6 +6701,7 @@
           "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.dll": {}
         }
       },
+      "NuGet.CommandLine/2.8.6": {},
       "System.AppContext/4.0.0": {
         "dependencies": {
           "System.Collections": "[4.0.0, )",
@@ -8329,6 +8334,7 @@
           "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.dll": {}
         }
       },
+      "NuGet.CommandLine/2.8.6": {},
       "System.AppContext/4.0.0": {
         "dependencies": {
           "System.Collections": "[4.0.0, )",
@@ -9956,6 +9962,7 @@
           "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.dll": {}
         }
       },
+      "NuGet.CommandLine/2.8.6": {},
       "System.AppContext/4.0.0": {
         "dependencies": {
           "System.Collections": "[4.0.0, )",
@@ -12016,6 +12023,17 @@
         "Newtonsoft.Json.nuspec",
         "package/services/metadata/core-properties/49e907fc018c4c7ab632e6d4ad4766f8.psmdcp",
         "tools/install.ps1"
+      ]
+    },
+    "NuGet.CommandLine/2.8.6": {
+      "sha512": "cFpAQ6XBJj9Cilj9MVQpfrQZxir/Q4BatWdF676TrviA/Zjjfw44I35StRz4CJALKkdij7m+vwKBU57MgqMl+g==",
+      "type": "Package",
+      "files": [
+        "[Content_Types].xml",
+        "_rels/.rels",
+        "NuGet.CommandLine.nuspec",
+        "package/services/metadata/core-properties/0e4a340237bf4eedb236f5e1d792d111.psmdcp",
+        "tools/NuGet.exe"
       ]
     },
     "System.AppContext/4.0.0": {
@@ -14718,7 +14736,8 @@
     "": [
       "CommonServiceLocator >= 1.3.0",
       "Microsoft.NETCore.UniversalWindowsPlatform >= 5.0.0",
-      "Newtonsoft.Json >= 7.0.1"
+      "Newtonsoft.Json >= 7.0.1",
+      "NuGet.CommandLine >= 2.8.6"
     ],
     "UAP,Version=v10.0": []
   }

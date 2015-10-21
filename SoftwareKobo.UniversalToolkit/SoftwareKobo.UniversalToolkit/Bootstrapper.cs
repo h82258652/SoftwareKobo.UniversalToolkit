@@ -1,4 +1,5 @@
 ﻿using SoftwareKobo.UniversalToolkit.Controls;
+using SoftwareKobo.UniversalToolkit.Extensions;
 using SoftwareKobo.UniversalToolkit.Utils.AppxManifest;
 using System;
 using System.Collections.Generic;
@@ -546,20 +547,9 @@ namespace SoftwareKobo.UniversalToolkit
             return hadContent;
         }
 
-        private static async Task HandleWaitForRootFrameCreatedActionsAsync()
-        {
-            while (_waitForRootFrameCreatedActions.Count > 0)
-            {
-                Func<Task> asyncAction = _waitForRootFrameCreatedActions[0];
-                await asyncAction();
-                _waitForRootFrameCreatedActions.RemoveAt(0);
-            }
-        }
-
         private static async Task InitializeRootFrameAsync(Window hostWindow)
         {
-            TaskCompletionSource<object> tcs = new TaskCompletionSource<object>();
-            await hostWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            await hostWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 if (hostWindow.Content == null)
                 {
@@ -567,12 +557,15 @@ namespace SoftwareKobo.UniversalToolkit
                     {
                         Language = ApplicationLanguages.Languages[0]
                     };
-                    hostWindow.Content = frame;
+                    SetContent(hostWindow, frame);
                 }
-                await HandleWaitForRootFrameCreatedActionsAsync();
-                tcs.SetResult(null);
             });
-            await tcs.Task;
+        }
+
+        private static void SetContent(Window hostWindow, UIElement content)
+        {
+            hostWindow.Content = content;
+            ColorExtensions.ReInitAccentColorChanged();
         }
 
         private static async Task NavigateToFirstPageAsync(Window hostWindow, Type pageType, object parameter)
@@ -645,7 +638,7 @@ namespace SoftwareKobo.UniversalToolkit
             // 清除窗口内容，准备导航操作。
             await hostWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                hostWindow.Content = null;
+                SetContent(hostWindow, null);
             });
         }
 
@@ -655,7 +648,7 @@ namespace SoftwareKobo.UniversalToolkit
             {
                 await hostWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
-                    hostWindow.Content = hostWindowContent;
+                    SetContent(hostWindow, hostWindowContent);
                     hostWindow.Activate();
                 });
             }

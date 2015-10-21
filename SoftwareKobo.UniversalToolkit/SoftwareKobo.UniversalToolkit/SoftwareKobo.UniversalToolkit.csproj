@@ -114,6 +114,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <None Include="Nuget\package.ps1" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
@@ -211,6 +212,8 @@
     <Compile Include="Utils\Mdl2.cs" />
     <Compile Include="Utils\ExpressionResolver.cs" />
     <Compile Include="Utils\ScreenResolution.cs" />
+    <Content Include="Nuget\NuGet.exe" />
+    <None Include="Nuget\SoftwareKobo.UniversalToolkit.template" />
     <Content Include="Properties\SoftwareKobo.UniversalToolkit.rd.xml" />
   </ItemGroup>
   <ItemGroup>
