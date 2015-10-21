@@ -127,6 +127,7 @@
     <Compile Include="Controls\AdaptiveCollectionView.cs" />
     <Compile Include="Controls\AdaptiveCollectionViewItem.cs" />
     <Compile Include="Controls\AdaptiveCollectionViewMode.cs" />
+    <Compile Include="Controls\AdaptiveCollectionViewModeChangedEventArgs.cs" />
     <Compile Include="Controls\DisplayMemoryUsage.cs" />
     <Compile Include="Controls\Dock.cs" />
     <Compile Include="Controls\DockPanel.cs" />
@@ -145,6 +146,7 @@
     <Compile Include="Extensions\ListViewBaseExtensions.cs" />
     <Compile Include="Extensions\PackageExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
+    <Compile Include="Extensions\WebViewExtensions.cs" />
     <Compile Include="Extensions\WriteableBitmapExtensions.cs" />
     <Compile Include="Helpers\DeviceFamilyHelper.cs" />
     <Compile Include="Helpers\StatusBarHelper.cs" />

@@ -11,13 +11,20 @@ namespace SoftwareKobo.UniversalToolkit.Controls
     {
         public new static readonly DependencyProperty ItemContainerStyleProperty = DependencyProperty.Register(nameof(ItemContainerStyle), typeof(Style), typeof(AdaptiveCollectionView), new PropertyMetadata(null, ItemContainerStyleChanged));
 
-        public static readonly DependencyProperty ModeProperty = DependencyProperty.Register(nameof(Mode), typeof(AdaptiveCollectionViewMode), typeof(AdaptiveCollectionView), new PropertyMetadata(AdaptiveCollectionViewMode.List, ModeChanged));
+        public static readonly DependencyProperty ModeProperty = DependencyProperty.Register(nameof(Mode), typeof(AdaptiveCollectionViewMode), typeof(AdaptiveCollectionView), new PropertyMetadata(AdaptiveCollectionViewMode.List, InternalModeChanged));
 
         private new static readonly DependencyProperty ItemsPanelProperty = DependencyProperty.Register(nameof(ItemsPanel), typeof(ItemsPanelTemplate), typeof(AdaptiveCollectionView), new PropertyMetadata(null, ItemsPanelChanged));
 
-        private ItemsPanelTemplate _itemsStackPanel = (ItemsPanelTemplate)XamlReader.Load("<ItemsPanelTemplate xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\"><ItemsStackPanel Orientation=\"Vertical\"/></ItemsPanelTemplate>");
+        private ItemsPanelTemplate _itemsStackPanel = (ItemsPanelTemplate)XamlReader.Load("<ItemsPanelTemplate xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\"><ItemsStackPanel Orientation=\"Vertical\" HorizontalAlignment=\"Stretch\" /></ItemsPanelTemplate>");
 
-        private ItemsPanelTemplate _itemsWrapGrid = (ItemsPanelTemplate)XamlReader.Load("<ItemsPanelTemplate xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\"><ItemsWrapGrid Orientation=\"Horizontal\"/></ItemsPanelTemplate>");
+        private ItemsPanelTemplate _itemsWrapGrid = (ItemsPanelTemplate)XamlReader.Load("<ItemsPanelTemplate xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\"><ItemsWrapGrid Orientation=\"Horizontal\" HorizontalAlignment=\"Center\" /></ItemsPanelTemplate>");
+
+        public AdaptiveCollectionView()
+        {
+            this.Mode = AdaptiveCollectionViewMode.List;
+        }
+
+        public event EventHandler<AdaptiveCollectionViewModeChangedEventArgs> ModeChanged;
 
         public new Style ItemContainerStyle
         {
@@ -55,35 +62,7 @@ namespace SoftwareKobo.UniversalToolkit.Controls
             }
         }
 
-        private static void ItemContainerStyleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            AdaptiveCollectionView obj = (AdaptiveCollectionView)d;
-            Style value = (Style)e.NewValue;
-
-            if (value != null)
-            {
-                if (value.TargetType != typeof(AdaptiveCollectionViewItem))
-                {
-                    throw new ArgumentException($"the target type of item container style should be {nameof(AdaptiveCollectionViewItem)}", nameof(value));
-                }
-                else
-                {
-                    value.TargetType = typeof(GridViewItem);
-                }
-            }
-
-            obj.SetBaseItemContainerStyle(value);
-        }
-
-        private static void ItemsPanelChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            AdaptiveCollectionView obj = (AdaptiveCollectionView)d;
-            ItemsPanelTemplate value = (ItemsPanelTemplate)e.NewValue;
-
-            obj.SetBaseItemsPanel(value);
-        }
-
-        private static async void ModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static async void InternalModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             AdaptiveCollectionView obj = (AdaptiveCollectionView)d;
             AdaptiveCollectionViewMode value = (AdaptiveCollectionViewMode)e.NewValue;
@@ -118,6 +97,11 @@ namespace SoftwareKobo.UniversalToolkit.Controls
                 obj.ItemsPanel = obj._itemsWrapGrid;
             }
 
+            if (obj.ModeChanged != null)
+            {
+                obj.ModeChanged(obj, new AdaptiveCollectionViewModeChangedEventArgs((AdaptiveCollectionViewMode)e.OldValue, (AdaptiveCollectionViewMode)e.NewValue));
+            }
+
             await obj.WaitForLayoutUpdatedAsync();
 
             if (obj.SelectedItem != null)
@@ -132,6 +116,34 @@ namespace SoftwareKobo.UniversalToolkit.Controls
                     obj.ScrollIntoView(item, ScrollIntoViewAlignment.Leading);
                 }
             }
+        }
+
+        private static void ItemContainerStyleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            AdaptiveCollectionView obj = (AdaptiveCollectionView)d;
+            Style value = (Style)e.NewValue;
+
+            if (value != null)
+            {
+                if (value.TargetType != typeof(AdaptiveCollectionViewItem))
+                {
+                    throw new ArgumentException($"the target type of item container style should be {nameof(AdaptiveCollectionViewItem)}", nameof(value));
+                }
+                else
+                {
+                    value.TargetType = typeof(GridViewItem);
+                }
+            }
+
+            obj.SetBaseItemContainerStyle(value);
+        }
+
+        private static void ItemsPanelChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            AdaptiveCollectionView obj = (AdaptiveCollectionView)d;
+            ItemsPanelTemplate value = (ItemsPanelTemplate)e.NewValue;
+
+            obj.SetBaseItemsPanel(value);
         }
 
         private void SetBaseItemContainerStyle(Style value)
