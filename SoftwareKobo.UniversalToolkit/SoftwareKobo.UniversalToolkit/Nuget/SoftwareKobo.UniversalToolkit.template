@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>SoftwareKobo.UniversalToolkit</id>
+    <version>$version$</version>
+    <title>SoftwareKobo.UniversalToolkit</title>
+    <authors>h82258652</authors>
+    <owners>h82258652</owners>
+    <licenseUrl>https://raw.githubusercontent.com/h82258652/SoftwareKobo.UniversalToolkit/master/LICENSE.md</licenseUrl>
+    <projectUrl>https://github.com/h82258652/SoftwareKobo.UniversalToolkit</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>a toolkit for window 10 app development.</description>
+    <releaseNotes>beta version</releaseNotes>
+    <copyright />
+    <tags>UWP Win10 Windows10</tags>
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="7.0.1" />
+      <dependency id="CommonServiceLocator" version="1.3" />
+    </dependencies>
+  </metadata>
+  <files>
+    <!-- T4 模板 -->
+    <file src="..\..\SoftwareKobo.UniversalToolkit.T4\LocalizedStrings.tt" target="content\LocalizedStrings.tt"></file>
+    <!-- 类库 -->
+    <file src="..\bin\Release\SoftwareKobo.UniversalToolkit.dll" target="lib\uap10.0\SoftwareKobo.UniversalToolkit.dll"></file>
+    <file src="..\bin\Release\SoftwareKobo.UniversalToolkit.XML" target="lib\uap10.0\SoftwareKobo.UniversalToolkit.XML"></file>
+    <file src="..\bin\Release\SoftwareKobo.UniversalToolkit.pri" target="lib\uap10.0\SoftwareKobo.UniversalToolkit.pri"></file>
+    <file src="..\bin\Release\SoftwareKobo.UniversalToolkit.xr.xml" target="lib\uap10.0\SoftwareKobo.UniversalToolkit\SoftwareKobo.UniversalToolkit.xr.xml"></file>
+    <file src="..\bin\Release\Controls\ExtendedSplashScreen.xbf" target="lib\uap10.0\SoftwareKobo.UniversalToolkit\Controls\ExtendedSplashScreen.xbf"></file>
+    <file src="..\bin\Release\Themes\Generic.xbf" target="lib\uap10.0\SoftwareKobo.UniversalToolkit\Themes\Generic.xbf"></file>
+    <file src="..\Controls\ExtendedSplashScreen.xaml" target="lib\uap10.0\SoftwareKobo.UniversalToolkit\Controls\ExtendedSplashScreen.xaml"></file>
+    <file src="..\Themes\Generic.xaml" target="lib\uap10.0\SoftwareKobo.UniversalToolkit\Themes\Generic.xaml"></file>
+    <file src="..\Properties\SoftwareKobo.UniversalToolkit.rd.xml" target="lib\uap10.0\SoftwareKobo.UniversalToolkit\Properties\SoftwareKobo.UniversalToolkit.rd.xml"></file>
+  </files>
+</package>
