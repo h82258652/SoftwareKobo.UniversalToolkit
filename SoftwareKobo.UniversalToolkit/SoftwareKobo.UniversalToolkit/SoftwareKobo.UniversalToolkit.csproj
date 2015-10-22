@@ -124,6 +124,7 @@
     <Compile Include="AwaitableUI\FrameworkElementExtensions.cs" />
     <Compile Include="AwaitableUI\RoutedEventHandlerTaskSource.cs" />
     <Compile Include="AwaitableUI\StoryboardExtensions.cs" />
+    <Compile Include="Behaviors\ItemClickBehaviors.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Controls\AdaptiveCollectionView.cs" />
     <Compile Include="Controls\AdaptiveCollectionViewItem.cs" />
@@ -156,6 +157,7 @@
     <Compile Include="Mvvm\IoC.cs" />
     <Compile Include="Mvvm\IView.cs" />
     <Compile Include="Mvvm\Messenger.cs" />
+    <Compile Include="Mvvm\ModelVerifyErrors.cs" />
     <Compile Include="Mvvm\PreferredConstructorAttribute.cs" />
     <Compile Include="Mvvm\ReceiveFromViewModelHandler.cs" />
     <Compile Include="Mvvm\ViewExtensions.cs" />
@@ -215,11 +217,11 @@
     <None Include="Nuget\SoftwareKobo.UniversalToolkit.template" />
     <Content Include="Properties\SoftwareKobo.UniversalToolkit.rd.xml" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Behaviors\" />
-    <Folder Include="Controls\Validation\" />
-  </ItemGroup>
-  <ItemGroup>
+    <SDKReference Include="BehaviorsXamlSDKManaged, Version=12.0">
+      <Name>Behaviors SDK %28XAML%29</Name>
+    </SDKReference>
     <SDKReference Include="WindowsMobile, Version=10.0.10240.0">
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>

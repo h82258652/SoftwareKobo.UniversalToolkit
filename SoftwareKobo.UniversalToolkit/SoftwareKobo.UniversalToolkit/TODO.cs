@@ -12,8 +12,6 @@
 
     // 扩展标题栏（控件）。http://stackoverflow.com/questions/32626470/c-sharp-detect-accent-colour-changes-winrt-xaml
 
-    // ValidationSystem http://blogs.u2u.be/diederik/post/2015/09/27/User-input-validation-with-Prism-and-data-annotations-on-the-UWP.aspx
-
     // 模板选择器 http://www.cnblogs.com/ms-uap/p/4201334.html
 
     // WeakAction 和 WeakAction<T> 然后改进整个框架特别是MVVM部分，使用WeakAction
@@ -51,6 +49,8 @@
     // AppxManifest.xml 辅助类
 
     // Kinds of state triggers
+
+    // 改进 Validation http://blogs.u2u.be/diederik/post/2015/09/27/User-input-validation-with-Prism-and-data-annotations-on-the-UWP.aspx
 
     // 改进 nuget 包生成的 powershell 脚本。
 
