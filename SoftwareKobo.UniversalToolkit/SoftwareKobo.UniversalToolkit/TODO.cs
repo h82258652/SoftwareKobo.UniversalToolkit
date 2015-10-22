@@ -12,7 +12,7 @@
 
     // 扩展标题栏（控件）。http://stackoverflow.com/questions/32626470/c-sharp-detect-accent-colour-changes-winrt-xaml
 
-    // ValidationSystem
+    // ValidationSystem http://blogs.u2u.be/diederik/post/2015/09/27/User-input-validation-with-Prism-and-data-annotations-on-the-UWP.aspx
 
     // 模板选择器 http://www.cnblogs.com/ms-uap/p/4201334.html
 
@@ -29,7 +29,7 @@
 
     // Tab 和 Pivot 控件。https://msdn.microsoft.com/en-us/library/windows/apps/dn997788.aspx
 
-    // 修复扩展启动屏幕中无法使用 AccentColorChanged 的 bug。
+    // Element Actual Size State Trigger
 
     #endregion 完全未动工
 
@@ -52,11 +52,7 @@
 
     // Kinds of state triggers
 
+    // 改进 nuget 包生成的 powershell 脚本。
+
     #endregion 大概做了一半？
-
-    #region 必要
-
-    // 使用 PowerShell 改进 nuget 包的发布。
-
-    #endregion
 }
