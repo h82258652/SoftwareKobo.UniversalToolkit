@@ -85,6 +85,38 @@ public class MainViewModel : ViewModelBase
 
 用于 ```IncrementalLoadingCollection```，指示应该如何加载数据和添加数据到集合当中。
 
-----------
 ## VerifiableBase
-> 预留给将来的 ValidationSystem，暂时请勿使用。
+提供验证的 Model 基类，继承自 BindableBase。
+例子：
+```C#
+public class Person : VerifiableBase
+{
+	[StringLength(5)]
+    public string Name
+    {
+        get;
+		set;
+    }
+}
+
+public class MainViewModel : ViewModelBase
+{
+	public MainViewModel()
+	{
+		this.Person = new Person();
+	}
+
+    public Person Person
+    {
+        get;
+		set;
+    }
+}
+```
+```XAML
+<TextBox Text="{Binding Path=Person.Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+<!-- 显示 Name 属性的错误消息（若该属性有错误，则只显示第一条消息） -->
+<TextBlock Text="{Binding Path=Person.Errors[Name]}" />
+<!-- 显示 Person 对象所有属性的错误消息（每条消息以换行符分隔） -->
+<TextBlock Text="{Binding Path=Person.Errors}" />
+```
