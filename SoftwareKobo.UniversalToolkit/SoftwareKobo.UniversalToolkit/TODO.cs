@@ -3,7 +3,6 @@
     #region 完全未动工
 
     // AeroPanel https://github.com/JustinXinLiu/EffectsAndAnimationsWinComposition
-    // 汉堡按钮（绑定SplitView用于开关）
     // 下拉刷新、上推加载面板
     // CircleImage
     // Gif Image Control
