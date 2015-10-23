@@ -7,6 +7,8 @@ namespace SoftwareKobo.UniversalToolkit.Controls
     {
         public static readonly DependencyProperty ContentMarginProperty = DependencyProperty.Register(nameof(ContentMargin), typeof(Thickness), typeof(HamburgerButton), new PropertyMetadata(new Thickness()));
 
+        public static readonly DependencyProperty IconSizeProperty = DependencyProperty.Register(nameof(IconSize), typeof(double), typeof(HamburgerButton), new PropertyMetadata(default(double)));
+
         public HamburgerButton()
         {
             this.DefaultStyleKey = typeof(HamburgerButton);
@@ -23,6 +25,18 @@ namespace SoftwareKobo.UniversalToolkit.Controls
             set
             {
                 this.SetValue(ContentMarginProperty, value);
+            }
+        }
+
+        public double IconSize
+        {
+            get
+            {
+                return (double)this.GetValue(IconSizeProperty);
+            }
+            set
+            {
+                this.SetValue(IconSizeProperty, value);
             }
         }
 

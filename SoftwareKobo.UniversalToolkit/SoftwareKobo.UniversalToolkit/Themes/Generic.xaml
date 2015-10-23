@@ -34,10 +34,12 @@
                 Value="Center" />
         <Setter Property="Padding"
                 Value="1" />
-        <Setter Property="FontSize"
-                Value="15" />
+        <Setter Property="Margin"
+                Value="10,0,10,0" />
         <Setter Property="ContentMargin"
-                Value="5,0,0,0" />
+                Value="10,0,0,0" />
+        <Setter Property="IconSize"
+                Value="28" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:HamburgerButton">
@@ -167,7 +169,10 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Viewbox VerticalAlignment="Center">
+                        <Viewbox VerticalAlignment="Top"
+                                 HorizontalAlignment="Left"
+                                 Width="{TemplateBinding IconSize}"
+                                 Height="{TemplateBinding IconSize}">
                             <Canvas x:Name="canvas"
                                     Width="24"
                                     Height="24"
@@ -182,7 +187,7 @@
                                 </Canvas.RenderTransform>
                                 <Rectangle x:Name="topLine"
                                            Fill="{TemplateBinding Foreground}"
-                                           Height="2"
+                                           Height="1"
                                            Canvas.Left="3"
                                            RadiusY="0"
                                            RadiusX="0"
@@ -200,7 +205,7 @@
                                 </Rectangle>
                                 <Rectangle x:Name="centerLine"
                                            Fill="{TemplateBinding Foreground}"
-                                           Height="2"
+                                           Height="1"
                                            Canvas.Left="3"
                                            RadiusY="0"
                                            RadiusX="0"
@@ -218,7 +223,7 @@
                                 </Rectangle>
                                 <Rectangle x:Name="bottomLine"
                                            Fill="{TemplateBinding Foreground}"
-                                           Height="2"
+                                           Height="1"
                                            Canvas.Left="3"
                                            RadiusY="0"
                                            RadiusX="0"
@@ -238,6 +243,7 @@
                         </Viewbox>
                         <ContentControl HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
+                                        Margin="{TemplateBinding ContentMargin}"
                                         Content="{TemplateBinding Content}" />
                     </StackPanel>
                 </ControlTemplate>
