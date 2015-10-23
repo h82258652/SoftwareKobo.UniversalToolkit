@@ -9,6 +9,15 @@ namespace SoftwareKobo.UniversalToolkit.Converters
     public class StringFormatConverter : IValueConverter
     {
         /// <summary>
+        /// 当 Convert 方法中的 parameter 不是字符串类型或者为空时，才使用该参数。
+        /// </summary>
+        public string DefaultFormat
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// 使用 ConverterParameter 格式化 value。
         /// </summary>
         /// <param name="value">需要格式化的值。</param>
@@ -18,12 +27,12 @@ namespace SoftwareKobo.UniversalToolkit.Converters
         /// <returns>格式化后的字符串。</returns>
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (parameter == null)
+            string format = parameter as string ?? this.DefaultFormat;
+            if (format == null)
             {
                 return value;
             }
-
-            return string.Format((string)parameter, value);
+            return string.Format(format, value);
         }
 
         /// <summary>

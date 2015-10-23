@@ -186,75 +186,14 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
             this.Unregister(typeof(TService), null);
         }
 
-        protected override IEnumerable<object> DoGetAllInstances(Type serviceType)
+        protected override sealed IEnumerable<object> DoGetAllInstances(Type serviceType)
         {
-            if (serviceType == null)
-            {
-                throw new ArgumentNullException(nameof(serviceType));
-            }
-
-            foreach (var keyValue in this._keyRegisteredTypes)
-            {
-                yield return GetInstance(serviceType, keyValue.Key);
-            }
+            return this.InternalGetAllInstances(serviceType);
         }
 
-        protected override object DoGetInstance(Type serviceType, string key)
+        protected override sealed object DoGetInstance(Type serviceType, string key)
         {
-            if (serviceType == null)
-            {
-                throw new ArgumentNullException(nameof(serviceType));
-            }
-
-            key = key ?? this._defaultKey;
-
-            object instance = this.GetStoredInstance(key, serviceType);
-            if (instance != null)
-            {
-                return instance;
-            }
-
-            if (this._keyRegisteredTypes.ContainsKey(key) == false)
-            {
-                throw new ArgumentException("key is not registered.", nameof(key));
-            }
-
-            List<Type> registeredTypes = _keyRegisteredTypes[key];
-            if (registeredTypes.Contains(serviceType) == false)
-            {
-                throw new ArgumentException("service type is not registered.", nameof(serviceType));
-            }
-
-            Type instanceType;
-            if (serviceType.GetTypeInfo().IsInterface)
-            {
-                instanceType = this._interfaceClassMap[serviceType];
-            }
-            else
-            {
-                instanceType = serviceType;
-            }
-
-            ConstructorInfo constructor = this.GetConstructor(instanceType);
-            ParameterInfo[] constructorParameterInfos = constructor.GetParameters();
-            object[] parameters = new object[constructorParameterInfos.Length];
-            for (int i = 0; i < constructorParameterInfos.Length; i++)
-            {
-                Type parameterType = constructorParameterInfos[i].ParameterType;
-                object parameter;
-                parameter = this.GetInstance(parameterType, key);
-                if (parameter == null && key != this._defaultKey)
-                {
-                    parameter = this.GetInstance(parameterType);
-                }
-                parameters[i] = parameter;
-            }
-
-            instance = constructor.Invoke(parameters);
-
-            // 将生成的对象实例缓存起来。
-            this.StoreInstance(key, serviceType, instance);
-            return instance;
+            return this.InternalGetInstance(serviceType, key);
         }
 
         private ConstructorInfo GetConstructor(Type type)
@@ -295,36 +234,66 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
             return suitableConstructor;
         }
 
-        private object GetStoredInstance(string key, Type serviceType)
+        private IEnumerable<object> InternalGetAllInstances(Type serviceType)
         {
-            if (key == null || serviceType == null)
+            if (serviceType == null)
             {
-                return null;
+                throw new ArgumentNullException(nameof(serviceType));
             }
 
-            if (this._instances.ContainsKey(key) == false)
+            foreach (var keyValue in this._keyRegisteredTypes)
             {
-                return null;
-            }
-            Dictionary<Type, object> dict = _instances[key];
-            if (dict.ContainsKey(serviceType))
-            {
-                return dict[serviceType];
-            }
-            else
-            {
-                return null;
+                yield return this.InternalGetInstance(serviceType, keyValue.Key);
             }
         }
 
-        private void StoreInstance(string key, Type serviceType, object instance)
+        private object InternalGetInstance(Type serviceType, string key)
         {
-            if (this._instances.ContainsKey(key) == false)
+            if (serviceType == null)
             {
-                this._instances.Add(key, new Dictionary<Type, object>());
+                throw new ArgumentNullException(nameof(serviceType));
             }
-            Dictionary<Type, object> dict = this._instances[key];
-            dict[serviceType] = instance;
+
+            key = key ?? this._defaultKey;
+
+            if (this._keyRegisteredTypes.ContainsKey(key) == false)
+            {
+                throw new ArgumentException("key is not registered.", nameof(key));
+            }
+
+            List<Type> registeredTypes = _keyRegisteredTypes[key];
+            if (registeredTypes.Contains(serviceType) == false)
+            {
+                throw new ArgumentException("service type is not registered.", nameof(serviceType));
+            }
+
+            Type instanceType;
+            if (serviceType.GetTypeInfo().IsInterface)
+            {
+                instanceType = this._interfaceClassMap[serviceType];
+            }
+            else
+            {
+                instanceType = serviceType;
+            }
+
+            ConstructorInfo constructor = this.GetConstructor(instanceType);
+            ParameterInfo[] constructorParameterInfos = constructor.GetParameters();
+            object[] parameters = new object[constructorParameterInfos.Length];
+            for (int i = 0; i < constructorParameterInfos.Length; i++)
+            {
+                Type parameterType = constructorParameterInfos[i].ParameterType;
+                object parameter;
+                parameter = this.InternalGetInstance(parameterType, key);
+                if (parameter == null && key != this._defaultKey)
+                {
+                    parameter = this.InternalGetInstance(parameterType, null);
+                }
+                parameters[i] = parameter;
+            }
+
+            object instance = constructor.Invoke(parameters);
+            return instance;
         }
     }
 }

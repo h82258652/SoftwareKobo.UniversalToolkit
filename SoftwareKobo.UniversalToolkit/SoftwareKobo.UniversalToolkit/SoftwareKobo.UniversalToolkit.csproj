@@ -114,6 +114,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <None Include="Nuget\package.ps1" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
@@ -123,10 +124,13 @@
     <Compile Include="AwaitableUI\FrameworkElementExtensions.cs" />
     <Compile Include="AwaitableUI\RoutedEventHandlerTaskSource.cs" />
     <Compile Include="AwaitableUI\StoryboardExtensions.cs" />
+    <Compile Include="Behaviors\ItemClickBehavior.cs" />
+    <Compile Include="Behaviors\TimeoutAction.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Controls\AdaptiveCollectionView.cs" />
     <Compile Include="Controls\AdaptiveCollectionViewItem.cs" />
     <Compile Include="Controls\AdaptiveCollectionViewMode.cs" />
+    <Compile Include="Controls\AdaptiveCollectionViewModeChangedEventArgs.cs" />
     <Compile Include="Controls\DisplayMemoryUsage.cs" />
     <Compile Include="Controls\Dock.cs" />
     <Compile Include="Controls\DockPanel.cs" />
@@ -135,6 +139,7 @@
     </Compile>
     <Compile Include="Controls\ExtendedSplashScreenContent.cs" />
     <Compile Include="Controls\FullWindowPopup.cs" />
+    <Compile Include="Controls\HamburgerButton.cs" />
     <Compile Include="Controls\OrientedSize.cs" />
     <Compile Include="Controls\ReflectionPanel.cs" />
     <Compile Include="Controls\WaterfallPanel.cs" />
@@ -145,14 +150,16 @@
     <Compile Include="Extensions\ListViewBaseExtensions.cs" />
     <Compile Include="Extensions\PackageExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
+    <Compile Include="Extensions\WebViewExtensions.cs" />
     <Compile Include="Extensions\WriteableBitmapExtensions.cs" />
     <Compile Include="Helpers\DeviceFamilyHelper.cs" />
     <Compile Include="Helpers\StatusBarHelper.cs" />
-    <Compile Include="Mvvm\IIncrementalItemSource.cs" />
+    <Compile Include="Mvvm\IncrementalItemSourceBase.cs" />
     <Compile Include="Mvvm\IncrementalLoadingCollection.cs" />
     <Compile Include="Mvvm\IoC.cs" />
     <Compile Include="Mvvm\IView.cs" />
     <Compile Include="Mvvm\Messenger.cs" />
+    <Compile Include="Mvvm\ModelVerifyErrors.cs" />
     <Compile Include="Mvvm\PreferredConstructorAttribute.cs" />
     <Compile Include="Mvvm\ReceiveFromViewModelHandler.cs" />
     <Compile Include="Mvvm\ViewExtensions.cs" />
@@ -193,6 +200,7 @@
     <Compile Include="Storage\SettingsStrategy.cs" />
     <Compile Include="Helpers\DeviceFamily.cs" />
     <Compile Include="Triggers\DeviceFamilyTrigger.cs" />
+    <Compile Include="Triggers\InputDeviceTypeTrigger.cs" />
     <Compile Include="Triggers\Orientation.cs" />
     <Compile Include="Triggers\NetworkState.cs" />
     <Compile Include="Triggers\NetworkStateTrigger.cs" />
@@ -208,13 +216,14 @@
     <Compile Include="Utils\Mdl2.cs" />
     <Compile Include="Utils\ExpressionResolver.cs" />
     <Compile Include="Utils\ScreenResolution.cs" />
+    <None Include="Nuget\SoftwareKobo.UniversalToolkit.template" />
     <Content Include="Properties\SoftwareKobo.UniversalToolkit.rd.xml" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Behaviors\" />
-    <Folder Include="Controls\Validation\" />
-  </ItemGroup>
-  <ItemGroup>
+    <SDKReference Include="BehaviorsXamlSDKManaged, Version=12.0">
+      <Name>Behaviors SDK %28XAML%29</Name>
+    </SDKReference>
     <SDKReference Include="WindowsMobile, Version=10.0.10240.0">
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>

@@ -1,4 +1,6 @@
-﻿namespace SoftwareKobo.UniversalToolkit.Mvvm
+﻿using Windows.ApplicationModel;
+
+namespace SoftwareKobo.UniversalToolkit.Mvvm
 {
     /// <summary>
     /// 视图模型定位器基类。
@@ -6,6 +8,17 @@
     public abstract class ViewModelLocatorBase
     {
         private IoC _container = new IoC();
+
+        /// <summary>
+        /// 指示当前是否处于设计模式。
+        /// </summary>
+        public static bool IsInDesignMode
+        {
+            get
+            {
+                return ViewModelBase.IsInDesignMode;
+            }
+        }
 
         /// <summary>
         /// 获取注入类的实例。

@@ -1,22 +1,35 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 
 namespace SoftwareKobo.UniversalToolkit.Mvvm
 {
     /// <summary>
     /// 可验证的 MVVM 模式模型基类。
     /// </summary>
+    /// <example>
+    /// &lt;TextBox Text="{Binding Path=Person.Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" /&gt;
+    /// 某个属性 Errors（只显示该属性错误的第一条消息）：
+    /// &lt;TextBlock Text="{Binding Path=Person.Errors[Name]}" /&gt;
+    /// 所有属性 Errors（以换行符分隔每一条错误消息）：
+    /// &lt;TextBlock Text="{Binding Path=Person.Errors}" /&gt;
+    /// </example>
     public abstract class VerifiableBase : BindableBase
     {
-        /// <summary>
-        /// 指示该模型的所有属性是否验证成功。
-        /// </summary>
-        public virtual bool IsValid
+        public ModelVerifyErrors Errors
         {
             get
             {
-                return ValidationResults.Count <= 0;
+                return new ModelVerifyErrors(this);
+            }
+        }
+
+        /// <summary>
+        /// 指示该模型的所有属性是否验证成功。
+        /// </summary>
+        public bool IsValid
+        {
+            get
+            {
+                return this.Errors.Count <= 0;
             }
         }
 
@@ -27,36 +40,8 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
         protected override void RaisePropertyChanged([CallerMemberName] string propertyName = null)
         {
             base.RaisePropertyChanged(propertyName);
+            base.RaisePropertyChanged(nameof(Errors));
             base.RaisePropertyChanged(nameof(IsValid));
-            base.RaisePropertyChanged(nameof(ValidationResults));
-        }
-
-        /// <summary>
-        /// 获取该模型的验证错误。
-        /// </summary>
-        public virtual ICollection<ValidationResult> ValidationResults
-        {
-            get
-            {
-                ValidationContext context = new ValidationContext(this);
-                var validationResults = new List<ValidationResult>();
-                Validator.TryValidateObject(this, context, validationResults, true);
-                return validationResults;
-            }
-        }
-
-        /// <summary>
-        /// 获取指定属性的验证结果。
-        /// </summary>
-        /// <param name="propertyName">属性名称。</param>
-        /// <returns>该属性的验证结果。</returns>
-        public virtual ICollection<ValidationResult> GetPropertyValidationResults(string propertyName)
-        {
-            ValidationContext context = new ValidationContext(this);
-            context.MemberName = propertyName;
-            var propertyValidationResults = new List<ValidationResult>();
-            Validator.TryValidateObject(this, context, propertyValidationResults, false);
-            return propertyValidationResults;
         }
     }
 }

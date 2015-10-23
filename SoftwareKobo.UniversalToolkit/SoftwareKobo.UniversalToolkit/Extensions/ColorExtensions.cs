@@ -4,7 +4,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Markup;
@@ -19,29 +18,46 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
     {
         private static readonly DependencyProperty AccentColorBrushProperty = DependencyProperty.RegisterAttached("AccentColorBrush", typeof(SolidColorBrush), typeof(ColorExtensions), new PropertyMetadata(null));
 
-        private static bool _hadInitAccentColorChanged = false;
-
         private static IDictionary<string, Color> _knownColors;
+
+        private static UIElement _currentListenElement;
+
+        private static long? _listenToken;
+
+        internal static void ReInitAccentColorChanged()
+        {
+            if (_currentListenElement != null && _listenToken.HasValue)
+            {
+                _currentListenElement.UnregisterPropertyChangedCallback(SolidColorBrush.ColorProperty, _listenToken.Value);
+            }
+            if (_currentListenElement == null)
+            {
+                _currentListenElement = Window.Current.Content;
+                if (_currentListenElement != null)
+                {
+                    SolidColorBrush accentColorBrush = (SolidColorBrush)XamlReader.Load("<SolidColorBrush xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\" Color=\"{ThemeResource SystemAccentColor}\" />");
+                    _listenToken = accentColorBrush.RegisterPropertyChangedCallback(SolidColorBrush.ColorProperty, (obj, dp) =>
+                    {
+                        if (AccentColorChanged != null)
+                        {
+                            Color accentColor = (Color)obj.GetValue(dp);
+                            AccentColorChanged(obj, accentColor);
+                        }
+                    });
+                    _currentListenElement.SetValue(AccentColorBrushProperty, accentColorBrush);
+                }
+            }
+        }
 
         /// <summary>
         /// 用户主题色发生了变化。
         /// </summary>
-        /// <remarks>特别感谢 @韦恩卑鄙 的帮助。</remarks>
+        /// <remarks>
+        /// 使用此事件后，请勿修改 Window.Current.Content 属性。
+        /// 特别感谢 @韦恩卑鄙 的帮助。
+        /// </remarks>
         [SuppressMessage("Microsoft.Design", "CA1009")]
-        public static event EventHandler<Color> AccentColorChanged
-        {
-            add
-            {
-                InitAccentColorChanged();
-                _accentColorChanged += value;
-            }
-            remove
-            {
-                _accentColorChanged -= value;
-            }
-        }
-
-        private static event EventHandler<Color> _accentColorChanged;
+        public static event EventHandler<Color> AccentColorChanged;
 
         /// <summary>
         /// 获取用户主题色。
@@ -205,41 +221,6 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
                 color = TryFromName(value);
             }
             return color;
-        }
-
-        private static void InitAccentColorChanged()
-        {
-            if (_hadInitAccentColorChanged == false)
-            {
-                SolidColorBrush accentColorBrush = (SolidColorBrush)XamlReader.Load("<SolidColorBrush xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\" Color=\"{ThemeResource SystemAccentColor}\" />");
-                accentColorBrush.RegisterPropertyChangedCallback(SolidColorBrush.ColorProperty, (obj, dp) =>
-                {
-                    if (_accentColorChanged != null)
-                    {
-                        Color accentColor = (Color)obj.GetValue(dp);
-                        _accentColorChanged(obj, accentColor);
-                    }
-                });
-
-                Action attachToWindowContent = () =>
-                {
-                    Window.Current.Content.SetValue(AccentColorBrushProperty, accentColorBrush);
-                };
-                if (Bootstrapper.Current.IsInConstructing || Window.Current.Content == null)
-                {
-                    Bootstrapper._waitForRootFrameCreatedActions.Add(() =>
-                    {
-                        attachToWindowContent();
-                        return Task.FromResult<object>(null);
-                    });
-                }
-                else
-                {
-                    attachToWindowContent();
-                }
-
-                _hadInitAccentColorChanged = true;
-            }
         }
     }
 }

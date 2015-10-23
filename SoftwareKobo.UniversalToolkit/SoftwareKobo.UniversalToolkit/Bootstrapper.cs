@@ -1,8 +1,10 @@
 ﻿using SoftwareKobo.UniversalToolkit.Controls;
+using SoftwareKobo.UniversalToolkit.Extensions;
 using SoftwareKobo.UniversalToolkit.Utils.AppxManifest;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -20,14 +22,14 @@ namespace SoftwareKobo.UniversalToolkit
     public abstract class Bootstrapper : Application
     {
         /// <summary>
-        /// 存放所有需要在构造函数结束后执行的方法。
-        /// </summary>
-        internal List<Func<Task>> _waitForConstructedActions = new List<Func<Task>>();
-
-        /// <summary>
         /// 存放所有需要 RootFrame 创造后执行的方法。
         /// </summary>
         internal static List<Func<Task>> _waitForRootFrameCreatedActions = new List<Func<Task>>();
+
+        /// <summary>
+        /// 存放所有需要在构造函数结束后执行的方法。
+        /// </summary>
+        internal List<Func<Task>> _waitForConstructedActions = new List<Func<Task>>();
 
         private Type _defaultNavigatePage;
 
@@ -53,6 +55,9 @@ namespace SoftwareKobo.UniversalToolkit
             };
             this.UnhandledException += this.OnUnhandledException;
         }
+
+        [SuppressMessage("Microsoft.Design", "CA1009")]
+        public event EventHandler<WindowCreatedEventArgs> WindowCreated;
 
         /// <summary>
         /// 获取当前应用程序的 Bootstrapper 对象。
@@ -477,6 +482,20 @@ namespace SoftwareKobo.UniversalToolkit
             return Task.FromResult<object>(null);
         }
 
+        protected override sealed async void OnWindowCreated(WindowCreatedEventArgs args)
+        {
+            if (this.WindowCreated != null)
+            {
+                this.WindowCreated(this, args);
+            }
+            await this.OnWindowCreatedAsync(args);
+        }
+
+        protected virtual Task OnWindowCreatedAsync(WindowCreatedEventArgs args)
+        {
+            return Task.FromResult<object>(null);
+        }
+
         private static async Task<UIElement> BuildExtendedSplashScreenAsync(Window hostWindow, ExtendedSplashScreenContent extendedSplashScreenContent, IActivatedEventArgs args)
         {
             // 用于等待 ExtendedSplashScreen 构造完成。因为 RunAsync 方法第二个参数签名是 async void，不是 async Task。
@@ -530,8 +549,7 @@ namespace SoftwareKobo.UniversalToolkit
 
         private static async Task InitializeRootFrameAsync(Window hostWindow)
         {
-            TaskCompletionSource<object> tcs = new TaskCompletionSource<object>();
-            await hostWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            await hostWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 if (hostWindow.Content == null)
                 {
@@ -539,12 +557,15 @@ namespace SoftwareKobo.UniversalToolkit
                     {
                         Language = ApplicationLanguages.Languages[0]
                     };
-                    hostWindow.Content = frame;
+                    SetContent(hostWindow, frame);
                 }
-                await HandleWaitForRootFrameCreatedActionsAsync();
-                tcs.SetResult(null);
             });
-            await tcs.Task;
+        }
+
+        private static void SetContent(Window hostWindow, UIElement content)
+        {
+            hostWindow.Content = content;
+            ColorExtensions.ReInitAccentColorChanged();
         }
 
         private static async Task NavigateToFirstPageAsync(Window hostWindow, Type pageType, object parameter)
@@ -617,7 +638,7 @@ namespace SoftwareKobo.UniversalToolkit
             // 清除窗口内容，准备导航操作。
             await hostWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                hostWindow.Content = null;
+                SetContent(hostWindow, null);
             });
         }
 
@@ -627,7 +648,7 @@ namespace SoftwareKobo.UniversalToolkit
             {
                 await hostWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
-                    hostWindow.Content = hostWindowContent;
+                    SetContent(hostWindow, hostWindowContent);
                     hostWindow.Activate();
                 });
             }
@@ -653,16 +674,6 @@ namespace SoftwareKobo.UniversalToolkit
                 newWindow = Window.Current;
             });
             return newWindow;
-        }
-
-        private static async Task HandleWaitForRootFrameCreatedActionsAsync()
-        {
-            while (_waitForRootFrameCreatedActions.Count > 0)
-            {
-                Func<Task> asyncAction = _waitForRootFrameCreatedActions[0];
-                await asyncAction();
-                _waitForRootFrameCreatedActions.RemoveAt(0);
-            }
         }
 
         private async Task HandleWaitForConstructedActionsAsync()

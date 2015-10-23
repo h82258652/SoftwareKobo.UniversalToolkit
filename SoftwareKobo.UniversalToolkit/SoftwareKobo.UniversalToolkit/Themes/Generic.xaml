@@ -2,6 +2,246 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="using:SoftwareKobo.UniversalToolkit"
                     xmlns:controls="using:SoftwareKobo.UniversalToolkit.Controls">
+    <Style TargetType="controls:DisplayMemoryUsage">
+        <Setter Property="Background"
+                Value="#80000000" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:DisplayMemoryUsage">
+                    <Grid Background="{TemplateBinding Background}">
+                        <TextBlock x:Name="txtMemoryUsage"
+                                   Margin="5"
+                                   Foreground="White"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="controls:HamburgerButton">
+        <Setter Property="Foreground"
+                Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="UseSystemFocusVisuals"
+                Value="True" />
+        <Setter Property="BorderThickness"
+                Value="1" />
+        <Setter Property="HorizontalAlignment"
+                Value="Center" />
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+        <Setter Property="Padding"
+                Value="1" />
+        <Setter Property="FontSize"
+                Value="18" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:HamburgerButton">
+                    <StackPanel Background="{TemplateBinding Background}"
+                                Orientation="Horizontal">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CheckStates">
+                                <VisualState x:Name="Checked">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)"
+                                                                       Storyboard.TargetName="topLine">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.3"
+                                                                  Value="45" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)"
+                                                                       Storyboard.TargetName="topLine">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.3"
+                                                                  Value="0.581" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
+                                                                       Storyboard.TargetName="topLine">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.3"
+                                                                  Value="4.875" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)"
+                                                                       Storyboard.TargetName="topLine">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.3"
+                                                                  Value="1.875" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)"
+                                                                       Storyboard.TargetName="bottomLine">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.3"
+                                                                  Value="-45" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)"
+                                                                       Storyboard.TargetName="bottomLine">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.3"
+                                                                  Value="0.581" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
+                                                                       Storyboard.TargetName="bottomLine">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.3"
+                                                                  Value="4.832" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)"
+                                                                       Storyboard.TargetName="bottomLine">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.3"
+                                                                  Value="-2.082" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)"
+                                                                       Storyboard.TargetName="centerLine">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.3"
+                                                                  Value="0.889" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
+                                                                       Storyboard.TargetName="centerLine">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.3"
+                                                                  Value="-1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)"
+                                                                       Storyboard.TargetName="canvas">
+                                            <EasingDoubleKeyFrame KeyTime="0"
+                                                                  Value="0" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.3"
+                                                                  Value="-180" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Unchecked">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)"
+                                                                       Storyboard.TargetName="topLine">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.3"
+                                                                  Value="0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)"
+                                                                       Storyboard.TargetName="topLine">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.3"
+                                                                  Value="1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
+                                                                       Storyboard.TargetName="topLine">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.3"
+                                                                  Value="0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)"
+                                                                       Storyboard.TargetName="topLine">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.3"
+                                                                  Value="0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)"
+                                                                       Storyboard.TargetName="bottomLine">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.3"
+                                                                  Value="0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)"
+                                                                       Storyboard.TargetName="bottomLine">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.3"
+                                                                  Value="1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
+                                                                       Storyboard.TargetName="bottomLine">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.3"
+                                                                  Value="0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)"
+                                                                       Storyboard.TargetName="bottomLine">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.3"
+                                                                  Value="0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)"
+                                                                       Storyboard.TargetName="centerLine">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.3"
+                                                                  Value="1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
+                                                                       Storyboard.TargetName="centerLine">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.3"
+                                                                  Value="0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)"
+                                                                       Storyboard.TargetName="canvas">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.3"
+                                                                  Value="0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Viewbox VerticalAlignment="Center">
+                            <Canvas x:Name="canvas"
+                                    Width="24"
+                                    Height="24"
+                                    RenderTransformOrigin="0.5,0.5">
+                                <Canvas.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform />
+                                        <SkewTransform />
+                                        <RotateTransform />
+                                        <TranslateTransform />
+                                    </TransformGroup>
+                                </Canvas.RenderTransform>
+                                <Rectangle x:Name="topLine"
+                                           Fill="{TemplateBinding Foreground}"
+                                           Height="2"
+                                           Canvas.Left="3"
+                                           RadiusY="0"
+                                           RadiusX="0"
+                                           Canvas.Top="6"
+                                           Width="18"
+                                           RenderTransformOrigin="0.5,0.5">
+                                    <Rectangle.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform />
+                                            <SkewTransform />
+                                            <RotateTransform />
+                                            <TranslateTransform />
+                                        </TransformGroup>
+                                    </Rectangle.RenderTransform>
+                                </Rectangle>
+                                <Rectangle x:Name="centerLine"
+                                           Fill="{TemplateBinding Foreground}"
+                                           Height="2"
+                                           Canvas.Left="3"
+                                           RadiusY="0"
+                                           RadiusX="0"
+                                           Canvas.Top="11"
+                                           Width="18"
+                                           RenderTransformOrigin="0.5,0.5">
+                                    <Rectangle.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform />
+                                            <SkewTransform />
+                                            <RotateTransform />
+                                            <TranslateTransform />
+                                        </TransformGroup>
+                                    </Rectangle.RenderTransform>
+                                </Rectangle>
+                                <Rectangle x:Name="bottomLine"
+                                           Fill="{TemplateBinding Foreground}"
+                                           Height="2"
+                                           Canvas.Left="3"
+                                           RadiusY="0"
+                                           RadiusX="0"
+                                           Canvas.Top="16"
+                                           Width="18"
+                                           RenderTransformOrigin="0.5,0.5">
+                                    <Rectangle.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform />
+                                            <SkewTransform />
+                                            <RotateTransform />
+                                            <TranslateTransform />
+                                        </TransformGroup>
+                                    </Rectangle.RenderTransform>
+                                </Rectangle>
+                            </Canvas>
+                        </Viewbox>
+                        <ContentControl HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}" />
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
     <Style TargetType="controls:ReflectionPanel">
         <Setter Property="HorizontalAlignment"
                 Value="Center" />
@@ -12,43 +252,26 @@
                 <ControlTemplate TargetType="controls:ReflectionPanel">
                     <Grid x:Name="RootLayout"
                           Background="{TemplateBinding Background}">
-                        <!--#region µ¹Ó°-->
-                        <!--ÒÔ¿Ø¼þµ×²¿ÖÐÐÄ×÷Îª±ä»»µã-->
+                        <!--#region å€’å½±-->
+                        <!--ä»¥æŽ§ä»¶åº•éƒ¨ä¸­å¿ƒä½œä¸ºå˜æ¢ç‚¹-->
                         <Image x:Name="ReflectionImage"
                                Stretch="None"
                                RenderTransformOrigin="0.5,1">
                             <Image.RenderTransform>
                                 <TransformGroup>
-                                    <!--ÒÔ¿Ø¼þµ×²¿·´×ª¿Ø¼þ-->
+                                    <!--ä»¥æŽ§ä»¶åº•éƒ¨åè½¬æŽ§ä»¶-->
                                     <ScaleTransform ScaleY="-1" />
-                                    <!--µ¹Ó°ÓëÊµ¼ÊÄÚÈÝµÄ¼ä¾à-->
+                                    <!--å€’å½±ä¸Žå®žé™…å†…å®¹çš„é—´è·-->
                                     <TranslateTransform x:Name="SpacingTransform"
                                                         Y="0" />
                                 </TransformGroup>
                             </Image.RenderTransform>
                         </Image>
                         <!--#endregion-->
-                        <!--#region Êµ¼ÊÄÚÈÝ-->
+                        <!--#region å®žé™…å†…å®¹-->
                         <ContentControl x:Name="ContentBorder"
                                         Content="{TemplateBinding Content}" />
                         <!--#endregion-->
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    <Style TargetType="controls:DisplayMemoryUsage">
-        <Setter Property="Background"
-                Value="Black" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="controls:DisplayMemoryUsage">
-                    <Grid Background="{TemplateBinding Background}">
-                        <TextBlock x:Name="txtMemoryUsage"
-                                   Margin="5"
-                                   Foreground="White"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
