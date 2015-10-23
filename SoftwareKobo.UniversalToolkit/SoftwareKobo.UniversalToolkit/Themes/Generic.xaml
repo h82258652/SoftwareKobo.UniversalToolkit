@@ -35,7 +35,9 @@
         <Setter Property="Padding"
                 Value="1" />
         <Setter Property="FontSize"
-                Value="18" />
+                Value="15" />
+        <Setter Property="ContentMargin"
+                Value="5,0,0,0" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:HamburgerButton">
