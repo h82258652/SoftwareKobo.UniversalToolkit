@@ -124,6 +124,14 @@ public sealed partial class App : Bootstrapper
 </Grid>
 ```
 
+## HamburgerButton
+汉堡按钮。
+例子：
+```XAML
+<controls:HamburgerButton IsChecked="{Binding ElementName=view,Path=IsPaneOpen,Mode=TwoWay}"></controls:HamburgerButton>
+<SplitView x:Name="view"></SplitView>
+```
+
 ## ReflectionPanel
 参见 http://www.cnblogs.com/h82258652/p/4839649.html
 
