@@ -128,7 +128,7 @@ public sealed partial class App : Bootstrapper
 汉堡按钮。
 例子：
 ```XAML
-<controls:HamburgerButton IsChecked="{Binding ElementName=view,Path=IsPaneOpen,Mode=TwoWay}"></controls:HamburgerButton>
+<controls:HamburgerButton IsChecked="{Binding ElementName=view,Path=IsPaneOpen,Mode=TwoWay}" Height="37" Content="这是一个汉堡按钮"></controls:HamburgerButton>
 <SplitView x:Name="view"></SplitView>
 ```
 

@@ -124,7 +124,8 @@
     <Compile Include="AwaitableUI\FrameworkElementExtensions.cs" />
     <Compile Include="AwaitableUI\RoutedEventHandlerTaskSource.cs" />
     <Compile Include="AwaitableUI\StoryboardExtensions.cs" />
-    <Compile Include="Behaviors\ItemClickBehaviors.cs" />
+    <Compile Include="Behaviors\ItemClickBehavior.cs" />
+    <Compile Include="Behaviors\TimeoutAction.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Controls\AdaptiveCollectionView.cs" />
     <Compile Include="Controls\AdaptiveCollectionViewItem.cs" />

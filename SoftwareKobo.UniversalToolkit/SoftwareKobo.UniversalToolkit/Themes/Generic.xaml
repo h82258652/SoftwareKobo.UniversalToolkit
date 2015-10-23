@@ -28,20 +28,19 @@
                 Value="True" />
         <Setter Property="BorderThickness"
                 Value="1" />
-        <Setter Property="HorizontalContentAlignment"
+        <Setter Property="HorizontalAlignment"
                 Value="Center" />
-        <Setter Property="VerticalContentAlignment"
+        <Setter Property="VerticalAlignment"
                 Value="Center" />
-        <Setter Property="Width"
-                Value="37" />
-        <Setter Property="Height"
-                Value="37" />
         <Setter Property="Padding"
                 Value="1" />
+        <Setter Property="FontSize"
+                Value="18" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:HamburgerButton">
-                    <Border Background="{TemplateBinding Background}">
+                    <StackPanel Background="{TemplateBinding Background}"
+                                Orientation="Horizontal">
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CheckStates">
                                 <VisualState x:Name="Checked">
@@ -166,7 +165,7 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Viewbox>
+                        <Viewbox VerticalAlignment="Center">
                             <Canvas x:Name="canvas"
                                     Width="24"
                                     Height="24"
@@ -235,7 +234,10 @@
                                 </Rectangle>
                             </Canvas>
                         </Viewbox>
-                    </Border>
+                        <ContentControl HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Content="{TemplateBinding Content}" />
+                    </StackPanel>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

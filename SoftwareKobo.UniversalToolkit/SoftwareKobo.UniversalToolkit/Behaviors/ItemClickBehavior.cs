@@ -7,9 +7,9 @@ namespace SoftwareKobo.UniversalToolkit.Behaviors
 {
     [TypeConstraint(typeof(ListViewBase))]
     [ContentProperty(Name = nameof(Actions))]
-    public sealed class ItemClickBehaviors : DependencyObject, IBehavior
+    public sealed class ItemClickBehavior : DependencyObject, IBehavior
     {
-        public static readonly DependencyProperty ActionsProperty = DependencyProperty.Register(nameof(Actions), typeof(ActionCollection), typeof(ItemClickBehaviors), new PropertyMetadata(null));
+        public static readonly DependencyProperty ActionsProperty = DependencyProperty.Register(nameof(Actions), typeof(ActionCollection), typeof(ItemClickBehavior), new PropertyMetadata(null));
 
         public ActionCollection Actions
         {
