@@ -28,6 +28,8 @@
 
     // Element Actual Size State Trigger
 
+    // WebView 缓存 IUriToStreamResolver http://www.cnblogs.com/webabcd/archive/2014/06/23/3803384.html
+
     #endregion 完全未动工
 
     #region 大概做了一半？
