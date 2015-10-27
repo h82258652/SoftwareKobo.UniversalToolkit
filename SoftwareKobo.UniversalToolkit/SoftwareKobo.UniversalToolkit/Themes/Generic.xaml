@@ -11,7 +11,7 @@
                 <ControlTemplate TargetType="controls:AeroPanel">
                     <Grid>
                         <win2d:CanvasAnimatedControl x:Name="canvas" />
-                        <ContentControl Content="{Binding Content}" />
+                        <ContentControl Content="{TemplateBinding Content}" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
