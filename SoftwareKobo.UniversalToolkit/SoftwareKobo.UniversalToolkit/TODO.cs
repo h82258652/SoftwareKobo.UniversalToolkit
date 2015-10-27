@@ -1,8 +1,7 @@
 ﻿namespace SoftwareKobo.UniversalToolkit
 {
     #region 完全未动工
-
-    // AeroPanel https://github.com/JustinXinLiu/EffectsAndAnimationsWinComposition
+    
     // 下拉刷新、上推加载面板
     // CircleImage
     // Gif Image Control

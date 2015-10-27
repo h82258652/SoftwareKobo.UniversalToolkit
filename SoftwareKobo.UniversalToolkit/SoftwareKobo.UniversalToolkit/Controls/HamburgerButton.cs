@@ -5,8 +5,6 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 {
     public sealed class HamburgerButton : ToggleButton
     {
-        public static readonly DependencyProperty ContentMarginProperty = DependencyProperty.Register(nameof(ContentMargin), typeof(Thickness), typeof(HamburgerButton), new PropertyMetadata(new Thickness()));
-
         public static readonly DependencyProperty IconSizeProperty = DependencyProperty.Register(nameof(IconSize), typeof(double), typeof(HamburgerButton), new PropertyMetadata(default(double)));
 
         public HamburgerButton()
@@ -15,19 +13,7 @@ namespace SoftwareKobo.UniversalToolkit.Controls
             this.Checked += this.HamburgerButton_Checked;
             this.Unchecked += this.HamburgerButton_Unchecked;
         }
-
-        public Thickness ContentMargin
-        {
-            get
-            {
-                return (Thickness)this.GetValue(ContentMarginProperty);
-            }
-            set
-            {
-                this.SetValue(ContentMarginProperty, value);
-            }
-        }
-
+        
         public double IconSize
         {
             get

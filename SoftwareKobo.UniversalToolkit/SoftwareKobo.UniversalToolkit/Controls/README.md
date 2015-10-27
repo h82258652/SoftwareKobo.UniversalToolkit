@@ -48,6 +48,27 @@
 ```
 那么在窗口宽度小于 800 的时候，将会使用 ListView 模式，而大于等于 800 时，则使用 GridView 模式。
 
+## AeroPanel
+结合 Win2D 仿照 Aero 效果的控件。
+例子：
+```XAML
+<Grid>
+    <Grid.ColumnDefinitions>
+		<ColumnDefinition Width="Auto" />
+		<ColumnDefinition Width="*" />
+	</Grid.ColumnDefinitions>
+	<Image x:Name="content"
+           Grid.ColumnSpan="2"
+           Source="your test img uri"
+           Stretch="Fill">
+	<controls:AeroPanel RenderElement="{Binding ElementName=content">
+        <!--在这里放 AeroPanel 的内容。-->
+    </controls:AeroPanel>
+</Grid>
+```
+> 1、AeroPanel 默认会有一个透明浅蓝色遮罩效果，要去除可以修改 MaskColor 为 Transparent。
+> 2、部分情况下可能 AeroPanel 背景渲染和 RenderElement 的位置不正确，可以调用 AeroPanel.UpdateRender 方法刷新背景渲染。
+
 ## DisplayMemoryUsage
 显示内存使用量。
 

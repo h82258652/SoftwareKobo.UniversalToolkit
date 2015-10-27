@@ -11,3 +11,7 @@
 </ListView>
 ```
 > Command 获取的参数直接是 ClickItem 而不是 EventArgs。
+
+## TimeoutAction
+延时命令。
+IsConcurrent 指是否并发。为 false 情况下，若来了新的执行请求，而上次请求还没开始的话，那么则会结束掉上次请求。true 的情况下则不相互影响。
