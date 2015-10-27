@@ -11,7 +11,7 @@ https://www.nuget.org/packages/SoftwareKobo.UniversalToolkit/
 ## 项目进度：
 目前处于 beta。  
 本项目不会有 roadmap 之类的东西，因为需要取决于是否能实现和我有没有空。但是，只要有用的，我都会考虑加进该项目。  
-或者你可以参见：https://github.com/h82258652/SoftwareKobo.UniversalToolkit/blob/master/SoftwareKobo.UniversalToolkit/SoftwareKobo.UniversalToolkit/TODO.cs  
+或者你可以参见：https://github.com/h82258652/SoftwareKobo.UniversalToolkit/blob/developing/SoftwareKobo.UniversalToolkit/SoftwareKobo.UniversalToolkit/TODO.cs  
 里面列出了我认为有用的，虽然不一定会实现（多半因为技术原因，或者我懒=_=）。
 
 ## 这个工具库里面主要有什么：
@@ -38,6 +38,9 @@ https://www.nuget.org/packages/SoftwareKobo.UniversalToolkit/
 
 ## 请问能去掉 Json.NET 的依赖吗？
 抱歉，这点不会，因为 Json.NET 已经是 .NET 平台下大家公认的 Json 实现。对比起 .NET Framework 里各个平台不一样的 Json 实现，Json.NET 统一的 API 你觉得不更好吗？
+
+## 请问能去掉 Win2D 的依赖吗？
+等你学过 Win2D 再来问这个问题吧。因为使用 Win2D 能够方便快速地实现各种效果，例如高斯模糊。
 
 ## 我在使用过程中遇到问题，怎么办？
 你可以在这个项目的 issue 里提出，我会尽量解答。

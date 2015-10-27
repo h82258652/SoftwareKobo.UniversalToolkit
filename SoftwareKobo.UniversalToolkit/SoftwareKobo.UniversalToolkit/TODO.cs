@@ -1,8 +1,7 @@
 ﻿namespace SoftwareKobo.UniversalToolkit
 {
     #region 完全未动工
-
-    // AeroPanel https://github.com/JustinXinLiu/EffectsAndAnimationsWinComposition
+    
     // 下拉刷新、上推加载面板
     // CircleImage
     // Gif Image Control
@@ -27,6 +26,8 @@
     // Tab 和 Pivot 控件。https://msdn.microsoft.com/en-us/library/windows/apps/dn997788.aspx
 
     // Element Actual Size State Trigger
+
+    // WebView 缓存 IUriToStreamResolver http://www.cnblogs.com/webabcd/archive/2014/06/23/3803384.html
 
     #endregion 完全未动工
 

@@ -131,6 +131,7 @@
     <Compile Include="Controls\AdaptiveCollectionViewItem.cs" />
     <Compile Include="Controls\AdaptiveCollectionViewMode.cs" />
     <Compile Include="Controls\AdaptiveCollectionViewModeChangedEventArgs.cs" />
+    <Compile Include="Controls\AeroPanel.cs" />
     <Compile Include="Controls\DisplayMemoryUsage.cs" />
     <Compile Include="Controls\Dock.cs" />
     <Compile Include="Controls\DockPanel.cs" />
