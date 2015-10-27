@@ -12,13 +12,13 @@ using Windows.Graphics.Display;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
-// The Templated Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234235
-
 namespace SoftwareKobo.UniversalToolkit.Controls
 {
+    [ContentProperty(Name = nameof(Content))]
     public sealed class AeroPanel : Control
     {
         public static readonly DependencyProperty ContentProperty = DependencyProperty.Register(nameof(Content), typeof(object), typeof(AeroPanel), new PropertyMetadata(null));
