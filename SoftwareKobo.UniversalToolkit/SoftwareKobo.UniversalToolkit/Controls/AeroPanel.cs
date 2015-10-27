@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel;
 using Windows.Foundation;
 using Windows.Graphics.DirectX;
 using Windows.Graphics.Display;
@@ -84,6 +85,11 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 
         public async void UpdateRender()
         {
+            if (DesignMode.DesignModeEnabled)
+            {
+                return;
+            }
+
             if (this._canvas.ReadyToDraw == false)
             {
                 return;
