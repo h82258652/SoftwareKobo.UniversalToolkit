@@ -23,22 +23,8 @@ namespace SoftwareKobo.UniversalToolkit.Controls
     {
         public static readonly DependencyProperty ContentProperty = DependencyProperty.Register(nameof(Content), typeof(object), typeof(AeroPanel), new PropertyMetadata(null));
 
+        public static readonly DependencyProperty MaskColorProperty = DependencyProperty.Register(nameof(MaskColor), typeof(Color), typeof(AeroPanel), new PropertyMetadata(Colors.Transparent, MaskColorChanged));
         public static readonly DependencyProperty RenderElementProperty = DependencyProperty.Register(nameof(RenderElement), typeof(FrameworkElement), typeof(AeroPanel), new PropertyMetadata(null, RenderElementChanged));
-
-        public static readonly DependencyProperty MaskColorProperty = DependencyProperty.Register(nameof(MaskColor), typeof(Color), typeof(AeroPanel), new PropertyMetadata(default(Color)));
-
-        public Color MaskColor
-        {
-            get
-            {
-                return (Color)this.GetValue(MaskColorProperty);
-            }
-            set
-            {
-                this.SetValue(MaskColorProperty, value);
-            }
-        }
-
         private byte[] _bytes;
 
         private CanvasAnimatedControl _canvas;
@@ -48,6 +34,8 @@ namespace SoftwareKobo.UniversalToolkit.Controls
         private GaussianBlurEffect _effect;
 
         private int _heightInPixels;
+
+        private Color _maskColor;
 
         private int _widthInPixels;
 
@@ -67,6 +55,18 @@ namespace SoftwareKobo.UniversalToolkit.Controls
             set
             {
                 this.SetValue(ContentProperty, value);
+            }
+        }
+
+        public Color MaskColor
+        {
+            get
+            {
+                return (Color)this.GetValue(MaskColorProperty);
+            }
+            set
+            {
+                this.SetValue(MaskColorProperty, value);
             }
         }
 
@@ -167,6 +167,14 @@ namespace SoftwareKobo.UniversalToolkit.Controls
             this._canvas.Draw += this.Canvas_Draw;
         }
 
+        private static void MaskColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            AeroPanel obj = (AeroPanel)d;
+            Color value = (Color)e.NewValue;
+
+            obj._maskColor = value;
+        }
+
         private static void RenderElementChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             AeroPanel obj = (AeroPanel)d;
@@ -222,11 +230,11 @@ namespace SoftwareKobo.UniversalToolkit.Controls
                     {
                         clds.DrawImage(bitmap);
                     }
-                    clds.FillRectangle(0, 0, this._widthInPixels, this._heightInPixels, this.MaskColor);
+                    clds.FillRectangle(0, 0, this._widthInPixels, this._heightInPixels, this._maskColor);
                 }
                 else
                 {
-                    clds.FillRectangle(0, 0, (float)sender.Size.Width, (float)sender.Size.Height, this.MaskColor);
+                    clds.FillRectangle(0, 0, (float)sender.Size.Width, (float)sender.Size.Height, this._maskColor);
                 }
             }
 
