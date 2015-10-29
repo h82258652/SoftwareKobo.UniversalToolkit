@@ -141,6 +141,7 @@
     </Compile>
     <Compile Include="Controls\ExtendedSplashScreenContent.cs" />
     <Compile Include="Controls\FullWindowPopup.cs" />
+    <Compile Include="Controls\HamburgerItem.cs" />
     <Compile Include="Controls\HamburgerMenu.cs" />
     <Compile Include="Controls\OrientedSize.cs" />
     <Compile Include="Controls\ReflectionPanel.cs" />

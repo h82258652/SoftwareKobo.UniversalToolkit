@@ -145,6 +145,9 @@ public sealed partial class App : Bootstrapper
 </Grid>
 ```
 
+## HamburgerItem
+汉堡菜单内容，由 Icon 属性和 Text 属性组成。继承自 Button。
+
 ## HamburgerMenu
 汉堡按钮。
 例子：
