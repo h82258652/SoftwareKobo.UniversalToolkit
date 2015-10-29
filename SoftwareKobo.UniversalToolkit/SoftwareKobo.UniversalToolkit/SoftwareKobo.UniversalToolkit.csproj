@@ -125,6 +125,7 @@
     <Compile Include="AwaitableUI\RoutedEventHandlerTaskSource.cs" />
     <Compile Include="AwaitableUI\StoryboardExtensions.cs" />
     <Compile Include="Behaviors\ItemClickBehavior.cs" />
+    <Compile Include="Behaviors\ListViewBaseScrollBehavior.cs" />
     <Compile Include="Behaviors\TimeoutAction.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Controls\AdaptiveCollectionView.cs" />
@@ -145,6 +146,7 @@
     <Compile Include="Controls\ReflectionPanel.cs" />
     <Compile Include="Controls\WaterfallPanel.cs" />
     <Compile Include="Controls\WrapPanel.cs" />
+    <Compile Include="Converters\ItemClickEventArgsConverter.cs" />
     <Compile Include="Converters\Json\UnixTimestampConverter.cs" />
     <Compile Include="Extensions\DebugSettingsExtensions.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
@@ -158,12 +160,12 @@
     <Compile Include="Mvvm\IncrementalItemSourceBase.cs" />
     <Compile Include="Mvvm\IncrementalLoadingCollection.cs" />
     <Compile Include="Mvvm\IoC.cs" />
-    <Compile Include="Mvvm\IView.cs" />
-    <Compile Include="Mvvm\Messenger.cs" />
     <Compile Include="Mvvm\ModelVerifyErrors.cs" />
     <Compile Include="Mvvm\PreferredConstructorAttribute.cs" />
-    <Compile Include="Mvvm\ReceiveFromViewModelHandler.cs" />
+    <Compile Include="Mvvm\IView.cs" />
+    <Compile Include="Mvvm\Messenger.cs" />
     <Compile Include="Mvvm\ViewExtensions.cs" />
+    <Compile Include="Mvvm\ViewModelBase.cs" />
     <Compile Include="Services\LauncherServices\KnownFolderService.cs" />
     <Compile Include="Services\LauncherServices\SystemSettingsService.cs" />
     <Compile Include="Services\LauncherServices\StorePage.cs" />
@@ -188,7 +190,6 @@
     <Compile Include="Mvvm\DelegateCommand.cs" />
     <Compile Include="Mvvm\DelegateCommandGeneric.cs" />
     <Compile Include="Mvvm\VerifiableBase.cs" />
-    <Compile Include="Mvvm\ViewModelBase.cs" />
     <Compile Include="Mvvm\ViewModelLocatorBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Storage\ApplicationContainerSettings.cs" />

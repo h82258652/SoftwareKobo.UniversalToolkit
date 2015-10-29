@@ -218,6 +218,14 @@
         }
       },
       "NuGet.CommandLine/2.8.6": {},
+      "PlatformSpecific.Analyzer/1.0.5": {
+        "compile": {
+          "lib/uap/PlatformSpecific.dll": {}
+        },
+        "runtime": {
+          "lib/uap/PlatformSpecific.dll": {}
+        }
+      },
       "System.AppContext/4.0.0": {
         "dependencies": {
           "System.Collections": "[4.0.0, )",
@@ -1823,6 +1831,14 @@
         }
       },
       "NuGet.CommandLine/2.8.6": {},
+      "PlatformSpecific.Analyzer/1.0.5": {
+        "compile": {
+          "lib/uap/PlatformSpecific.dll": {}
+        },
+        "runtime": {
+          "lib/uap/PlatformSpecific.dll": {}
+        }
+      },
       "System.AppContext/4.0.0": {
         "dependencies": {
           "System.Collections": "[4.0.0, )",
@@ -3464,6 +3480,14 @@
         }
       },
       "NuGet.CommandLine/2.8.6": {},
+      "PlatformSpecific.Analyzer/1.0.5": {
+        "compile": {
+          "lib/uap/PlatformSpecific.dll": {}
+        },
+        "runtime": {
+          "lib/uap/PlatformSpecific.dll": {}
+        }
+      },
       "System.AppContext/4.0.0": {
         "dependencies": {
           "System.Collections": "[4.0.0, )",
@@ -5110,6 +5134,14 @@
         }
       },
       "NuGet.CommandLine/2.8.6": {},
+      "PlatformSpecific.Analyzer/1.0.5": {
+        "compile": {
+          "lib/uap/PlatformSpecific.dll": {}
+        },
+        "runtime": {
+          "lib/uap/PlatformSpecific.dll": {}
+        }
+      },
       "System.AppContext/4.0.0": {
         "dependencies": {
           "System.Collections": "[4.0.0, )",
@@ -6751,6 +6783,14 @@
         }
       },
       "NuGet.CommandLine/2.8.6": {},
+      "PlatformSpecific.Analyzer/1.0.5": {
+        "compile": {
+          "lib/uap/PlatformSpecific.dll": {}
+        },
+        "runtime": {
+          "lib/uap/PlatformSpecific.dll": {}
+        }
+      },
       "System.AppContext/4.0.0": {
         "dependencies": {
           "System.Collections": "[4.0.0, )",
@@ -8397,6 +8437,14 @@
         }
       },
       "NuGet.CommandLine/2.8.6": {},
+      "PlatformSpecific.Analyzer/1.0.5": {
+        "compile": {
+          "lib/uap/PlatformSpecific.dll": {}
+        },
+        "runtime": {
+          "lib/uap/PlatformSpecific.dll": {}
+        }
+      },
       "System.AppContext/4.0.0": {
         "dependencies": {
           "System.Collections": "[4.0.0, )",
@@ -10038,6 +10086,14 @@
         }
       },
       "NuGet.CommandLine/2.8.6": {},
+      "PlatformSpecific.Analyzer/1.0.5": {
+        "compile": {
+          "lib/uap/PlatformSpecific.dll": {}
+        },
+        "runtime": {
+          "lib/uap/PlatformSpecific.dll": {}
+        }
+      },
       "System.AppContext/4.0.0": {
         "dependencies": {
           "System.Collections": "[4.0.0, )",
@@ -12122,6 +12178,20 @@
         "NuGet.CommandLine.nuspec",
         "package/services/metadata/core-properties/0e4a340237bf4eedb236f5e1d792d111.psmdcp",
         "tools/NuGet.exe"
+      ]
+    },
+    "PlatformSpecific.Analyzer/1.0.5": {
+      "sha512": "VFCcriB3nsWLklyFRgIihnDTL+BVV6NO+p5CpgSOEHvP5/nRWGI0t2dcTHmUMZtTKRByrpsoaROTjRLzS0VAXw==",
+      "type": "Package",
+      "files": [
+        "[Content_Types].xml",
+        "_rels/.rels",
+        "analyzers/dotnet/PlatformSpecific.Analyzer.dll",
+        "lib/uap/PlatformSpecific.dll",
+        "package/services/metadata/core-properties/d7495a1d727d41a385c8972bf1410165.psmdcp",
+        "PlatformSpecific.Analyzer.nuspec",
+        "tools/install.ps1",
+        "tools/uninstall.ps1"
       ]
     },
     "System.AppContext/4.0.0": {
@@ -14847,6 +14917,7 @@
       "Microsoft.NETCore.UniversalWindowsPlatform >= 5.0.0",
       "Newtonsoft.Json >= 7.0.1",
       "NuGet.CommandLine >= 2.8.6",
+      "PlatformSpecific.Analyzer >= 1.0.5",
       "Win2D.uwp >= 1.7.0"
     ],
     "UAP,Version=v10.0": []

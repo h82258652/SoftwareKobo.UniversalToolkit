@@ -26,7 +26,8 @@ namespace SoftwareKobo.UniversalToolkit.Utils
         /// <summary>
         /// 释放托管对象。
         /// </summary>
-        protected virtual void DisposeManagedObjects()
+        /// <param name="disposing">false 时为析构函数调用，true 时为 Dispose 方法调用。</param>
+        protected virtual void DisposeManagedObjects(bool disposing)
         {
         }
 
@@ -47,7 +48,7 @@ namespace SoftwareKobo.UniversalToolkit.Utils
             {
                 if (isDisposingByDispose)
                 {
-                    this.DisposeManagedObjects();
+                    this.DisposeManagedObjects(isDisposingByDispose);
                 }
 
                 this.DisposeUnmanagedObjects();

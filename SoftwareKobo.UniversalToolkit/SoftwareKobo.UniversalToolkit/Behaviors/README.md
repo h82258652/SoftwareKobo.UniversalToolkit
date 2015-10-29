@@ -10,7 +10,10 @@
 	</Interactivity:Interaction.Behaviors>
 </ListView>
 ```
-> Command 获取的参数直接是 ClickItem 而不是 EventArgs。
+> Command 参数是 ItemClickEventArgs。建议配合 ItemClickEventArgsConverter 使用。
+
+## ListViewBaseScrollBehavior
+ListView、GridView 等滚动方向行为。
 
 ## TimeoutAction
 延时命令。

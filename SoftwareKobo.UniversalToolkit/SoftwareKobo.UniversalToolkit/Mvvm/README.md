@@ -14,9 +14,7 @@ DelegateCommand 的泛型实现。
 继承自 BindableBase，视图模型基类。
 
 ## 如何在 App 中使用该 MVVM 框架：
-> **本 MVVM 框架需要视图 View 与视图模型 ViewModel 名称必须严格遵守**  
-> **ViewName + "Model" 等于 ViewModelName**  
-> **即假设有 View 叫 MainView，则 ViewModel 必须叫 MainViewModel。**
+> View 必须实现 IView 接口。
 
 View 代码：
 ```C#
@@ -24,6 +22,7 @@ public sealed class MainView : Page, IView
 {
     public MainView()
     {
+		this.InitializeComponent();
     }
 
 	protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -38,10 +37,9 @@ public sealed class MainView : Page, IView
         Messenger.Unregister(this);
     }
 
-    public void ReceiveFromViewModel(ViewModelBase originSourceViewModel, dynamic parameter)
+    public void ReceiveFromViewModel(dynamic parameter)
     {
-		// 该方法实现 IView 接口，以接收从 ViewModel 发送过来的消息。
-		// originSourceViewModel 参数应该尽量不用，仅在特殊情况下，例如程序运行时存在多个该 View 所对应的 ViewModel 的实例时需要用作检查才使用。
+		// 实现该方法自 IView 接口，以接收从 ViewModel 发送过来的消息。
 		Debug.WriteLine("ViewModel send:" + parameter);
     }
 
@@ -56,10 +54,9 @@ ViewModel 代码：
 ```C#
 public class MainViewModel : ViewModelBase
 {
-	protected override void ReceiveFromView(FrameworkElement originSourceView, dynamic parameter)
+	protected override void ReceiveFromView(dynamic parameter)
     {
 		// 重写该方法以接收来自 View 的消息。
-		// originSourceView 同上面 View 的情况，应尽量不用。
 		Debug.WriteLine("View send:" + parameter);
 
 		// 发送消息到对应的 View。
