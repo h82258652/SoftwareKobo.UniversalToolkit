@@ -34,7 +34,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style TargetType="controls:HamburgerButton">
+    <Style TargetType="controls:HamburgerMenu">
         <Setter Property="Foreground"
                 Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
         <Setter Property="Background"
@@ -53,7 +53,7 @@
                 Value="28" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="controls:HamburgerButton">
+                <ControlTemplate TargetType="controls:HamburgerMenu">
                     <StackPanel Background="{TemplateBinding Background}"
                                 Orientation="Horizontal">
                         <VisualStateManager.VisualStateGroups>
