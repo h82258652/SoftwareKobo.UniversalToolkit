@@ -29,6 +29,11 @@
 
     // WebView 缓存 IUriToStreamResolver http://www.cnblogs.com/webabcd/archive/2014/06/23/3803384.html
 
+    // CarouselPanel
+    // https://github.com/neurosoup/mymoon/blob/97c2c96cb5edfd96809fcfb63879e9a2149848ad/Framework/VisualSingularity.Moonlight.Composite.Presentation/Controls/CarouselPanel.cs
+    // https://github.com/jmreynolds/SuperProductiveWPFApps/blob/b615f527af600a18526c1ae19e0f4b7b4db4b2fd/ListBoxesWPF/ListBoxesWPF/CarouselPanel.cs
+    // https://github.com/Slifer7/ikariam2009/blob/1ff102adbea14366d1524ae75b386187ba5392a7/Database/Ikariam9.1/Ikariam9/CarouselCustomControl/Carousel.cs
+
     #endregion 完全未动工
 
     #region 大概做了一半？

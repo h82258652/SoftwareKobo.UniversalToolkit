@@ -9,7 +9,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 namespace SoftwareKobo.UniversalToolkit.Behaviors
 {
     [TypeConstraint(typeof(ListViewBase))]
-    public sealed class ListViewBaseScrollBehavior : IBehavior
+    public sealed class ListViewBaseScrollBehavior : DependencyObject, IBehavior
     {
         private ScrollBar _horizontalBar;
 
@@ -38,19 +38,18 @@ namespace SoftwareKobo.UniversalToolkit.Behaviors
                 ScrollViewer scrollViewer = dataView.GetDescendantsOfType<ScrollViewer>().FirstOrDefault();
                 if (scrollViewer != null)
                 {
-                    var scrollBars = scrollViewer.GetDescendantsOfType<ScrollBar>().ToList();
-                    ScrollBar horizontalBar = scrollBars.FirstOrDefault(temp => temp.Orientation == Orientation.Horizontal);
-                    if (horizontalBar != null)
+                    this.AttachScrollBar(scrollViewer);
+                }
+                else
+                {
+                    RoutedEventHandler loadedHandler = null;
+                    loadedHandler = (sender, e) =>
                     {
-                        this._horizontalBar = horizontalBar;
-                        this._horizontalBar.ValueChanged += this.HorizontalBar_ValueChanged;
-                    }
-                    ScrollBar verticalBar = scrollBars.FirstOrDefault(temp => temp.Orientation == Orientation.Vertical);
-                    if (verticalBar != null)
-                    {
-                        this._verticalBar = verticalBar;
-                        this._verticalBar.ValueChanged += this.VerticalBar_ValueChanged;
-                    }
+                        scrollViewer = dataView.GetDescendantsOfType<ScrollViewer>().FirstOrDefault();
+                        this.AttachScrollBar(scrollViewer);
+                        dataView.Loaded -= loadedHandler;
+                    };
+                    dataView.Loaded += loadedHandler;
                 }
             }
         }
@@ -66,6 +65,23 @@ namespace SoftwareKobo.UniversalToolkit.Behaviors
                 this._verticalBar.ValueChanged -= this.VerticalBar_ValueChanged;
             }
             this.AssociatedObject = null;
+        }
+
+        private void AttachScrollBar(ScrollViewer scrollViewer)
+        {
+            var scrollBars = scrollViewer.GetDescendantsOfType<ScrollBar>().ToList();
+            ScrollBar horizontalBar = scrollBars.FirstOrDefault(temp => temp.Orientation == Orientation.Horizontal);
+            if (horizontalBar != null)
+            {
+                this._horizontalBar = horizontalBar;
+                this._horizontalBar.ValueChanged += this.HorizontalBar_ValueChanged;
+            }
+            ScrollBar verticalBar = scrollBars.FirstOrDefault(temp => temp.Orientation == Orientation.Vertical);
+            if (verticalBar != null)
+            {
+                this._verticalBar = verticalBar;
+                this._verticalBar.ValueChanged += this.VerticalBar_ValueChanged;
+            }
         }
 
         private void HorizontalBar_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
