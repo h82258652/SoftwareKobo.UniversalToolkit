@@ -571,8 +571,6 @@
                 Value="{ThemeResource TextControlThemeMinHeight}" />
         <Setter Property="Foreground"
                 Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
-        <Setter Property="Background"
-                Value="{ThemeResource SystemControlBackgroundAltHighBrush}" />
         <Setter Property="BorderBrush"
                 Value="{ThemeResource SystemControlForegroundChromeDisabledLowBrush}" />
         <Setter Property="SelectionHighlightColor"
@@ -713,16 +711,6 @@
                                                                        Storyboard.TargetProperty="Foreground">
                                             <DiscreteObjectKeyFrame KeyTime="0"
                                                                     Value="{ThemeResource SystemControlPageTextChromeBlackMediumLowBrush}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BackgroundElement"
-                                                                       Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0"
-                                                                    Value="{ThemeResource SystemControlBackgroundChromeWhiteBrush}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BackgroundElement"
-                                                                       Storyboard.TargetProperty="Opacity">
-                                            <DiscreteObjectKeyFrame KeyTime="0"
-                                                                    Value="{ThemeResource TextControlBackgroundFocusedOpacity}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement"
                                                                        Storyboard.TargetProperty="BorderBrush">
