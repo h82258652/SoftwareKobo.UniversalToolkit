@@ -150,6 +150,7 @@
     <Compile Include="Controls\TextBoxEx.cs" />
     <Compile Include="Controls\WaterfallPanel.cs" />
     <Compile Include="Controls\WrapPanel.cs" />
+    <Compile Include="Converters\IsNullOrEmptyConverter.cs" />
     <Compile Include="Converters\ItemClickEventArgsConverter.cs" />
     <Compile Include="Converters\Json\UnixTimestampConverter.cs" />
     <Compile Include="Extensions\DebugSettingsExtensions.cs" />
@@ -206,6 +207,7 @@
     <Compile Include="Storage\ISettings.cs" />
     <Compile Include="Storage\SettingsStrategy.cs" />
     <Compile Include="Helpers\DeviceFamily.cs" />
+    <Compile Include="Triggers\CompositeStateTrigger.cs" />
     <Compile Include="Triggers\DeviceFamilyTrigger.cs" />
     <Compile Include="Triggers\InputDeviceTypeTrigger.cs" />
     <Compile Include="Triggers\Orientation.cs" />
