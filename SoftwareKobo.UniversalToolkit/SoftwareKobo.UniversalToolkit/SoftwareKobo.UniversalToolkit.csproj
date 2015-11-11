@@ -168,6 +168,7 @@
     <Compile Include="Mvvm\PreferredConstructorAttribute.cs" />
     <Compile Include="Mvvm\IView.cs" />
     <Compile Include="Mvvm\Messenger.cs" />
+    <Compile Include="Mvvm\VerifiableViewModelBase.cs" />
     <Compile Include="Mvvm\ViewExtensions.cs" />
     <Compile Include="Mvvm\ViewModelBase.cs" />
     <Compile Include="Services\LauncherServices\KnownFolderService.cs" />

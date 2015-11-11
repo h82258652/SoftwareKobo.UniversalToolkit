@@ -10,10 +10,10 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
     {
         private IList<ValidationResult> _results = new List<ValidationResult>();
 
-        internal ModelVerifyErrors(VerifiableBase model)
+        internal ModelVerifyErrors(object verifiableObject)
         {
-            ValidationContext context = new ValidationContext(model);
-            Validator.TryValidateObject(model, context, this._results, true);
+            ValidationContext context = new ValidationContext(verifiableObject);
+            Validator.TryValidateObject(verifiableObject, context, this._results, true);
             foreach (var result in this._results)
             {
                 this.Add(result.ErrorMessage);

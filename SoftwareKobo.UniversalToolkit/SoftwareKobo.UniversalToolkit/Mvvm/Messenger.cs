@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Windows.UI.Core;
+using Windows.UI.Xaml;
 
 namespace SoftwareKobo.UniversalToolkit.Mvvm
 {
@@ -72,7 +75,7 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
             }
         }
 
-        internal static void Process(ViewModelBase viewModel, object parameter)
+        internal static async void Process(ViewModelBase viewModel, object parameter)
         {
             for (int i = 0; i < _registeredViews.Count; i++)
             {
@@ -80,9 +83,33 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
                 IView registeredView;
                 if (registeredViewReference.TryGetTarget(out registeredView))
                 {
-                    if (registeredView.DataContext == viewModel)
+                    DependencyObject element = registeredView as DependencyObject;
+                    if (element != null)
                     {
-                        registeredView.ReceiveFromViewModel(parameter);
+                        if (element.Dispatcher.HasThreadAccess)
+                        {
+                            if (registeredView.DataContext == viewModel)
+                            {
+                                registeredView.ReceiveFromViewModel(parameter);
+                            }
+                        }
+                        else
+                        {
+                            await element.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                            {
+                                if (registeredView.DataContext == viewModel)
+                                {
+                                    registeredView.ReceiveFromViewModel(parameter);
+                                }
+                            });
+                        }
+                    }
+                    else
+                    {
+                        if (registeredView.DataContext == viewModel)
+                        {
+                            registeredView.ReceiveFromViewModel(parameter);
+                        }
                     }
                 }
                 else
