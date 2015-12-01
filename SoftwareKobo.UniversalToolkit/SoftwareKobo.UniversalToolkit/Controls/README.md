@@ -145,11 +145,14 @@ public sealed partial class App : Bootstrapper
 </Grid>
 ```
 
-## HamburgerButton
+## HamburgerItem
+汉堡菜单内容，由 Icon 属性和 Text 属性组成。继承自 Button。
+
+## HamburgerMenu
 汉堡按钮。
 例子：
 ```XAML
-<controls:HamburgerButton IsChecked="{Binding ElementName=view,Path=IsPaneOpen,Mode=TwoWay}" Height="37" Content="这是一个汉堡按钮"></controls:HamburgerButton>
+<controls:HamburgerMenu IsChecked="{Binding ElementName=view,Path=IsPaneOpen,Mode=TwoWay}" Height="37" Content="这是一个汉堡按钮"></controls:HamburgerMenu>
 <SplitView x:Name="view"></SplitView>
 ```
 

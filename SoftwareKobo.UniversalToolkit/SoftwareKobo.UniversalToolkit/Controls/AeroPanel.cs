@@ -6,19 +6,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel;
 using Windows.Foundation;
 using Windows.Graphics.DirectX;
 using Windows.Graphics.Display;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
-// The Templated Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234235
-
 namespace SoftwareKobo.UniversalToolkit.Controls
 {
+    [ContentProperty(Name = nameof(Content))]
     public sealed class AeroPanel : Control
     {
         public static readonly DependencyProperty ContentProperty = DependencyProperty.Register(nameof(Content), typeof(object), typeof(AeroPanel), new PropertyMetadata(null));
@@ -84,6 +85,11 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 
         public async void UpdateRender()
         {
+            if (DesignMode.DesignModeEnabled)
+            {
+                return;
+            }
+
             if (this._canvas.ReadyToDraw == false)
             {
                 return;

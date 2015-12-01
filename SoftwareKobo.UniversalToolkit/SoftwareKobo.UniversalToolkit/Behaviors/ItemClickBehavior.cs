@@ -48,11 +48,12 @@ namespace SoftwareKobo.UniversalToolkit.Behaviors
             {
                 view.ItemClick -= this.OnItemClick;
             }
+            this.AssociatedObject = null;
         }
 
         private void OnItemClick(object sender, ItemClickEventArgs e)
         {
-            Interaction.ExecuteActions(sender, Actions, e.ClickedItem);
+            Interaction.ExecuteActions(sender, Actions, e);
         }
     }
 }

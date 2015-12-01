@@ -1,5 +1,5 @@
-﻿using Windows.ApplicationModel;
-using Windows.UI.Xaml;
+﻿using System;
+using Windows.ApplicationModel;
 
 namespace SoftwareKobo.UniversalToolkit.Mvvm
 {
@@ -8,11 +8,6 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
     /// </summary>
     public abstract class ViewModelBase : BindableBase
     {
-        protected ViewModelBase()
-        {
-            Messenger.Register(this);
-        }
-
         /// <summary>
         /// 指示当前是否处于设计模式。
         /// </summary>
@@ -24,17 +19,11 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
             }
         }
 
-        protected override void DisposeManagedObjects()
-        {
-            Messenger.Unregister(this);
-        }
-
         /// <summary>
         /// 接收来自 View 的消息。
         /// </summary>
-        /// <param name="originSourceView">发送消息的 View。</param>
         /// <param name="parameter">消息内容。</param>
-        protected internal virtual void ReceiveFromView(FrameworkElement originSourceView, dynamic parameter)
+        protected internal virtual void ReceiveFromView(dynamic parameter)
         {
         }
 

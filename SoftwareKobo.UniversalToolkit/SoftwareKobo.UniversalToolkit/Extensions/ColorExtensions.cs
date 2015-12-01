@@ -144,25 +144,7 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
         {
             return Color.FromArgb(value.A, (byte)(255 - value.R), (byte)(255 - value.G), (byte)(255 - value.B));
         }
-
-        public static Color Parse(string value)
-        {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
-
-            Color? color = TryParse(value);
-            if (color.HasValue)
-            {
-                return color.Value;
-            }
-            else
-            {
-                throw new ArgumentException("unknown color format", nameof(value));
-            }
-        }
-
+        
         public static Color? TryFromHex(string hex)
         {
             if (hex == null)
@@ -212,15 +194,21 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
             return null;
         }
 
+        public static Color Parse(string value)
+        {
+            return (Color)XamlBindingHelper.ConvertValue(typeof(Color), value);
+        }
+
         public static Color? TryParse(string value)
         {
-            Color? color;
-            color = TryFromHex(value);
-            if (color.HasValue == false)
+            try
             {
-                color = TryFromName(value);
+                return Parse(value);
             }
-            return color;
+            catch
+            {
+                return null;
+            }
         }
     }
 }
