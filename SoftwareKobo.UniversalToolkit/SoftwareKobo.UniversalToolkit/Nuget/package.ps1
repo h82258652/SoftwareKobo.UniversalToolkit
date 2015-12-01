@@ -1,6 +1,6 @@
 Function GetNuget
 {
-    return [System.IO.Directory]::GetFiles("..\..\packages","nuget.exe",[System.IO.SearchOption]::AllDirectories)[0]
+	return "C:\Users\%USERNAME%\.nuget\packages\NuGet.CommandLine\3.3.0\tools\nuget.exe"
 }
 
 $path = "..\bin\Release\"

@@ -225,14 +225,13 @@
     <Compile Include="Utils\Mdl2.cs" />
     <Compile Include="Utils\ExpressionResolver.cs" />
     <Compile Include="Utils\ScreenResolution.cs" />
-    <None Include="Nuget\SoftwareKobo.UniversalToolkit.template" />
+    <None Include="Nuget\SoftwareKobo.UniversalToolkit.template">
+      <SubType>Designer</SubType>
+    </None>
     <Content Include="Properties\SoftwareKobo.UniversalToolkit.rd.xml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <SDKReference Include="BehaviorsXamlSDKManaged, Version=12.0">
-      <Name>Behaviors SDK %28XAML%29</Name>
-    </SDKReference>
     <SDKReference Include="WindowsMobile, Version=10.0.10240.0">
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>

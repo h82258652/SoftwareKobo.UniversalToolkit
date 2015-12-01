@@ -29,8 +29,8 @@
     <file src="..\bin\Release\SoftwareKobo.UniversalToolkit.xr.xml" target="lib\uap10.0\SoftwareKobo.UniversalToolkit\SoftwareKobo.UniversalToolkit.xr.xml"></file>
     <file src="..\bin\Release\Controls\ExtendedSplashScreen.xbf" target="lib\uap10.0\SoftwareKobo.UniversalToolkit\Controls\ExtendedSplashScreen.xbf"></file>
     <file src="..\bin\Release\Themes\Generic.xbf" target="lib\uap10.0\SoftwareKobo.UniversalToolkit\Themes\Generic.xbf"></file>
-    <file src="..\Controls\ExtendedSplashScreen.xaml" target="lib\uap10.0\SoftwareKobo.UniversalToolkit\Controls\ExtendedSplashScreen.xaml"></file>
-    <file src="..\Themes\Generic.xaml" target="lib\uap10.0\SoftwareKobo.UniversalToolkit\Themes\Generic.xaml"></file>
+    <!--<file src="..\Controls\ExtendedSplashScreen.xaml" target="lib\uap10.0\SoftwareKobo.UniversalToolkit\Controls\ExtendedSplashScreen.xaml"></file>
+    <file src="..\Themes\Generic.xaml" target="lib\uap10.0\SoftwareKobo.UniversalToolkit\Themes\Generic.xaml"></file>-->
     <file src="..\Properties\SoftwareKobo.UniversalToolkit.rd.xml" target="lib\uap10.0\SoftwareKobo.UniversalToolkit\Properties\SoftwareKobo.UniversalToolkit.rd.xml"></file>
   </files>
 </package>
