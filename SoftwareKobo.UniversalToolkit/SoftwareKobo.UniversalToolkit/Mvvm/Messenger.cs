@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 
@@ -86,22 +86,28 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
                     DependencyObject element = registeredView as DependencyObject;
                     if (element != null)
                     {
-                        if (element.Dispatcher.HasThreadAccess)
+                        try
                         {
-                            if (registeredView.DataContext == viewModel)
-                            {
-                                registeredView.ReceiveFromViewModel(parameter);
-                            }
-                        }
-                        else
-                        {
-                            await element.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                            if (element.Dispatcher.HasThreadAccess)
                             {
                                 if (registeredView.DataContext == viewModel)
                                 {
                                     registeredView.ReceiveFromViewModel(parameter);
                                 }
-                            });
+                            }
+                            else
+                            {
+                                await element.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                                {
+                                    if (registeredView.DataContext == viewModel)
+                                    {
+                                        registeredView.ReceiveFromViewModel(parameter);
+                                    }
+                                });
+                            }
+                        }
+                        catch (InvalidComObjectException ex)
+                        {
                         }
                     }
                     else

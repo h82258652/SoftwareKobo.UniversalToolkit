@@ -47,7 +47,13 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
             this.VerifyPropertyName(propertyName);
             if (this.PropertyChanged != null)
             {
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                try
+                {
+                    this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                }
+                catch (InvalidCastException)
+                {                    
+                }
             }
         }
 
@@ -70,21 +76,21 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
             this.RaisePropertyChanging(ExpressionResolver.ResolvePropertyName(propertyExpression));
         }
 
-        protected bool Set<T>(ref T oldValue, T newValue, [CallerMemberName] string propertyName = null)
+        protected bool Set<T>(ref T storage, T newValue, [CallerMemberName] string propertyName = null)
         {
-            if (EqualityComparer<T>.Default.Equals(oldValue, newValue))
+            if (EqualityComparer<T>.Default.Equals(storage, newValue))
             {
                 return false;
             }
             this.RaisePropertyChanging(propertyName);
-            oldValue = newValue;
+            storage = newValue;
             this.RaisePropertyChanged(propertyName);
             return true;
         }
 
-        protected bool Set<T>(Expression<Func<T>> propertyExpression, ref T oldValue, T newValue)
+        protected bool Set<T>(Expression<Func<T>> propertyExpression, ref T storage, T newValue)
         {
-            return this.Set(ref oldValue, newValue, ExpressionResolver.ResolvePropertyName(propertyExpression));
+            return this.Set(ref storage, newValue, ExpressionResolver.ResolvePropertyName(propertyExpression));
         }
 
         /// <summary>
