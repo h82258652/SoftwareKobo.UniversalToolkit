@@ -6,7 +6,7 @@
     "Newtonsoft.Json": "7.0.1",
     "NuGet.CommandLine": "3.3.0",
     "PlatformSpecific.Analyzer": "2.0.2",
-    "Win2D.uwp": "1.9.0"
+    "Win2D.uwp": "1.10.0"
   },
   "frameworks": {
     "uap10.0": {}
