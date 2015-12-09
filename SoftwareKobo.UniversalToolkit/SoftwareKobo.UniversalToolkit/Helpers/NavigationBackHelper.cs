@@ -9,6 +9,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace SoftwareKobo.UniversalToolkit.Helpers
 {
+    [Obsolete("请使用 NavigationHelper", false)]
     public static class NavigationBackHelper
     {
         private static readonly Dictionary<Frame, EventHandler<BackPressedEventArgs>> _backPressedHandlers = new Dictionary<Frame, EventHandler<BackPressedEventArgs>>();
