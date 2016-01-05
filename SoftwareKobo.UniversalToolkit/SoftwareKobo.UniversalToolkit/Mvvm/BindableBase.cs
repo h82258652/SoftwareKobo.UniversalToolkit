@@ -7,6 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using Windows.UI.Core;
 
 namespace SoftwareKobo.UniversalToolkit.Mvvm
 {
@@ -15,6 +16,8 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
     /// </summary>
     public abstract class BindableBase : DisposableObject, INotifyPropertyChanging, INotifyPropertyChanged
     {
+        private static readonly CoreWindow CoreWindow = CoreWindow.GetForCurrentThread();
+
         /// <summary>
         /// 在属性值更改后发生。
         /// </summary>
@@ -30,50 +33,80 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
         /// </summary>
         protected virtual void RaiseAllPropertiesChanged()
         {
-            this.RaisePropertyChanged(string.Empty);
+            RaisePropertyChanged(string.Empty);
         }
 
         protected virtual void RaiseAllPropertiesChanging()
         {
-            this.RaisePropertyChanging(string.Empty);
+            RaisePropertyChanging(string.Empty);
         }
 
         /// <summary>
         /// 通知属性发生变化。
         /// </summary>
         /// <param name="propertyName">属性名称。</param>
-        protected virtual void RaisePropertyChanged([CallerMemberName]string propertyName = null)
+        protected virtual async void RaisePropertyChanged([CallerMemberName]string propertyName = null)
         {
-            this.VerifyPropertyName(propertyName);
-            if (this.PropertyChanged != null)
+            VerifyPropertyName(propertyName);
+            if (PropertyChanged == null)
             {
-                try
+                return;
+            }
+            if (CoreWindow == null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+            else
+            {
+                if (CoreWindow.Dispatcher.HasThreadAccess)
                 {
-                    this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                    PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
                 }
-                catch (InvalidCastException)
-                {                    
+                else
+                {
+                    await CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    {
+                        PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                    });
                 }
             }
         }
 
         protected virtual void RaisePropertyChanged<T>(Expression<Func<T>> propertyExpression)
         {
-            this.RaisePropertyChanged(ExpressionResolver.ResolvePropertyName(propertyExpression));
+            RaisePropertyChanged(ExpressionResolver.ResolvePropertyName(propertyExpression));
         }
 
-        protected virtual void RaisePropertyChanging([CallerMemberName]string propertyName = null)
+        protected virtual async void RaisePropertyChanging([CallerMemberName]string propertyName = null)
         {
-            this.VerifyPropertyName(propertyName);
-            if (this.PropertyChanging != null)
+            VerifyPropertyName(propertyName);
+            if (PropertyChanging == null)
             {
-                this.PropertyChanging(this, new PropertyChangingEventArgs(propertyName));
+                return;
+            }
+            if (CoreWindow == null)
+            {
+                PropertyChanging(this, new PropertyChangingEventArgs(propertyName));
+            }
+            else
+            {
+                if (CoreWindow.Dispatcher.HasThreadAccess)
+                {
+                    PropertyChanging(this, new PropertyChangingEventArgs(propertyName));
+                }
+                else
+                {
+                    await CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    {
+                        PropertyChanging(this, new PropertyChangingEventArgs(propertyName));
+                    });
+                }
             }
         }
 
         protected virtual void RaisePropertyChanging<T>(Expression<Func<T>> propertyExpression)
         {
-            this.RaisePropertyChanging(ExpressionResolver.ResolvePropertyName(propertyExpression));
+            RaisePropertyChanging(ExpressionResolver.ResolvePropertyName(propertyExpression));
         }
 
         protected bool Set<T>(ref T storage, T newValue, [CallerMemberName] string propertyName = null)
@@ -82,15 +115,15 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
             {
                 return false;
             }
-            this.RaisePropertyChanging(propertyName);
+            RaisePropertyChanging(propertyName);
             storage = newValue;
-            this.RaisePropertyChanged(propertyName);
+            RaisePropertyChanged(propertyName);
             return true;
         }
 
         protected bool Set<T>(Expression<Func<T>> propertyExpression, ref T storage, T newValue)
         {
-            return this.Set(ref storage, newValue, ExpressionResolver.ResolvePropertyName(propertyExpression));
+            return Set(ref storage, newValue, ExpressionResolver.ResolvePropertyName(propertyExpression));
         }
 
         /// <summary>
@@ -111,7 +144,7 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
                 return;
             }
 
-            var propertiesNames = this.GetType().GetRuntimeProperties().Select(temp => temp.Name);
+            var propertiesNames = GetType().GetRuntimeProperties().Select(temp => temp.Name);
 
             if (propertiesNames.Contains(propertyName) == false)
             {
