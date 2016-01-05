@@ -52,23 +52,16 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
             {
                 return;
             }
-            if (CoreWindow == null)
+            if (CoreWindow != null && CoreWindow.Dispatcher.HasThreadAccess == false)
             {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                await CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                });
             }
             else
             {
-                if (CoreWindow.Dispatcher.HasThreadAccess)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-                }
-                else
-                {
-                    await CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                    {
-                        PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-                    });
-                }
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
 
@@ -84,23 +77,16 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
             {
                 return;
             }
-            if (CoreWindow == null)
+            if (CoreWindow != null && CoreWindow.Dispatcher.HasThreadAccess == false)
             {
-                PropertyChanging(this, new PropertyChangingEventArgs(propertyName));
+                await CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    PropertyChanging(this, new PropertyChangingEventArgs(propertyName));
+                });
             }
             else
             {
-                if (CoreWindow.Dispatcher.HasThreadAccess)
-                {
-                    PropertyChanging(this, new PropertyChangingEventArgs(propertyName));
-                }
-                else
-                {
-                    await CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                    {
-                        PropertyChanging(this, new PropertyChangingEventArgs(propertyName));
-                    });
-                }
+                PropertyChanging(this, new PropertyChangingEventArgs(propertyName));
             }
         }
 
