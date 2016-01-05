@@ -31,52 +31,16 @@ namespace SoftwareKobo.UniversalToolkit.Helpers
             }
         }
 
-        public static bool IsDesktop
-        {
-            get
-            {
-                return DeviceFamily == DeviceFamily.Desktop;
-            }
-        }
+        public static bool IsDesktop => DeviceFamily == DeviceFamily.Desktop;
 
-        public static bool IsIoT
-        {
-            get
-            {
-                return DeviceFamily == DeviceFamily.IoT;
-            }
-        }
+        public static bool IsIoT => DeviceFamily == DeviceFamily.IoT;
 
-        public static bool IsMobile
-        {
-            get
-            {
-                return DeviceFamily == DeviceFamily.Mobile;
-            }
-        }
+        public static bool IsMobile => DeviceFamily == DeviceFamily.Mobile;
 
-        public static bool IsTeam
-        {
-            get
-            {
-                return DeviceFamily == DeviceFamily.Team;
-            }
-        }
+        public static bool IsTeam => DeviceFamily == DeviceFamily.Team;
 
-        public static bool IsUnknown
-        {
-            get
-            {
-                return DeviceFamily == DeviceFamily.Unknown;
-            }
-        }
+        public static bool IsUnknown => DeviceFamily == DeviceFamily.Unknown;
 
-        public static bool IsXbox
-        {
-            get
-            {
-                return DeviceFamily == DeviceFamily.Xbox;
-            }
-        }
+        public static bool IsXbox => DeviceFamily == DeviceFamily.Xbox;
     }
 }

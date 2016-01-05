@@ -18,18 +18,18 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
                 throw new ArgumentNullException(nameof(listViewBase));
             }
 
-            ScrollViewer scrollViewer = listViewBase.GetDescendantsOfType<ScrollViewer>().First();
+            var scrollViewer = listViewBase.GetDescendantsOfType<ScrollViewer>().First();
 
-            double originHorizontalOffset = scrollViewer.HorizontalOffset;
-            double originVerticalOffset = scrollViewer.VerticalOffset;
+            var originHorizontalOffset = scrollViewer.HorizontalOffset;
+            var originVerticalOffset = scrollViewer.VerticalOffset;
 
             EventHandler<object> layoutUpdatedHandler = null;
             layoutUpdatedHandler = delegate
             {
                 listViewBase.LayoutUpdated -= layoutUpdatedHandler;
 
-                double targetHorizontalOffset = scrollViewer.HorizontalOffset;
-                double targetVerticalOffset = scrollViewer.VerticalOffset;
+                var targetHorizontalOffset = scrollViewer.HorizontalOffset;
+                var targetVerticalOffset = scrollViewer.VerticalOffset;
 
                 EventHandler<ScrollViewerViewChangedEventArgs> scrollHandler = null;
                 scrollHandler = (sender, e) =>

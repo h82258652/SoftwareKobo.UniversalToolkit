@@ -19,8 +19,8 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
 
         private static void HtmlChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            WebView webView = (WebView)d;
-            string value = (string)e.NewValue;
+            var webView = (WebView)d;
+            var value = (string)e.NewValue;
 
             webView.NavigateToString(value);
         }

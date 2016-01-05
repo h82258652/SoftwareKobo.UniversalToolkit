@@ -116,7 +116,7 @@ namespace SoftwareKobo.UniversalToolkit.Helpers
             {
                 if (_systemNavigateBackHandlers.ContainsKey(frame) == false)
                 {
-                    SystemNavigationManager snm = SystemNavigationManager.GetForCurrentView();
+                    var snm = SystemNavigationManager.GetForCurrentView();
                     snm.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
                     EventHandler<BackRequestedEventArgs> systemNavigateBackHandler = async (sender, e) =>
                     {
@@ -172,8 +172,8 @@ namespace SoftwareKobo.UniversalToolkit.Helpers
 
             if (config.IsNavigateBackByMouseXButton1 || config.IsNavigateForwardByMouseXButton2)
             {
-                bool isNavigateBackByMouseXButton1 = config.IsNavigateBackByMouseXButton1;
-                bool isNavigateForwardByMouseXButton2 = config.IsNavigateForwardByMouseXButton2;
+                var isNavigateBackByMouseXButton1 = config.IsNavigateBackByMouseXButton1;
+                var isNavigateForwardByMouseXButton2 = config.IsNavigateForwardByMouseXButton2;
                 if (_mouseXButtonHandlers.ContainsKey(frame) == false)
                 {
                     TypedEventHandler<CoreWindow, PointerEventArgs> mouseXButtonHandler = async (sender, e) =>
@@ -213,10 +213,10 @@ namespace SoftwareKobo.UniversalToolkit.Helpers
 
             if (config.IsNavigateBackBySlideToRight || config.IsNavigateForwardBySlideToLeft)
             {
-                bool isNavigateBackBySlideToRight = config.IsNavigateBackBySlideToRight;
-                bool isNavigateForwardBySlideToLeft = config.IsNavigateForwardBySlideToLeft;
+                var isNavigateBackBySlideToRight = config.IsNavigateBackBySlideToRight;
+                var isNavigateForwardBySlideToLeft = config.IsNavigateForwardBySlideToLeft;
 
-                GestureRecognizer recognizer = new GestureRecognizer()
+                var recognizer = new GestureRecognizer()
                 {
                     GestureSettings = GestureSettings.CrossSlide,
                     CrossSlideHorizontally = true
@@ -232,7 +232,7 @@ namespace SoftwareKobo.UniversalToolkit.Helpers
                         {
                             case Windows.Devices.Input.PointerDeviceType.Touch:
                             case Windows.Devices.Input.PointerDeviceType.Pen:
-                                PointerPoint point = e.CurrentPoint;
+                                var point = e.CurrentPoint;
                                 startPoint = point;
                                 recognizer.ProcessDownEvent(point);
                                 break;
@@ -266,7 +266,7 @@ namespace SoftwareKobo.UniversalToolkit.Helpers
                         {
                             case Windows.Devices.Input.PointerDeviceType.Touch:
                             case Windows.Devices.Input.PointerDeviceType.Pen:
-                                PointerPoint point = e.CurrentPoint;
+                                var point = e.CurrentPoint;
                                 endPoint = point;
                                 recognizer.ProcessUpEvent(point);
                                 break;
@@ -281,8 +281,8 @@ namespace SoftwareKobo.UniversalToolkit.Helpers
                     {
                         if (startPoint != null && endPoint != null)
                         {
-                            double startX = startPoint.Position.X;
-                            double endX = endPoint.Position.X;
+                            var startX = startPoint.Position.X;
+                            var endX = endPoint.Position.X;
                             if (startX < endX && isNavigateBackBySlideToRight)
                             {
                                 if (asyncBackAction != null)
@@ -311,9 +311,9 @@ namespace SoftwareKobo.UniversalToolkit.Helpers
 
             if (_systemNavigateBackHandlers.ContainsKey(frame))
             {
-                SystemNavigationManager snm = SystemNavigationManager.GetForCurrentView();
+                var snm = SystemNavigationManager.GetForCurrentView();
                 snm.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-                EventHandler<BackRequestedEventArgs> systemNavigateBackHandler = _systemNavigateBackHandlers[frame];
+                var systemNavigateBackHandler = _systemNavigateBackHandlers[frame];
                 snm.BackRequested -= systemNavigateBackHandler;
                 _systemNavigateBackHandlers.Remove(frame);
             }
@@ -326,7 +326,7 @@ namespace SoftwareKobo.UniversalToolkit.Helpers
             {
                 if (_hardwareNavigateBackHandlers.ContainsKey(frame))
                 {
-                    EventHandler<BackPressedEventArgs> hardwareNavigateBackHandler = _hardwareNavigateBackHandlers[frame];
+                    var hardwareNavigateBackHandler = _hardwareNavigateBackHandlers[frame];
                     HardwareButtons.BackPressed -= hardwareNavigateBackHandler;
                     _hardwareNavigateBackHandlers.Remove(frame);
                 }
@@ -344,7 +344,7 @@ namespace SoftwareKobo.UniversalToolkit.Helpers
 
             if (_mouseXButtonHandlers.ContainsKey(frame))
             {
-                TypedEventHandler<CoreWindow, PointerEventArgs> mouseXButtonHandler = _mouseXButtonHandlers[frame];
+                var mouseXButtonHandler = _mouseXButtonHandlers[frame];
                 window.PointerReleased -= mouseXButtonHandler;
                 _mouseXButtonHandlers.Remove(frame);
             }
@@ -355,19 +355,19 @@ namespace SoftwareKobo.UniversalToolkit.Helpers
 
             if (_pointerPressedHandlers.ContainsKey(frame))
             {
-                TypedEventHandler<CoreWindow, PointerEventArgs> pointerPressedHandler = _pointerPressedHandlers[frame];
+                var pointerPressedHandler = _pointerPressedHandlers[frame];
                 window.PointerPressed -= pointerPressedHandler;
                 _pointerPressedHandlers.Remove(frame);
             }
             if (_pointerMovedHandlers.ContainsKey(frame))
             {
-                TypedEventHandler<CoreWindow, PointerEventArgs> pointerMovedHandler = _pointerMovedHandlers[frame];
+                var pointerMovedHandler = _pointerMovedHandlers[frame];
                 window.PointerMoved -= pointerMovedHandler;
                 _pointerMovedHandlers.Remove(frame);
             }
             if (_pointerReleasedHandlers.ContainsKey(frame))
             {
-                TypedEventHandler<CoreWindow, PointerEventArgs> pointerReleasedHandler = _pointerReleasedHandlers[frame];
+                var pointerReleasedHandler = _pointerReleasedHandlers[frame];
                 window.PointerReleased -= pointerReleasedHandler;
                 _pointerReleasedHandlers.Remove(frame);
             }

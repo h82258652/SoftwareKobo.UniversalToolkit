@@ -11,13 +11,13 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 
         public DisplayMemoryUsage()
         {
-            this.DefaultStyleKey = typeof(DisplayMemoryUsage);
+            DefaultStyleKey = typeof(DisplayMemoryUsage);
         }
 
         protected override void OnApplyTemplate()
         {
-            this._txtMemoryUsage = (TextBlock)GetTemplateChild("txtMemoryUsage");
-            DispatcherTimer timer = new DispatcherTimer();
+            _txtMemoryUsage = (TextBlock)GetTemplateChild("txtMemoryUsage");
+            var timer = new DispatcherTimer();
             timer.Tick += Timer_Tick;
             timer.Start();
         }
@@ -25,9 +25,9 @@ namespace SoftwareKobo.UniversalToolkit.Controls
         [DebuggerNonUserCode]
         private void Timer_Tick(object sender, object e)
         {
-            string usage = (MemoryManager.AppMemoryUsage / 1024.0 / 1024.0).ToString("f2") + "MB";
-            string limit = (MemoryManager.AppMemoryUsageLimit / 1024.0 / 1024.0).ToString("f2") + "MB";
-            this._txtMemoryUsage.Text = usage + "/" + limit;
+            var usage = (MemoryManager.AppMemoryUsage / 1024.0 / 1024.0).ToString("f2") + "MB";
+            var limit = (MemoryManager.AppMemoryUsageLimit / 1024.0 / 1024.0).ToString("f2") + "MB";
+            _txtMemoryUsage.Text = usage + "/" + limit;
         }
     }
 }

@@ -23,11 +23,11 @@ namespace SoftwareKobo.UniversalToolkit.Triggers
         {
             get
             {
-                return (Orientation)this.GetValue(OrientationProperty);
+                return (Orientation)GetValue(OrientationProperty);
             }
             set
             {
-                this.SetValue(OrientationProperty, value);
+                SetValue(OrientationProperty, value);
             }
         }
 
@@ -51,16 +51,16 @@ namespace SoftwareKobo.UniversalToolkit.Triggers
                 {
                     case DisplayOrientations.Landscape:
                     case DisplayOrientations.LandscapeFlipped:
-                        this.SetActive(this.Orientation == Orientation.Landscape);
+                        SetActive(Orientation == Orientation.Landscape);
                         break;
 
                     case DisplayOrientations.Portrait:
                     case DisplayOrientations.PortraitFlipped:
-                        this.SetActive(this.Orientation == Orientation.Portrait);
+                        SetActive(Orientation == Orientation.Portrait);
                         break;
 
                     default:
-                        this.SetActive(this.Orientation == Orientation.None);
+                        SetActive(Orientation == Orientation.None);
                         break;
                 }
             }

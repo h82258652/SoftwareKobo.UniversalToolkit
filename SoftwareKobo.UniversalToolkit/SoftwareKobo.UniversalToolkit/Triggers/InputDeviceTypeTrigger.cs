@@ -11,7 +11,7 @@ namespace SoftwareKobo.UniversalToolkit.Triggers
 
         public InputDeviceTypeTrigger()
         {
-            CoreWindow coreWindow = Window.Current.CoreWindow;
+            var coreWindow = Window.Current.CoreWindow;
             coreWindow.PointerPressed += CoreWindow_PointerEvent;
             coreWindow.PointerMoved += CoreWindow_PointerEvent;
 
@@ -35,16 +35,16 @@ namespace SoftwareKobo.UniversalToolkit.Triggers
 
         private void App_WindowCreated(object sender, WindowCreatedEventArgs e)
         {
-            CoreWindow coreWindow = e.Window.CoreWindow;
+            var coreWindow = e.Window.CoreWindow;
             coreWindow.PointerPressed += CoreWindow_PointerEvent;
             coreWindow.PointerMoved += CoreWindow_PointerEvent;
         }
 
         private void CoreWindow_PointerEvent(CoreWindow sender, PointerEventArgs args)
         {
-            if (Enum.IsDefined(typeof(PointerDeviceType), this.InputDeviceType))
+            if (Enum.IsDefined(typeof(PointerDeviceType), InputDeviceType))
             {
-                this.SetActive(args.CurrentPoint.PointerDevice.PointerDeviceType == this.InputDeviceType);
+                SetActive(args.CurrentPoint.PointerDevice.PointerDeviceType == InputDeviceType);
             }
         }
     }

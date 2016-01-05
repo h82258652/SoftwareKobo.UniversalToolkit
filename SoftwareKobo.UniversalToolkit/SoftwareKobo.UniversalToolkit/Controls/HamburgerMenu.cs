@@ -9,20 +9,20 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 
         public HamburgerMenu()
         {
-            this.DefaultStyleKey = typeof(HamburgerMenu);
-            this.Checked += this.HamburgerMenu_Checked;
-            this.Unchecked += this.HamburgerMenu_Unchecked;
+            DefaultStyleKey = typeof(HamburgerMenu);
+            Checked += HamburgerMenu_Checked;
+            Unchecked += HamburgerMenu_Unchecked;
         }
-        
+
         public double IconSize
         {
             get
             {
-                return (double)this.GetValue(IconSizeProperty);
+                return (double)GetValue(IconSizeProperty);
             }
             set
             {
-                this.SetValue(IconSizeProperty, value);
+                SetValue(IconSizeProperty, value);
             }
         }
 

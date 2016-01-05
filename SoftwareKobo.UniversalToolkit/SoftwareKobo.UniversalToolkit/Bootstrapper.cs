@@ -38,22 +38,22 @@ namespace SoftwareKobo.UniversalToolkit
         /// </summary>
         protected Bootstrapper()
         {
-            this.IsInConstructing = true;
+            IsInConstructing = true;
 
-            this.Resuming += this.OnResuming;
-            this.Suspending += async (sender, e) =>
+            Resuming += OnResuming;
+            Suspending += async (sender, e) =>
             {
-                SuspendingDeferral deferral = e.SuspendingOperation.GetDeferral();
+                var deferral = e.SuspendingOperation.GetDeferral();
                 try
                 {
-                    await this.OnSuspendingAsync(sender, e);
+                    await OnSuspendingAsync(sender, e);
                 }
                 finally
                 {
                     deferral.Complete();
                 }
             };
-            this.UnhandledException += this.OnUnhandledException;
+            UnhandledException += OnUnhandledException;
         }
 
         [SuppressMessage("Microsoft.Design", "CA1009")]
@@ -62,24 +62,12 @@ namespace SoftwareKobo.UniversalToolkit
         /// <summary>
         /// 获取当前应用程序的 Bootstrapper 对象。
         /// </summary>
-        public static new Bootstrapper Current
-        {
-            get
-            {
-                return Application.Current as Bootstrapper;
-            }
-        }
+        public static new Bootstrapper Current => Application.Current as Bootstrapper;
 
         /// <summary>
         /// 获取当前窗口的根导航框架。
         /// </summary>
-        public static Frame RootFrame
-        {
-            get
-            {
-                return Window.Current.Content as Frame;
-            }
-        }
+        public static Frame RootFrame => Window.Current.Content as Frame;
 
         /// <summary>
         /// 指示当前执行是否处于 App 类的构造函数中。
@@ -106,12 +94,12 @@ namespace SoftwareKobo.UniversalToolkit
         {
             get
             {
-                return this._defaultNavigatePage;
+                return _defaultNavigatePage;
             }
             set
             {
                 VerifyIsPageType(value);
-                this._defaultNavigatePage = value;
+                _defaultNavigatePage = value;
             }
         }
 
@@ -137,7 +125,7 @@ namespace SoftwareKobo.UniversalToolkit
                 throw new ArgumentNullException(nameof(pageType));
             }
 
-            Window newWindow = await CreateNewWindowAsync();
+            var newWindow = await CreateNewWindowAsync();
 
             await InitializeRootFrameAsync(newWindow);
 
@@ -169,10 +157,10 @@ namespace SoftwareKobo.UniversalToolkit
 
         protected override sealed async void OnActivated(IActivatedEventArgs args)
         {
-            await this.HandleWaitForConstructedActionsAsync();
+            await HandleWaitForConstructedActionsAsync();
 
-            AppStartInfo info = AppStartInfo.Default;
-            await this.OnPreStartAsync(args, info);
+            var info = AppStartInfo.Default;
+            await OnPreStartAsync(args, info);
 
             #region 所有激活类型
 
@@ -185,8 +173,8 @@ namespace SoftwareKobo.UniversalToolkit
                     goto default;
 
                 case ActivationKind.Protocol:
-                    ProtocolActivatedEventArgs protocolArgs = (ProtocolActivatedEventArgs)args;
-                    await this.OnProtocolStartAsync(protocolArgs, info);
+                    var protocolArgs = (ProtocolActivatedEventArgs)args;
+                    await OnProtocolStartAsync(protocolArgs, info);
                     break;
 
                 case ActivationKind.FileOpenPicker:
@@ -203,8 +191,8 @@ namespace SoftwareKobo.UniversalToolkit
                     goto default;
 
                 case ActivationKind.VoiceCommand:
-                    VoiceCommandActivatedEventArgs voiceCommandArgs = (VoiceCommandActivatedEventArgs)args;
-                    await this.OnVoiceCommandStartAsync(voiceCommandArgs, info);
+                    var voiceCommandArgs = (VoiceCommandActivatedEventArgs)args;
+                    await OnVoiceCommandStartAsync(voiceCommandArgs, info);
                     break;
 
                 case ActivationKind.LockScreen:
@@ -220,23 +208,23 @@ namespace SoftwareKobo.UniversalToolkit
                 case ActivationKind.ToastNotification:
                 case ActivationKind.DialReceiver:
                 default:
-                    await this.OnOtherStartAsync(args, info);
+                    await OnOtherStartAsync(args, info);
                     break;
             }
 
             #endregion 所有激活类型
 
-            this.InternalStartAsync(args, info);
+            InternalStartAsync(args, info);
         }
 
         protected override sealed async void OnCachedFileUpdaterActivated(CachedFileUpdaterActivatedEventArgs args)
         {
-            await this.HandleWaitForConstructedActionsAsync();
+            await HandleWaitForConstructedActionsAsync();
 
-            AppStartInfo info = AppStartInfo.Default;
-            await this.OnPreStartAsync(args, info);
-            await this.OnCacheFileUpdaterStartAsync(args, info);
-            this.InternalStartAsync(args, info);
+            var info = AppStartInfo.Default;
+            await OnPreStartAsync(args, info);
+            await OnCacheFileUpdaterStartAsync(args, info);
+            InternalStartAsync(args, info);
         }
 
         /// <summary>
@@ -252,22 +240,22 @@ namespace SoftwareKobo.UniversalToolkit
 
         protected override sealed async void OnFileActivated(FileActivatedEventArgs args)
         {
-            await this.HandleWaitForConstructedActionsAsync();
+            await HandleWaitForConstructedActionsAsync();
 
-            AppStartInfo info = AppStartInfo.Default;
-            await this.OnPreStartAsync(args, info);
-            await this.OnFileTypeAssociationStartAsync(args, info);
-            this.InternalStartAsync(args, info);
+            var info = AppStartInfo.Default;
+            await OnPreStartAsync(args, info);
+            await OnFileTypeAssociationStartAsync(args, info);
+            InternalStartAsync(args, info);
         }
 
         protected override sealed async void OnFileOpenPickerActivated(FileOpenPickerActivatedEventArgs args)
         {
-            await this.HandleWaitForConstructedActionsAsync();
+            await HandleWaitForConstructedActionsAsync();
 
-            AppStartInfo info = AppStartInfo.Default;
-            await this.OnPreStartAsync(args, info);
-            await this.OnFileOpenPickerStartAsync(args, info);
-            this.InternalStartAsync(args, info);
+            var info = AppStartInfo.Default;
+            await OnPreStartAsync(args, info);
+            await OnFileOpenPickerStartAsync(args, info);
+            InternalStartAsync(args, info);
         }
 
         /// <summary>
@@ -283,12 +271,12 @@ namespace SoftwareKobo.UniversalToolkit
 
         protected override sealed async void OnFileSavePickerActivated(FileSavePickerActivatedEventArgs args)
         {
-            await this.HandleWaitForConstructedActionsAsync();
+            await HandleWaitForConstructedActionsAsync();
 
-            AppStartInfo info = AppStartInfo.Default;
-            await this.OnPreStartAsync(args, info);
-            await this.OnFileSavePickerStartAsync(args, info);
-            this.InternalStartAsync(args, info);
+            var info = AppStartInfo.Default;
+            await OnPreStartAsync(args, info);
+            await OnFileSavePickerStartAsync(args, info);
+            InternalStartAsync(args, info);
         }
 
         /// <summary>
@@ -315,45 +303,45 @@ namespace SoftwareKobo.UniversalToolkit
 
         protected override sealed async void OnLaunched(LaunchActivatedEventArgs args)
         {
-            await this.HandleWaitForConstructedActionsAsync();
+            await HandleWaitForConstructedActionsAsync();
 
-            AppStartInfo info = AppStartInfo.Default;
+            var info = AppStartInfo.Default;
             info.Parameter = args.Arguments;
-            await this.OnPreStartAsync(args, info);
+            await OnPreStartAsync(args, info);
 
             #region 确定 Launch 类型。
 
             // 获取定义在 AppxManifest 中的所有 Id。
             IList<string> tileIds = PackageManifest.Current.Applications.Select(temp => temp.Id).ToList();
             // 应用程序启动的磁贴 Id。
-            string launchTileId = args.TileId;
+            var launchTileId = args.TileId;
             // 应用程序启动参数。
-            string launchArguments = args.Arguments;
+            var launchArguments = args.Arguments;
 
             if (tileIds.Contains(launchTileId) && string.IsNullOrEmpty(launchArguments))
             {
                 // 主要启动。
-                await this.OnPrimaryStartAsync(args, info);
+                await OnPrimaryStartAsync(args, info);
             }
             else if (tileIds.Contains(launchTileId) && string.IsNullOrEmpty(launchArguments) == false)
             {
                 // 吐司通知启动。
-                await this.OnToastStartAsync(args, info);
+                await OnToastStartAsync(args, info);
             }
             else if (tileIds.Contains(launchTileId) == false)
             {
                 // 二级磁贴启动。
-                await this.OnSecondaryTileStartAsync(args, info);
+                await OnSecondaryTileStartAsync(args, info);
             }
             else
             {
                 // 其它启动方式。
-                await this.OnOtherStartAsync(args, info);
+                await OnOtherStartAsync(args, info);
             }
 
             #endregion 确定 Launch 类型。
 
-            this.InternalStartAsync(args, info);
+            InternalStartAsync(args, info);
         }
 
         /// <summary>
@@ -406,12 +394,12 @@ namespace SoftwareKobo.UniversalToolkit
 
         protected override sealed async void OnSearchActivated(SearchActivatedEventArgs args)
         {
-            await this.HandleWaitForConstructedActionsAsync();
+            await HandleWaitForConstructedActionsAsync();
 
-            AppStartInfo info = AppStartInfo.Default;
-            await this.OnPreStartAsync(args, info);
-            await this.OnSearchStartAsync(args, info);
-            this.InternalStartAsync(args, info);
+            var info = AppStartInfo.Default;
+            await OnPreStartAsync(args, info);
+            await OnSearchStartAsync(args, info);
+            InternalStartAsync(args, info);
         }
 
         /// <summary>
@@ -438,12 +426,12 @@ namespace SoftwareKobo.UniversalToolkit
 
         protected override sealed async void OnShareTargetActivated(ShareTargetActivatedEventArgs args)
         {
-            await this.HandleWaitForConstructedActionsAsync();
+            await HandleWaitForConstructedActionsAsync();
 
-            AppStartInfo info = AppStartInfo.Default;
-            await this.OnPreStartAsync(args, info);
-            await this.OnShareTargetStartAsync(args, info);
-            this.InternalStartAsync(args, info);
+            var info = AppStartInfo.Default;
+            await OnPreStartAsync(args, info);
+            await OnShareTargetStartAsync(args, info);
+            InternalStartAsync(args, info);
         }
 
         /// <summary>
@@ -484,11 +472,11 @@ namespace SoftwareKobo.UniversalToolkit
 
         protected override sealed async void OnWindowCreated(WindowCreatedEventArgs args)
         {
-            if (this.WindowCreated != null)
+            if (WindowCreated != null)
             {
-                this.WindowCreated(this, args);
+                WindowCreated(this, args);
             }
-            await this.OnWindowCreatedAsync(args);
+            await OnWindowCreatedAsync(args);
         }
 
         protected virtual Task OnWindowCreatedAsync(WindowCreatedEventArgs args)
@@ -499,10 +487,10 @@ namespace SoftwareKobo.UniversalToolkit
         private static async Task<UIElement> BuildExtendedSplashScreenAsync(Window hostWindow, ExtendedSplashScreenContent extendedSplashScreenContent, IActivatedEventArgs args)
         {
             // 用于等待 ExtendedSplashScreen 构造完成。因为 RunAsync 方法第二个参数签名是 async void，不是 async Task。
-            TaskCompletionSource<UIElement> containerTcs = new TaskCompletionSource<UIElement>();
+            var containerTcs = new TaskCompletionSource<UIElement>();
             await hostWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
             {
-                ExtendedSplashScreen extendedSplashScreen = await ExtendedSplashScreen.CreateAsync(args.SplashScreen, extendedSplashScreenContent);
+                var extendedSplashScreen = await ExtendedSplashScreen.CreateAsync(args.SplashScreen, extendedSplashScreenContent);
                 containerTcs.SetResult(extendedSplashScreen);
             });
             return await containerTcs.Task;
@@ -539,7 +527,7 @@ namespace SoftwareKobo.UniversalToolkit
 
         private static async Task<bool> GetIsWindowExistContentAsync(Window hostWindow)
         {
-            bool hadContent = false;
+            var hadContent = false;
             await hostWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 hadContent = hostWindow.Content != null;
@@ -553,7 +541,7 @@ namespace SoftwareKobo.UniversalToolkit
             {
                 if (hostWindow.Content == null)
                 {
-                    Frame frame = new Frame()
+                    var frame = new Frame()
                     {
                         Language = ApplicationLanguages.Languages[0]
                     };
@@ -578,7 +566,7 @@ namespace SoftwareKobo.UniversalToolkit
 
             await hostWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                Frame rootFrame = hostWindow.Content as Frame;
+                var rootFrame = hostWindow.Content as Frame;
                 if (rootFrame != null)
                 {
                     rootFrame.Navigate(pageType, parameter);
@@ -597,10 +585,10 @@ namespace SoftwareKobo.UniversalToolkit
             var temp = await CreateExtendedSplashScreenContentAsync(hostWindow, info);
 
             // 扩展屏幕内容。
-            ExtendedSplashScreenContent extendedSplashScreenContent = temp.Item1;
+            var extendedSplashScreenContent = temp.Item1;
 
             // 扩展启动屏幕结束回调信号。
-            TaskCompletionSource<object> extendedSplashScreenTcs = temp.Item2;
+            var extendedSplashScreenTcs = temp.Item2;
 
             // 窗口内容。
             UIElement hostWindowContent = null;
@@ -656,7 +644,7 @@ namespace SoftwareKobo.UniversalToolkit
 
         private static async Task SwitchToWindowAsync(Window hostWindow)
         {
-            int viewId = 0;
+            var viewId = 0;
             // 获取新窗口 Id。
             await hostWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
@@ -667,7 +655,7 @@ namespace SoftwareKobo.UniversalToolkit
 
         private async Task<Window> CreateNewWindowAsync()
         {
-            CoreApplicationView newCoreAppView = CoreApplication.CreateNewView();
+            var newCoreAppView = CoreApplication.CreateNewView();
             Window newWindow = null;
             await newCoreAppView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
@@ -678,12 +666,12 @@ namespace SoftwareKobo.UniversalToolkit
 
         private async Task HandleWaitForConstructedActionsAsync()
         {
-            this.IsInConstructing = false;
-            while (this._waitForConstructedActions.Count > 0)
+            IsInConstructing = false;
+            while (_waitForConstructedActions.Count > 0)
             {
-                Func<Task> asyncAction = this._waitForConstructedActions[0];
+                var asyncAction = _waitForConstructedActions[0];
                 await asyncAction();
-                this._waitForConstructedActions.RemoveAt(0);
+                _waitForConstructedActions.RemoveAt(0);
             }
         }
 
@@ -691,10 +679,10 @@ namespace SoftwareKobo.UniversalToolkit
         {
             Window hostWindow = null;
             // 当前创建的窗口是否是新窗口。
-            bool isNewWindow = false;
+            var isNewWindow = false;
 
             // 当前窗口是否是应用程序初启动窗口。
-            bool isMainWindow = args.PreviousExecutionState == ApplicationExecutionState.NotRunning || args.PreviousExecutionState == ApplicationExecutionState.Terminated || args.PreviousExecutionState == ApplicationExecutionState.ClosedByUser;
+            var isMainWindow = args.PreviousExecutionState == ApplicationExecutionState.NotRunning || args.PreviousExecutionState == ApplicationExecutionState.Terminated || args.PreviousExecutionState == ApplicationExecutionState.ClosedByUser;
 
             if (info.IsShowInNewWindow == false)
             {

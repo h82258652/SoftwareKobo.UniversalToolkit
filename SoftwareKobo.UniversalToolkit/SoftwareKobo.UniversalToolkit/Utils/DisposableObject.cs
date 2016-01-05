@@ -14,12 +14,12 @@ namespace SoftwareKobo.UniversalToolkit.Utils
 
         ~DisposableObject()
         {
-            this.Dispose(false);
+            Dispose(false);
         }
 
         public void Dispose()
         {
-            this.Dispose(true);
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
 
@@ -44,16 +44,16 @@ namespace SoftwareKobo.UniversalToolkit.Utils
         /// <param name="isDisposingByDispose">true 为由 Dispose 方法调用，false 为析构函数调用。</param>
         private void Dispose(bool isDisposingByDispose)
         {
-            if (this._hadDisposed == false)
+            if (_hadDisposed == false)
             {
                 if (isDisposingByDispose)
                 {
-                    this.DisposeManagedObjects(isDisposingByDispose);
+                    DisposeManagedObjects(isDisposingByDispose);
                 }
 
-                this.DisposeUnmanagedObjects();
+                DisposeUnmanagedObjects();
 
-                this._hadDisposed = true;
+                _hadDisposed = true;
             }
         }
     }

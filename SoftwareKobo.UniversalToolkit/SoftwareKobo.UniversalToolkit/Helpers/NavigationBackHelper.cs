@@ -23,7 +23,8 @@ namespace SoftwareKobo.UniversalToolkit.Helpers
         public static void RegisterNavigateBack(this Frame frame, Func<Task> asyncAction)
         {
             #region 标题栏后退键
-            SystemNavigationManager systemNavigationManager = SystemNavigationManager.GetForCurrentView();
+
+            var systemNavigationManager = SystemNavigationManager.GetForCurrentView();
             systemNavigationManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             if (_backPressedHandlers.ContainsKey(frame) == false)
             {
@@ -38,9 +39,11 @@ namespace SoftwareKobo.UniversalToolkit.Helpers
                 _backRequestedHandlers.Add(frame, backRequestedHandler);
                 systemNavigationManager.BackRequested += backRequestedHandler;
             }
-            #endregion
+
+            #endregion 标题栏后退键
 
             #region 设备后退键
+
             if (HardwareButtonsHelper.IsUseable && _backPressedHandlers.ContainsKey(frame) == false)
             {
                 EventHandler<BackPressedEventArgs> backPressedHandler = async (sender, e) =>
@@ -54,10 +57,12 @@ namespace SoftwareKobo.UniversalToolkit.Helpers
                 _backPressedHandlers.Add(frame, backPressedHandler);
                 HardwareButtons.BackPressed += backPressedHandler;
             }
-            #endregion
+
+            #endregion 设备后退键
 
             #region 鼠标后退键
-            CoreWindow window = CoreWindow.GetForCurrentThread();
+
+            var window = CoreWindow.GetForCurrentThread();
             if (_frameWindows.ContainsKey(frame) == false && _pointerReleasedHandlers.ContainsKey(frame) == false)
             {
                 TypedEventHandler<CoreWindow, PointerEventArgs> pointerReleasedHandler = async (sender, e) =>
@@ -75,13 +80,15 @@ namespace SoftwareKobo.UniversalToolkit.Helpers
                 _pointerReleasedHandlers.Add(frame, pointerReleasedHandler);
                 window.PointerReleased += pointerReleasedHandler;
             }
-            #endregion
+
+            #endregion 鼠标后退键
         }
 
         public static void RegisterNavigateBack(this Frame frame, Action action)
         {
             #region 标题栏后退键
-            SystemNavigationManager systemNavigationManager = SystemNavigationManager.GetForCurrentView();
+
+            var systemNavigationManager = SystemNavigationManager.GetForCurrentView();
             systemNavigationManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             if (_backPressedHandlers.ContainsKey(frame) == false)
             {
@@ -96,9 +103,11 @@ namespace SoftwareKobo.UniversalToolkit.Helpers
                 _backRequestedHandlers.Add(frame, backRequestedHandler);
                 systemNavigationManager.BackRequested += backRequestedHandler;
             }
-            #endregion
+
+            #endregion 标题栏后退键
 
             #region 设备后退键
+
             if (HardwareButtonsHelper.IsUseable && _backPressedHandlers.ContainsKey(frame) == false)
             {
                 EventHandler<BackPressedEventArgs> backPressedHandler = (sender, e) =>
@@ -112,10 +121,12 @@ namespace SoftwareKobo.UniversalToolkit.Helpers
                 _backPressedHandlers.Add(frame, backPressedHandler);
                 HardwareButtons.BackPressed += backPressedHandler;
             }
-            #endregion
+
+            #endregion 设备后退键
 
             #region 鼠标后退键
-            CoreWindow window = CoreWindow.GetForCurrentThread();
+
+            var window = CoreWindow.GetForCurrentThread();
             if (_frameWindows.ContainsKey(frame) == false && _pointerReleasedHandlers.ContainsKey(frame) == false)
             {
                 TypedEventHandler<CoreWindow, PointerEventArgs> pointerReleasedHandler = (sender, e) =>
@@ -133,7 +144,8 @@ namespace SoftwareKobo.UniversalToolkit.Helpers
                 _pointerReleasedHandlers.Add(frame, pointerReleasedHandler);
                 window.PointerReleased += pointerReleasedHandler;
             }
-            #endregion
+
+            #endregion 鼠标后退键
         }
 
         public static void RegisterNavigateBack(this Frame frame)
@@ -151,35 +163,41 @@ namespace SoftwareKobo.UniversalToolkit.Helpers
         public static void UnregisterNavigateBack(this Frame frame)
         {
             #region 标题栏后退键
+
             var systemNavigationManager = SystemNavigationManager.GetForCurrentView();
             systemNavigationManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             if (_backRequestedHandlers.ContainsKey(frame))
             {
-                EventHandler<BackRequestedEventArgs> backRequestedHandler = _backRequestedHandlers[frame];
+                var backRequestedHandler = _backRequestedHandlers[frame];
                 systemNavigationManager.BackRequested -= backRequestedHandler;
                 _backRequestedHandlers.Remove(frame);
             }
-            #endregion
+
+            #endregion 标题栏后退键
 
             #region 设备后退键
+
             if (HardwareButtonsHelper.IsUseable && _backPressedHandlers.ContainsKey(frame))
             {
-                EventHandler<BackPressedEventArgs> backPressedHandler = _backPressedHandlers[frame];
+                var backPressedHandler = _backPressedHandlers[frame];
                 HardwareButtons.BackPressed -= backPressedHandler;
                 _backPressedHandlers.Remove(frame);
             }
-            #endregion
+
+            #endregion 设备后退键
 
             #region 鼠标后退键
+
             if (_frameWindows.ContainsKey(frame) && _pointerReleasedHandlers.ContainsKey(frame))
             {
-                CoreWindow window = _frameWindows[frame];
-                TypedEventHandler<CoreWindow, PointerEventArgs> pointerReleasedHandler = _pointerReleasedHandlers[frame];
+                var window = _frameWindows[frame];
+                var pointerReleasedHandler = _pointerReleasedHandlers[frame];
                 window.PointerReleased -= pointerReleasedHandler;
                 _frameWindows.Remove(frame);
                 _pointerReleasedHandlers.Remove(frame);
             }
-            #endregion
+
+            #endregion 鼠标后退键
         }
     }
 }

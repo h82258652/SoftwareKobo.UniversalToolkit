@@ -23,12 +23,12 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
 
         public bool IsRegistered(Type serviceType)
         {
-            return this.IsRegistered(serviceType, null);
+            return IsRegistered(serviceType, null);
         }
 
         public bool IsRegistered<TService>(string key) where TService : class
         {
-            return this.IsRegistered(typeof(TService), key);
+            return IsRegistered(typeof(TService), key);
         }
 
         public bool IsRegistered(Type serviceType, string key)
@@ -38,23 +38,23 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
                 throw new ArgumentNullException(nameof(serviceType));
             }
 
-            key = key ?? this._defaultKey;
+            key = key ?? _defaultKey;
 
-            if (this._keyRegisteredTypes.ContainsKey(key) == false)
+            if (_keyRegisteredTypes.ContainsKey(key) == false)
             {
                 return false;
             }
-            return this._keyRegisteredTypes[key].Contains(serviceType);
+            return _keyRegisteredTypes[key].Contains(serviceType);
         }
 
         public bool IsRegistered<TService>() where TService : class
         {
-            return this.IsRegistered(typeof(TService));
+            return IsRegistered(typeof(TService));
         }
 
         public void Register(Type classType)
         {
-            this.Register(classType, key: null);
+            Register(classType, key: null);
         }
 
         public void Register(Type classType, string key)
@@ -64,40 +64,40 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
                 throw new ArgumentNullException(nameof(classType));
             }
 
-            TypeInfo classTypeInfo = classType.GetTypeInfo();
+            var classTypeInfo = classType.GetTypeInfo();
             if (classTypeInfo.IsClass == false || classTypeInfo.IsInterface)
             {
                 throw new ArgumentException($"{nameof(classType)} could not be interface.", nameof(classType));
             }
 
-            key = key ?? this._defaultKey;
+            key = key ?? _defaultKey;
 
             if (IsRegistered(classType, key))
             {
                 throw new ArgumentException("this classType had registered.", nameof(classType));
             }
 
-            if (this._keyRegisteredTypes.ContainsKey(key) == false)
+            if (_keyRegisteredTypes.ContainsKey(key) == false)
             {
-                this._keyRegisteredTypes.Add(key, new List<Type>());
+                _keyRegisteredTypes.Add(key, new List<Type>());
             }
-            List<Type> registeredTypes = this._keyRegisteredTypes[key];
+            var registeredTypes = _keyRegisteredTypes[key];
             registeredTypes.Add(classType);
         }
 
         public void Register<TClass>() where TClass : class
         {
-            this.Register<TClass>(null);
+            Register<TClass>(null);
         }
 
         public void Register<TClass>(string key) where TClass : class
         {
-            this.Register(typeof(TClass), key);
+            Register(typeof(TClass), key);
         }
 
         public void Register(Type interfaceType, Type classType)
         {
-            this.Register(interfaceType, classType, null);
+            Register(interfaceType, classType, null);
         }
 
         public void Register(Type interfaceType, Type classType, string key)
@@ -111,8 +111,8 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
                 throw new ArgumentNullException(nameof(classType));
             }
 
-            TypeInfo interfaceTypeInfo = interfaceType.GetTypeInfo();
-            TypeInfo classTypeInfo = classType.GetTypeInfo();
+            var interfaceTypeInfo = interfaceType.GetTypeInfo();
+            var classTypeInfo = classType.GetTypeInfo();
 
             if (interfaceTypeInfo.IsInterface == false)
             {
@@ -123,7 +123,7 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
                 throw new ArgumentException($"{nameof(classType)} must be a class and could not be interface.", nameof(classType));
             }
 
-            key = key ?? this._defaultKey;
+            key = key ?? _defaultKey;
 
             if (IsRegistered(interfaceType, key))
             {
@@ -135,33 +135,33 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
                 throw new ArgumentException("this interface had registered and the implement type is not equal class type.", nameof(interfaceType));
             }
 
-            if (this._keyRegisteredTypes.ContainsKey(key) == false)
+            if (_keyRegisteredTypes.ContainsKey(key) == false)
             {
-                this._keyRegisteredTypes.Add(key, new List<Type>());
+                _keyRegisteredTypes.Add(key, new List<Type>());
             }
-            List<Type> registeredTypes = this._keyRegisteredTypes[key];
+            var registeredTypes = _keyRegisteredTypes[key];
             registeredTypes.Add(interfaceType);
-            this._interfaceClassMap[interfaceType] = classType;
+            _interfaceClassMap[interfaceType] = classType;
         }
 
         public void Register<TInterface, TClass>() where TClass : class, TInterface where TInterface : class
         {
-            this.Register<TInterface, TClass>(null);
+            Register<TInterface, TClass>(null);
         }
 
         public void Register<TInterface, TClass>(string key) where TClass : class, TInterface where TInterface : class
         {
-            this.Register(typeof(TInterface), typeof(TClass), key);
+            Register(typeof(TInterface), typeof(TClass), key);
         }
 
         public void Unregister<TService>() where TService : class
         {
-            this.Unregister(typeof(TService));
+            Unregister(typeof(TService));
         }
 
         public void Unregister(Type serviceType)
         {
-            this.Unregister(serviceType, null);
+            Unregister(serviceType, null);
         }
 
         public void Unregister(Type serviceType, string key)
@@ -171,44 +171,44 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
                 throw new ArgumentNullException(nameof(serviceType));
             }
 
-            key = key ?? this._defaultKey;
+            key = key ?? _defaultKey;
 
-            if (this._keyRegisteredTypes.ContainsKey(key) == false)
+            if (_keyRegisteredTypes.ContainsKey(key) == false)
             {
                 return;
             }
-            List<Type> registeredTypes = this._keyRegisteredTypes[key];
+            var registeredTypes = _keyRegisteredTypes[key];
             registeredTypes.Remove(serviceType);
         }
 
         public void Unregister<TService>(string key) where TService : class
         {
-            this.Unregister(typeof(TService), null);
+            Unregister(typeof(TService), null);
         }
 
         protected override sealed IEnumerable<object> DoGetAllInstances(Type serviceType)
         {
-            return this.InternalGetAllInstances(serviceType);
+            return InternalGetAllInstances(serviceType);
         }
 
         protected override sealed object DoGetInstance(Type serviceType, string key)
         {
-            return this.InternalGetInstance(serviceType, key);
+            return InternalGetInstance(serviceType, key);
         }
 
         private ConstructorInfo GetConstructor(Type type)
         {
-            if (this._defaultConstructor.ContainsKey(type))
+            if (_defaultConstructor.ContainsKey(type))
             {
                 // 返回已经缓存的构造函数。
-                return this._defaultConstructor[type];
+                return _defaultConstructor[type];
             }
 
             // 最适合的构造函数。
             ConstructorInfo suitableConstructor;
 
-            ConstructorInfo[] constructors = type.GetConstructors();
-            List<ConstructorInfo> preferredConstructors = constructors.Where(temp => temp.GetCustomAttribute<PreferredConstructorAttribute>() != null).ToList();
+            var constructors = type.GetConstructors();
+            var preferredConstructors = constructors.Where(temp => temp.GetCustomAttribute<PreferredConstructorAttribute>() != null).ToList();
             if (preferredConstructors.Count == 1)
             {
                 suitableConstructor = preferredConstructors.Single();
@@ -221,7 +221,7 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
             else
             {
                 // 获取无参构造函数。
-                ConstructorInfo defaultConstructor = constructors.Length == 1 ? constructors[0] : type.GetConstructor(Type.EmptyTypes);
+                var defaultConstructor = constructors.Length == 1 ? constructors[0] : type.GetConstructor(Type.EmptyTypes);
                 if (defaultConstructor == null)
                 {
                     throw new ArgumentException("could not find a suitable constructor.", nameof(type));
@@ -230,7 +230,7 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
             }
 
             // 缓存起来。
-            this._defaultConstructor[type] = suitableConstructor;
+            _defaultConstructor[type] = suitableConstructor;
             return suitableConstructor;
         }
 
@@ -241,9 +241,9 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
                 throw new ArgumentNullException(nameof(serviceType));
             }
 
-            foreach (var keyValue in this._keyRegisteredTypes)
+            foreach (var keyValue in _keyRegisteredTypes)
             {
-                yield return this.InternalGetInstance(serviceType, keyValue.Key);
+                yield return InternalGetInstance(serviceType, keyValue.Key);
             }
         }
 
@@ -254,14 +254,14 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
                 throw new ArgumentNullException(nameof(serviceType));
             }
 
-            key = key ?? this._defaultKey;
+            key = key ?? _defaultKey;
 
-            if (this._keyRegisteredTypes.ContainsKey(key) == false)
+            if (_keyRegisteredTypes.ContainsKey(key) == false)
             {
                 throw new ArgumentException("key is not registered.", nameof(key));
             }
 
-            List<Type> registeredTypes = _keyRegisteredTypes[key];
+            var registeredTypes = _keyRegisteredTypes[key];
             if (registeredTypes.Contains(serviceType) == false)
             {
                 throw new ArgumentException("service type is not registered.", nameof(serviceType));
@@ -270,29 +270,29 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
             Type instanceType;
             if (serviceType.GetTypeInfo().IsInterface)
             {
-                instanceType = this._interfaceClassMap[serviceType];
+                instanceType = _interfaceClassMap[serviceType];
             }
             else
             {
                 instanceType = serviceType;
             }
 
-            ConstructorInfo constructor = this.GetConstructor(instanceType);
-            ParameterInfo[] constructorParameterInfos = constructor.GetParameters();
-            object[] parameters = new object[constructorParameterInfos.Length];
-            for (int i = 0; i < constructorParameterInfos.Length; i++)
+            var constructor = GetConstructor(instanceType);
+            var constructorParameterInfos = constructor.GetParameters();
+            var parameters = new object[constructorParameterInfos.Length];
+            for (var i = 0; i < constructorParameterInfos.Length; i++)
             {
-                Type parameterType = constructorParameterInfos[i].ParameterType;
+                var parameterType = constructorParameterInfos[i].ParameterType;
                 object parameter;
-                parameter = this.InternalGetInstance(parameterType, key);
-                if (parameter == null && key != this._defaultKey)
+                parameter = InternalGetInstance(parameterType, key);
+                if (parameter == null && key != _defaultKey)
                 {
-                    parameter = this.InternalGetInstance(parameterType, null);
+                    parameter = InternalGetInstance(parameterType, null);
                 }
                 parameters[i] = parameter;
             }
 
-            object instance = constructor.Invoke(parameters);
+            var instance = constructor.Invoke(parameters);
             return instance;
         }
     }

@@ -17,11 +17,11 @@ namespace SoftwareKobo.UniversalToolkit.Controls
         {
             get
             {
-                return (double)this.GetValue(ItemHeightProperty);
+                return (double)GetValue(ItemHeightProperty);
             }
             set
             {
-                this.SetValue(ItemHeightProperty, value);
+                SetValue(ItemHeightProperty, value);
             }
         }
 
@@ -29,11 +29,11 @@ namespace SoftwareKobo.UniversalToolkit.Controls
         {
             get
             {
-                return (double)this.GetValue(ItemWidthProperty);
+                return (double)GetValue(ItemWidthProperty);
             }
             set
             {
-                this.SetValue(ItemWidthProperty, value);
+                SetValue(ItemWidthProperty, value);
             }
         }
 
@@ -41,35 +41,35 @@ namespace SoftwareKobo.UniversalToolkit.Controls
         {
             get
             {
-                return (Orientation)this.GetValue(OrientationProperty);
+                return (Orientation)GetValue(OrientationProperty);
             }
             set
             {
-                this.SetValue(OrientationProperty, value);
+                SetValue(OrientationProperty, value);
             }
         }
 
         protected override Size ArrangeOverride(Size finalSize)
         {
-            Orientation orientation = this.Orientation;
-            OrientedSize lineSize = new OrientedSize(orientation);
-            OrientedSize maximumSize = new OrientedSize(orientation, finalSize.Width, finalSize.Height);
+            var orientation = Orientation;
+            var lineSize = new OrientedSize(orientation);
+            var maximumSize = new OrientedSize(orientation, finalSize.Width, finalSize.Height);
 
-            double itemWidth = this.ItemWidth;
-            double itemHeight = this.ItemHeight;
-            bool hasFixedWidth = double.IsNaN(itemWidth) == false;
-            bool hasFixedHeight = double.IsNaN(itemHeight) == false;
-            double indirectOffset = 0.0d;
-            double? directDelta = (orientation == Orientation.Horizontal) ? (hasFixedWidth ? (double?)itemWidth : null) : (hasFixedHeight ? (double?)itemHeight : null);
+            var itemWidth = ItemWidth;
+            var itemHeight = ItemHeight;
+            var hasFixedWidth = double.IsNaN(itemWidth) == false;
+            var hasFixedHeight = double.IsNaN(itemHeight) == false;
+            var indirectOffset = 0.0d;
+            var directDelta = (orientation == Orientation.Horizontal) ? (hasFixedWidth ? (double?)itemWidth : null) : (hasFixedHeight ? (double?)itemHeight : null);
 
-            UIElementCollection children = this.Children;
-            int count = children.Count;
-            int lineStart = 0;
-            for (int lineEnd = 0; lineEnd < count; lineEnd++)
+            var children = Children;
+            var count = children.Count;
+            var lineStart = 0;
+            for (var lineEnd = 0; lineEnd < count; lineEnd++)
             {
-                UIElement element = children[lineEnd];
+                var element = children[lineEnd];
 
-                OrientedSize elementSize = new OrientedSize(orientation, hasFixedWidth ? itemWidth : element.DesiredSize.Width, hasFixedHeight ? itemHeight : element.DesiredSize.Height);
+                var elementSize = new OrientedSize(orientation, hasFixedWidth ? itemWidth : element.DesiredSize.Width, hasFixedHeight ? itemHeight : element.DesiredSize.Height);
 
                 if (lineSize.Direct + elementSize.Direct > maximumSize.Direct)
                 {
@@ -105,21 +105,21 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 
         protected override Size MeasureOverride(Size constraint)
         {
-            Orientation orientation = this.Orientation;
-            OrientedSize lineSize = new OrientedSize(orientation);
-            OrientedSize totalSize = new OrientedSize(orientation);
-            OrientedSize maximumSize = new OrientedSize(orientation, constraint.Width, constraint.Height);
+            var orientation = Orientation;
+            var lineSize = new OrientedSize(orientation);
+            var totalSize = new OrientedSize(orientation);
+            var maximumSize = new OrientedSize(orientation, constraint.Width, constraint.Height);
 
-            double itemWidth = this.ItemWidth;
-            double itemHeight = this.ItemHeight;
-            bool hasFixedWidth = double.IsNaN(itemWidth) == false;
-            bool hasFixedHeihgt = double.IsNaN(itemHeight) == false;
-            Size itemSize = new Size(hasFixedWidth ? itemWidth : constraint.Width, hasFixedHeihgt ? itemHeight : constraint.Height);
+            var itemWidth = ItemWidth;
+            var itemHeight = ItemHeight;
+            var hasFixedWidth = double.IsNaN(itemWidth) == false;
+            var hasFixedHeihgt = double.IsNaN(itemHeight) == false;
+            var itemSize = new Size(hasFixedWidth ? itemWidth : constraint.Width, hasFixedHeihgt ? itemHeight : constraint.Height);
 
-            foreach (UIElement element in Children)
+            foreach (var element in Children)
             {
                 element.Measure(itemSize);
-                OrientedSize elementSize = new OrientedSize(orientation, hasFixedWidth ? itemWidth : element.DesiredSize.Width, hasFixedHeihgt ? itemHeight : element.DesiredSize.Height);
+                var elementSize = new OrientedSize(orientation, hasFixedWidth ? itemWidth : element.DesiredSize.Width, hasFixedHeihgt ? itemHeight : element.DesiredSize.Height);
 
                 if (lineSize.Direct + elementSize.Direct > maximumSize.Direct)
                 {
@@ -156,8 +156,8 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 
         private static void ItemWidthOrHeightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            WrapPanel obj = (WrapPanel)d;
-            double value = (double)e.NewValue;
+            var obj = (WrapPanel)d;
+            var value = (double)e.NewValue;
 
             if (IsItemWidthHeightValid(value) == false)
             {
@@ -169,8 +169,8 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 
         private static void OrientationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            WrapPanel obj = (WrapPanel)d;
-            Orientation value = (Orientation)e.NewValue;
+            var obj = (WrapPanel)d;
+            var value = (Orientation)e.NewValue;
 
             if (Enum.IsDefined(typeof(Orientation), value) == false)
             {
@@ -182,20 +182,20 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 
         private void ArrangeLine(int lineStart, int lineEnd, double? directDelta, double indirectOffset, double indirectGrowth)
         {
-            double directOffset = 0.0d;
+            var directOffset = 0.0d;
 
-            Orientation orientation = this.Orientation;
-            bool isHorizontal = orientation == Orientation.Horizontal;
+            var orientation = Orientation;
+            var isHorizontal = orientation == Orientation.Horizontal;
 
-            UIElementCollection children = this.Children;
-            for (int index = lineStart; index < lineEnd; index++)
+            var children = Children;
+            for (var index = lineStart; index < lineEnd; index++)
             {
-                UIElement element = children[index];
-                OrientedSize elementSize = new OrientedSize(orientation, element.DesiredSize.Width, element.DesiredSize.Height);
+                var element = children[index];
+                var elementSize = new OrientedSize(orientation, element.DesiredSize.Width, element.DesiredSize.Height);
 
-                double directGrowth = directDelta != null ? directDelta.Value : elementSize.Direct;
+                var directGrowth = directDelta != null ? directDelta.Value : elementSize.Direct;
 
-                Rect bounds = isHorizontal ? new Rect(directOffset, indirectOffset, directGrowth, indirectGrowth) : new Rect(indirectOffset, directOffset, indirectGrowth, directGrowth);
+                var bounds = isHorizontal ? new Rect(directOffset, indirectOffset, directGrowth, indirectGrowth) : new Rect(indirectOffset, directOffset, indirectGrowth, directGrowth);
                 element.Arrange(bounds);
 
                 directOffset += directGrowth;

@@ -6,8 +6,8 @@ namespace SoftwareKobo.UniversalToolkit.Controls
     {
         public AdaptiveCollectionViewModeChangedEventArgs(AdaptiveCollectionViewMode oldMode, AdaptiveCollectionViewMode newMode)
         {
-            this.OldMode = oldMode;
-            this.NewMode = NewMode;
+            OldMode = oldMode;
+            NewMode = NewMode;
         }
 
         public AdaptiveCollectionViewMode OldMode

@@ -44,8 +44,8 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
                 throw new ArgumentNullException(nameof(execute));
             }
 
-            this._execute = execute;
-            this._canExecute = canExecute;
+            _execute = execute;
+            _canExecute = canExecute;
         }
 
         /// <summary>
@@ -60,8 +60,8 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
                 throw new ArgumentNullException(nameof(asyncExecute));
             }
 
-            this._asyncExecute = asyncExecute;
-            this._canExecute = canExecute;
+            _asyncExecute = asyncExecute;
+            _canExecute = canExecute;
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
         /// <returns>是否允许命令执行。</returns>
         public bool CanExecute(object parameter)
         {
-            return _canExecute == null || this._canExecute((T)parameter);
+            return _canExecute == null || _canExecute((T)parameter);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
         /// <param name="parameter">参数。</param>
         public async void Execute(object parameter)
         {
-            if (this._execute != null)
+            if (_execute != null)
             {
                 _execute((T)parameter);
             }
@@ -100,10 +100,7 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
         /// </summary>
         public void RaiseCanExecuteChanged()
         {
-            if (this.CanExecuteChanged != null)
-            {
-                this.CanExecuteChanged(this, EventArgs.Empty);
-            }
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }

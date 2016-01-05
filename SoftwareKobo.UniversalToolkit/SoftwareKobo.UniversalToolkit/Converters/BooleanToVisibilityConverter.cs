@@ -39,7 +39,7 @@ namespace SoftwareKobo.UniversalToolkit.Converters
         {
             if (IsReversed)
             {
-                bool bValue = false;
+                var bValue = false;
                 if (value is Visibility)
                 {
                     bValue = (Visibility)value == Visibility.Visible;
@@ -52,7 +52,7 @@ namespace SoftwareKobo.UniversalToolkit.Converters
             }
             else
             {
-                Visibility visibility = Visibility.Collapsed;
+                var visibility = Visibility.Collapsed;
                 if (value is bool)
                 {
                     visibility = (bool)value ? Visibility.Visible : Visibility.Collapsed;
@@ -84,7 +84,7 @@ namespace SoftwareKobo.UniversalToolkit.Converters
         {
             if (IsReversed)
             {
-                Visibility visibility = Visibility.Collapsed;
+                var visibility = Visibility.Collapsed;
                 if (value is bool)
                 {
                     visibility = (bool)value ? Visibility.Visible : Visibility.Collapsed;
@@ -104,7 +104,7 @@ namespace SoftwareKobo.UniversalToolkit.Converters
             }
             else
             {
-                bool bValue = false;
+                var bValue = false;
                 if (value is Visibility)
                 {
                     bValue = (Visibility)value == Visibility.Visible;

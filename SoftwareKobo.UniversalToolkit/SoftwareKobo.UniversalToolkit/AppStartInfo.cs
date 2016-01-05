@@ -38,12 +38,12 @@ namespace SoftwareKobo.UniversalToolkit
         {
             get
             {
-                return this._mainPage;
+                return _mainPage;
             }
             set
             {
                 Bootstrapper.VerifyIsPageType(value);
-                this._mainPage = value;
+                _mainPage = value;
             }
         }
 
@@ -56,16 +56,10 @@ namespace SoftwareKobo.UniversalToolkit
             set;
         }
 
-        internal static AppStartInfo Default
+        internal static AppStartInfo Default => new AppStartInfo()
         {
-            get
-            {
-                return new AppStartInfo()
-                {
-                    NavigatePage = Bootstrapper.Current?.DefaultNavigatePage,
-                    ExtendedSplashScreen = Bootstrapper.Current?.DefaultExtendedSplashScreen
-                };
-            }
-        }
+            NavigatePage = Bootstrapper.Current?.DefaultNavigatePage,
+            ExtendedSplashScreen = Bootstrapper.Current?.DefaultExtendedSplashScreen
+        };
     }
 }

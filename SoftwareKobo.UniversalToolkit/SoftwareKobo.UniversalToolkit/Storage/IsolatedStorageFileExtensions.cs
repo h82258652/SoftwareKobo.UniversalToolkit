@@ -13,18 +13,18 @@ namespace SoftwareKobo.UniversalToolkit.Storage
         /// <param name="directory">需要删除的目录文件夹路径。</param>
         public static void DeleteDirectoryRecursive(string directory)
         {
-            using (IsolatedStorageFile isf = IsolatedStorageFile.GetUserStoreForApplication())
+            using (var isf = IsolatedStorageFile.GetUserStoreForApplication())
             {
                 if (isf.DirectoryExists(directory))
                 {
-                    string[] files = isf.GetFileNames(directory + @"/*");
-                    foreach (string file in files)
+                    var files = isf.GetFileNames(directory + @"/*");
+                    foreach (var file in files)
                     {
                         isf.DeleteFile(directory + @"/" + file);
                     }
 
-                    string[] subDirectories = isf.GetDirectoryNames(directory + @"/");
-                    foreach (string subDirectory in subDirectories)
+                    var subDirectories = isf.GetDirectoryNames(directory + @"/");
+                    foreach (var subDirectory in subDirectories)
                     {
                         DeleteDirectoryRecursive(directory + @"/" + subDirectory);
                     }
@@ -44,19 +44,19 @@ namespace SoftwareKobo.UniversalToolkit.Storage
         private static void GetDirectorySize(string directory, out long directorySize)
         {
             directorySize = 0;
-            using (IsolatedStorageFile isf = IsolatedStorageFile.GetUserStoreForApplication())
+            using (var isf = IsolatedStorageFile.GetUserStoreForApplication())
             {
                 if (isf.DirectoryExists(directory))
                 {
-                    string[] files = isf.GetFileNames(directory + @"/*");
-                    foreach (string file in files)
+                    var files = isf.GetFileNames(directory + @"/*");
+                    foreach (var file in files)
                     {
-                        long fileSize = GetFileSize(directory + @"/" + file);
+                        var fileSize = GetFileSize(directory + @"/" + file);
                         directorySize += fileSize;
                     }
 
-                    string[] subDirectories = isf.GetDirectoryNames(directory + @"/");
-                    foreach (string subDirectory in subDirectories)
+                    var subDirectories = isf.GetDirectoryNames(directory + @"/");
+                    foreach (var subDirectory in subDirectories)
                     {
                         long subDirectorySize;
                         GetDirectorySize(directory + @"/" + subDirectory, out subDirectorySize);
@@ -68,9 +68,9 @@ namespace SoftwareKobo.UniversalToolkit.Storage
 
         private static long GetFileSize(string filePath)
         {
-            using (IsolatedStorageFile isf = IsolatedStorageFile.GetUserStoreForApplication())
+            using (var isf = IsolatedStorageFile.GetUserStoreForApplication())
             {
-                using (IsolatedStorageFileStream fileStream = isf.OpenFile(filePath, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+                using (var fileStream = isf.OpenFile(filePath, System.IO.FileMode.Open, System.IO.FileAccess.Read))
                 {
                     return fileStream.Length;
                 }

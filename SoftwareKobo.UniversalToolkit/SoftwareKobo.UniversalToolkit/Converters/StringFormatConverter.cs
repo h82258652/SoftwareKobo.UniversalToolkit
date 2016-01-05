@@ -27,7 +27,7 @@ namespace SoftwareKobo.UniversalToolkit.Converters
         /// <returns>格式化后的字符串。</returns>
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            string format = parameter as string ?? this.DefaultFormat;
+            var format = parameter as string ?? DefaultFormat;
             if (format == null)
             {
                 return value;

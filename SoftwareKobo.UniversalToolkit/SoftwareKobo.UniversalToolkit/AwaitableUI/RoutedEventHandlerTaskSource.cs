@@ -38,13 +38,7 @@ namespace SoftwareKobo.UniversalToolkit.AwaitableUI
             _tcs = new TaskCompletionSource<RoutedEventArgs>();
         }
 
-        internal Task<RoutedEventArgs> Task
-        {
-            get
-            {
-                return _tcs.Task;
-            }
-        }
+        internal Task<RoutedEventArgs> Task => _tcs.Task;
 
         private void EventCompleted(object sender, RoutedEventArgs args)
         {

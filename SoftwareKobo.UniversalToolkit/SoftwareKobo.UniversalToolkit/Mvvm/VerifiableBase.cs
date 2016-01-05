@@ -14,24 +14,12 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
     /// </example>
     public abstract class VerifiableBase : BindableBase
     {
-        public ModelVerifyErrors Errors
-        {
-            get
-            {
-                return new ModelVerifyErrors(this);
-            }
-        }
+        public ModelVerifyErrors Errors => new ModelVerifyErrors(this);
 
         /// <summary>
         /// 指示该模型的所有属性是否验证成功。
         /// </summary>
-        public bool IsValid
-        {
-            get
-            {
-                return this.Errors.Count <= 0;
-            }
-        }
+        public bool IsValid => Errors.Count <= 0;
 
         /// <summary>
         /// 通知属性发生变化。

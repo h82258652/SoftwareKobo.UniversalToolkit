@@ -14,7 +14,7 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
         /// <param name="conditions">多个 SystemCondition 对象的实例。</param>
         public static void AddConditions(this BackgroundTaskBuilder builder, params IBackgroundCondition[] conditions)
         {
-            foreach (IBackgroundCondition condition in conditions)
+            foreach (var condition in conditions)
             {
                 builder.AddCondition(condition);
             }

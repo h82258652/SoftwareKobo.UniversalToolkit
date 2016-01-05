@@ -14,7 +14,7 @@ namespace SoftwareKobo.UniversalToolkit.Utils.AppxManifest
         {
             get
             {
-                string value = this["BackgroundColor"];
+                var value = this["BackgroundColor"];
                 return ColorExtensions.Parse(value);
             }
         }
@@ -23,7 +23,7 @@ namespace SoftwareKobo.UniversalToolkit.Utils.AppxManifest
         {
             get
             {
-                XElement defaultTileElement = this.GetChildElement("uap:DefaultTileElement");
+                var defaultTileElement = GetChildElement("uap:DefaultTileElement");
                 if (defaultTileElement == null)
                 {
                     return null;
@@ -35,27 +35,15 @@ namespace SoftwareKobo.UniversalToolkit.Utils.AppxManifest
             }
         }
 
-        public string Description
-        {
-            get
-            {
-                return this["Description"];
-            }
-        }
+        public string Description => this["Description"];
 
-        public string DisplayName
-        {
-            get
-            {
-                return this["DisplayName"];
-            }
-        }
+        public string DisplayName => this["DisplayName"];
 
         public SplashScreenManifest SplashScreen
         {
             get
             {
-                XElement splashScreen = this.GetChildElement("uap:SplashScreen");
+                var splashScreen = GetChildElement("uap:SplashScreen");
                 if (splashScreen == null)
                 {
                     return null;
@@ -67,20 +55,8 @@ namespace SoftwareKobo.UniversalToolkit.Utils.AppxManifest
             }
         }
 
-        public string Square150x150Logo
-        {
-            get
-            {
-                return this["Square150x150Logo"];
-            }
-        }
+        public string Square150x150Logo => this["Square150x150Logo"];
 
-        public string Square44x44Logo
-        {
-            get
-            {
-                return this["Square44x44Logo"];
-            }
-        }
+        public string Square44x44Logo => this["Square44x44Logo"];
     }
 }

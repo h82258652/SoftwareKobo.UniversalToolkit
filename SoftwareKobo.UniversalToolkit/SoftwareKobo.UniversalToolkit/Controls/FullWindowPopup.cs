@@ -41,28 +41,28 @@ namespace SoftwareKobo.UniversalToolkit.Controls
                 VerticalContentAlignment = VerticalAlignment.Stretch
             };
 
-            this._popup = new Popup()
+            _popup = new Popup()
             {
                 Child = _contentControl
             };
-            Binding binding = new Binding()
+            var binding = new Binding()
             {
                 Source = this,
                 Path = new PropertyPath(nameof(IsOpen)),
                 Mode = BindingMode.TwoWay
             };
-            this._popup.SetBinding(Popup.IsOpenProperty, binding);
+            _popup.SetBinding(Popup.IsOpenProperty, binding);
 
             Action keepPopupSize = () =>
             {
                 Window.Current.SizeChanged += delegate
                 {
-                    this.ReSize();
+                    ReSize();
                 };
-                this.ReSize();
+                ReSize();
             };
 
-            Bootstrapper app = Bootstrapper.Current;
+            var app = Bootstrapper.Current;
             if (app != null && app.IsInConstructing)
             {
                 // 应用程序的 App 类继承自 Bootstrapper，并且当前处于 App 类的构造函数中，将保持 Popup 大小的方法放至构造函数执行完成后再执行。
@@ -83,11 +83,11 @@ namespace SoftwareKobo.UniversalToolkit.Controls
         {
             add
             {
-                this._popup.Closed += value;
+                _popup.Closed += value;
             }
             remove
             {
-                this._popup.Closed -= value;
+                _popup.Closed -= value;
             }
         }
 
@@ -96,11 +96,11 @@ namespace SoftwareKobo.UniversalToolkit.Controls
         {
             add
             {
-                this._popup.Opened += value;
+                _popup.Opened += value;
             }
             remove
             {
-                this._popup.Opened -= value;
+                _popup.Opened -= value;
             }
         }
 
@@ -108,11 +108,11 @@ namespace SoftwareKobo.UniversalToolkit.Controls
         {
             get
             {
-                return (UIElement)this.GetValue(ChildProperty);
+                return (UIElement)GetValue(ChildProperty);
             }
             set
             {
-                this.SetValue(ChildProperty, value);
+                SetValue(ChildProperty, value);
             }
         }
 
@@ -120,11 +120,11 @@ namespace SoftwareKobo.UniversalToolkit.Controls
         {
             get
             {
-                return (TransitionCollection)this.GetValue(ChildTransitionsProperty);
+                return (TransitionCollection)GetValue(ChildTransitionsProperty);
             }
             set
             {
-                this.SetValue(ChildTransitionsProperty, value);
+                SetValue(ChildTransitionsProperty, value);
             }
         }
 
@@ -132,11 +132,11 @@ namespace SoftwareKobo.UniversalToolkit.Controls
         {
             get
             {
-                return (bool)this.GetValue(IsLightDismissEnabledProperty);
+                return (bool)GetValue(IsLightDismissEnabledProperty);
             }
             set
             {
-                this.SetValue(IsLightDismissEnabledProperty, value);
+                SetValue(IsLightDismissEnabledProperty, value);
             }
         }
 
@@ -144,11 +144,11 @@ namespace SoftwareKobo.UniversalToolkit.Controls
         {
             get
             {
-                return (bool)this.GetValue(IsOpenProperty);
+                return (bool)GetValue(IsOpenProperty);
             }
             set
             {
-                this.SetValue(IsOpenProperty, value);
+                SetValue(IsOpenProperty, value);
             }
         }
 
@@ -160,8 +160,8 @@ namespace SoftwareKobo.UniversalToolkit.Controls
                 {
                     _attachedObjectDataContextChangedHandler = (sender, e) =>
                     {
-                        this.DataContext = e.NewValue;
-                        this._popup.DataContext = e.NewValue;
+                        DataContext = e.NewValue;
+                        _popup.DataContext = e.NewValue;
                     };
                 }
                 return _attachedObjectDataContextChangedHandler;
@@ -185,16 +185,16 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 
         private static void AttachedPopupChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            FrameworkElement obj = d as FrameworkElement;
+            var obj = d as FrameworkElement;
             if (obj != null)
             {
-                FullWindowPopup oldPopup = (FullWindowPopup)e.OldValue;
+                var oldPopup = (FullWindowPopup)e.OldValue;
                 if (oldPopup != null)
                 {
                     obj.DataContextChanged -= oldPopup.AttachedObjectDataContextChangedHandler;
                 }
 
-                FullWindowPopup newPopup = (FullWindowPopup)e.NewValue;
+                var newPopup = (FullWindowPopup)e.NewValue;
                 if (newPopup != null)
                 {
                     obj.DataContextChanged += newPopup.AttachedObjectDataContextChangedHandler;
@@ -204,35 +204,35 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 
         private static void ChildChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            FullWindowPopup obj = (FullWindowPopup)d;
-            UIElement value = (UIElement)e.NewValue;
+            var obj = (FullWindowPopup)d;
+            var value = (UIElement)e.NewValue;
             obj._contentControl.Content = value;
         }
 
         private static void ChildTransitionsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            FullWindowPopup obj = (FullWindowPopup)d;
-            TransitionCollection value = (TransitionCollection)e.NewValue;
+            var obj = (FullWindowPopup)d;
+            var value = (TransitionCollection)e.NewValue;
             obj._popup.ChildTransitions = value;
         }
 
         private static void IsLightDismissEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            FullWindowPopup obj = (FullWindowPopup)d;
-            bool value = (bool)e.NewValue;
+            var obj = (FullWindowPopup)d;
+            var value = (bool)e.NewValue;
             obj._popup.IsLightDismissEnabled = value;
         }
 
         private static void IsOpenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            FullWindowPopup obj = (FullWindowPopup)d;
-            bool value = (bool)e.NewValue;
+            var obj = (FullWindowPopup)d;
+            var value = (bool)e.NewValue;
             obj._popup.IsOpen = value;
         }
 
         private void ReSize()
         {
-            Rect size = Window.Current.Bounds;
+            var size = Window.Current.Bounds;
             _contentControl.Width = size.Width;
             _contentControl.Height = size.Height;
         }

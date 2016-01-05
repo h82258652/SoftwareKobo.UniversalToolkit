@@ -31,7 +31,7 @@ namespace SoftwareKobo.UniversalToolkit.Storage
             try
             {
                 var file = _folder.GetFileAsync(key).AsTask().Result;
-                string str = FileIO.ReadTextAsync(file).AsTask().Result;
+                var str = FileIO.ReadTextAsync(file).AsTask().Result;
                 if (typeof(T) == typeof(string))
                 {
                     return (T)Convert.ChangeType(str, typeof(T));

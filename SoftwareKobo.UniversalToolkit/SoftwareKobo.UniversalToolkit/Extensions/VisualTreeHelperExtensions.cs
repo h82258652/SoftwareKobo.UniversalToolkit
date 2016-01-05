@@ -51,8 +51,8 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
         /// <returns>子级控件。</returns>
         public static IEnumerable<DependencyObject> GetChildren(this DependencyObject reference)
         {
-            int count = VisualTreeHelper.GetChildrenCount(reference);
-            for (int childIndex = 0; childIndex < count; childIndex++)
+            var count = VisualTreeHelper.GetChildrenCount(reference);
+            for (var childIndex = 0; childIndex < count; childIndex++)
             {
                 yield return VisualTreeHelper.GetChild(reference, childIndex);
             }
@@ -71,7 +71,7 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
                 throw new ArgumentNullException(nameof(reference));
             }
 
-            List<DependencyObject> descendants = new List<DependencyObject>();
+            var descendants = new List<DependencyObject>();
 
             var children = reference.GetChildren();
             foreach (var child in children)

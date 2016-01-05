@@ -8,28 +8,10 @@ namespace SoftwareKobo.UniversalToolkit.Utils.AppxManifest
         {
         }
 
-        public string Square310x310Logo
-        {
-            get
-            {
-                return this["Square310x310Logo"];
-            }
-        }
+        public string Square310x310Logo => this["Square310x310Logo"];
 
-        public string Square71x71Logo
-        {
-            get
-            {
-                return this["Square71x71Logo"];
-            }
-        }
+        public string Square71x71Logo => this["Square71x71Logo"];
 
-        public string Wide310x150Logo
-        {
-            get
-            {
-                return this["Wide310x150Logo"];
-            }
-        }
+        public string Wide310x150Logo => this["Wide310x150Logo"];
     }
 }

@@ -16,11 +16,11 @@ namespace SoftwareKobo.UniversalToolkit.Controls
         {
             get
             {
-                return (bool)this.GetValue(LastChildFillProperty);
+                return (bool)GetValue(LastChildFillProperty);
             }
             set
             {
-                this.SetValue(LastChildFillProperty, value);
+                SetValue(LastChildFillProperty, value);
             }
         }
 
@@ -37,24 +37,24 @@ namespace SoftwareKobo.UniversalToolkit.Controls
         protected override Size ArrangeOverride(Size arrangeSize)
         {
             // 表示剩余区域的距离可用区域的边距。
-            double left = 0.0d;
-            double top = 0.0d;
-            double right = 0.0d;
-            double bottom = 0.0d;
+            var left = 0.0d;
+            var top = 0.0d;
+            var right = 0.0d;
+            var bottom = 0.0d;
 
-            int dockedCount = this.Children.Count - (this.LastChildFill ? 1 : 0);
-            int index = 0;
-            foreach (UIElement element in this.Children)
+            var dockedCount = Children.Count - (LastChildFill ? 1 : 0);
+            var index = 0;
+            foreach (var element in Children)
             {
-                double remainingWidth = Math.Max(0.0d, arrangeSize.Width - left - right);
-                double remainingHeight = Math.Max(0.0d, arrangeSize.Height - top - bottom);
-                Rect remainingRect = new Rect(left, top, remainingWidth, remainingHeight);
+                var remainingWidth = Math.Max(0.0d, arrangeSize.Width - left - right);
+                var remainingHeight = Math.Max(0.0d, arrangeSize.Height - top - bottom);
+                var remainingRect = new Rect(left, top, remainingWidth, remainingHeight);
 
                 // 用于判断最后一个元素是否需要 Fill，如果是 Fill，那么则不执行该条件判断内的语句，将剩余空间全布局给最后一个元素。若不是 Fill 则，计算再布局。
                 if (index < dockedCount)
                 {
                     // 元素所需要的大小。
-                    Size desiredSize = element.DesiredSize;
+                    var desiredSize = element.DesiredSize;
 
                     switch (GetDock(element))
                     {
@@ -96,22 +96,22 @@ namespace SoftwareKobo.UniversalToolkit.Controls
         protected override Size MeasureOverride(Size constraint)
         {
             // 已经使用的宽和高。
-            double usedWidth = 0.0d;
-            double usedHeight = 0.0d;
+            var usedWidth = 0.0d;
+            var usedHeight = 0.0d;
 
             // 所需的最大宽度。
-            double maximumWidth = 0.0d;
+            var maximumWidth = 0.0d;
 
             // 所需的最大高度。
-            double maximumHeight = 0.0d;
+            var maximumHeight = 0.0d;
 
-            foreach (UIElement element in this.Children)
+            foreach (var element in Children)
             {
                 // 计算还有多少空间能给子控件。
-                Size remainingSize = new Size(Math.Max(0.0d, constraint.Width - usedWidth), Math.Max(0.0d, constraint.Height - usedHeight));
+                var remainingSize = new Size(Math.Max(0.0d, constraint.Width - usedWidth), Math.Max(0.0d, constraint.Height - usedHeight));
                 element.Measure(remainingSize);
                 // 子控件需要需要的大小。
-                Size desiredSize = element.DesiredSize;
+                var desiredSize = element.DesiredSize;
 
                 switch (GetDock(element))
                 {
@@ -136,15 +136,15 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 
         private static void DockChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            UIElement obj = (UIElement)d;
-            Dock value = (Dock)e.NewValue;
+            var obj = (UIElement)d;
+            var value = (Dock)e.NewValue;
 
             if (Enum.IsDefined(typeof(Dock), value) == false)
             {
                 throw new ArgumentException("dock is not defined.", nameof(value));
             }
 
-            DockPanel panel = VisualTreeHelper.GetParent(obj) as DockPanel;
+            var panel = VisualTreeHelper.GetParent(obj) as DockPanel;
             if (panel != null)
             {
                 panel.InvalidateMeasure();
@@ -153,7 +153,7 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 
         private static void LastChildFillChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            DockPanel obj = (DockPanel)d;
+            var obj = (DockPanel)d;
             obj.InvalidateArrange();
         }
     }
