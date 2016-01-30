@@ -7,7 +7,10 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
+using Windows.UI.ViewManagement;
+using Windows.UI.Xaml;
 
 namespace SoftwareKobo.UniversalToolkit.Mvvm
 {
@@ -16,7 +19,7 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
     /// </summary>
     public abstract class BindableBase : DisposableObject, INotifyPropertyChanging, INotifyPropertyChanged
     {
-        private static readonly CoreWindow CoreWindow = CoreWindow.GetForCurrentThread();
+        private static readonly CoreWindow ConstructorCoreWindow = CoreWindow.GetForCurrentThread();
 
         /// <summary>
         /// 在属性值更改后发生。
@@ -52,16 +55,31 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
             {
                 return;
             }
-            if (CoreWindow != null && CoreWindow.Dispatcher.HasThreadAccess == false)
-            {
-                await CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-                });
-            }
-            else
+            try
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+            catch (InvalidCastException)
+            {
+                var views = CoreApplication.Views;
+                foreach (var view in views)
+                {
+                    var dispatcher = view.Dispatcher;
+                    if (dispatcher != null)
+                    {
+                        await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                        {
+                            try
+                            {
+                                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                            }
+                            catch
+                            {
+                                // ignored
+                            }
+                        });
+                    }
+                }
             }
         }
 
@@ -77,16 +95,31 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
             {
                 return;
             }
-            if (CoreWindow != null && CoreWindow.Dispatcher.HasThreadAccess == false)
-            {
-                await CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    PropertyChanging(this, new PropertyChangingEventArgs(propertyName));
-                });
-            }
-            else
+            try
             {
                 PropertyChanging(this, new PropertyChangingEventArgs(propertyName));
+            }
+            catch (InvalidCastException)
+            {
+                var views = CoreApplication.Views;
+                foreach (var view in views)
+                {
+                    var dispatcher = view.Dispatcher;
+                    if (dispatcher != null)
+                    {
+                        await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                        {
+                            try
+                            {
+                                PropertyChanging?.Invoke(this, new PropertyChangingEventArgs(propertyName));
+                            }
+                            catch
+                            {
+                                // ignored
+                            }
+                        });
+                    }
+                }
             }
         }
 

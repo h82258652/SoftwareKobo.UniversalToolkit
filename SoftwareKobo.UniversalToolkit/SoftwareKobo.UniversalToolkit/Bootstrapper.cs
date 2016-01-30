@@ -567,10 +567,7 @@ namespace SoftwareKobo.UniversalToolkit
             await hostWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 var rootFrame = hostWindow.Content as Frame;
-                if (rootFrame != null)
-                {
-                    rootFrame.Navigate(pageType, parameter);
-                }
+                rootFrame?.Navigate(pageType, parameter);
             });
         }
 

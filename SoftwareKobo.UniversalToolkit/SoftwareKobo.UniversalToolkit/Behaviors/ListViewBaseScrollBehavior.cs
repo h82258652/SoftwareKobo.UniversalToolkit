@@ -88,17 +88,11 @@ namespace SoftwareKobo.UniversalToolkit.Behaviors
         {
             if (e.NewValue > e.OldValue)
             {
-                if (ScrollRight != null)
-                {
-                    ScrollRight(AssociatedObject, EventArgs.Empty);
-                }
+                ScrollRight?.Invoke(AssociatedObject, EventArgs.Empty);
             }
             else if (e.NewValue < e.OldValue)
             {
-                if (ScrollLeft != null)
-                {
-                    ScrollLeft(AssociatedObject, EventArgs.Empty);
-                }
+                ScrollLeft?.Invoke(AssociatedObject, EventArgs.Empty);
             }
         }
 
@@ -106,17 +100,11 @@ namespace SoftwareKobo.UniversalToolkit.Behaviors
         {
             if (e.NewValue > e.OldValue)
             {
-                if (ScrollDown != null)
-                {
-                    ScrollDown(AssociatedObject, EventArgs.Empty);
-                }
+                ScrollDown?.Invoke(AssociatedObject, EventArgs.Empty);
             }
             else if (e.NewValue < e.OldValue)
             {
-                if (ScrollUp != null)
-                {
-                    ScrollUp(AssociatedObject, EventArgs.Empty);
-                }
+                ScrollUp?.Invoke(AssociatedObject, EventArgs.Empty);
             }
         }
     }
