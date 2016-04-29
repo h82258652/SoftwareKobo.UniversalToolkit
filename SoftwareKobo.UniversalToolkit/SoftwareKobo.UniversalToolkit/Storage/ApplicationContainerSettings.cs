@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SoftwareKobo.UniversalToolkit.Extensions;
 using System;
-using System.Reflection;
 using Windows.Storage;
 
 namespace SoftwareKobo.UniversalToolkit.Storage
@@ -24,9 +23,9 @@ namespace SoftwareKobo.UniversalToolkit.Storage
         {
             try
             {
-                Type type = typeof(T);
+                var type = typeof(T);
                 // 存储的值。
-                object storeObject = _container.Values[key];
+                var storeObject = _container.Values[key];
                 if (IsSupportType(type))
                 {
                     return (T)storeObject;
@@ -36,7 +35,7 @@ namespace SoftwareKobo.UniversalToolkit.Storage
                     if (type.IsEnum())
                     {
                         // 枚举类型。
-                        Type underlyingType = Enum.GetUnderlyingType(type);
+                        var underlyingType = Enum.GetUnderlyingType(type);
                         if (IsSupportType(underlyingType))
                         {
                             // 枚举类型基类支持直接存储，从基类型转换为枚举类型。
@@ -68,7 +67,7 @@ namespace SoftwareKobo.UniversalToolkit.Storage
 
         public void Write<T>(string key, T value)
         {
-            Type type = typeof(T);
+            var type = typeof(T);
             // 即将存储的值。
             object storeObject;
             if (IsSupportType(type))
@@ -81,7 +80,7 @@ namespace SoftwareKobo.UniversalToolkit.Storage
                 if (type.IsEnum())
                 {
                     // 枚举类型。
-                    Type underlyingType = Enum.GetUnderlyingType(type);
+                    var underlyingType = Enum.GetUnderlyingType(type);
                     if (IsSupportType(underlyingType))
                     {
                         // 枚举类型基类支持直接存储，转换为基类型。
@@ -99,7 +98,7 @@ namespace SoftwareKobo.UniversalToolkit.Storage
                     storeObject = JsonConvert.SerializeObject(value);
                 }
             }
-            
+
             _container.Values[key] = storeObject;
         }
 

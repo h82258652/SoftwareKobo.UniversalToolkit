@@ -22,16 +22,16 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 
         private ExtendedSplashScreen(SplashScreen splashScreen, ExtendedSplashScreenContent content)
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
-            this._splashScreen = splashScreen;
-            this.Content = content;
+            _splashScreen = splashScreen;
+            Content = content;
 
             Window.Current.SizeChanged += (sender, e) =>
             {
-                this.SetExtendedSplashBackgroundLocation();
+                SetExtendedSplashBackgroundLocation();
             };
-            this.SetExtendedSplashBackgroundLocation();
+            SetExtendedSplashBackgroundLocation();
         }
 
         public new ExtendedSplashScreenContent Content
@@ -48,13 +48,13 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 
         private void SetExtendedSplashBackgroundLocation()
         {
-            if (this._splashScreen != null)
+            if (_splashScreen != null)
             {
-                Rect extendedSplashBackgroundLocation = _splashScreen.ImageLocation;
+                var extendedSplashBackgroundLocation = _splashScreen.ImageLocation;
                 Canvas.SetLeft(imgExtendedSplashBackground, extendedSplashBackgroundLocation.Left);
                 Canvas.SetTop(imgExtendedSplashBackground, extendedSplashBackgroundLocation.Top);
 
-                double scaleFactor = (double)DisplayInformation.GetForCurrentView().ResolutionScale / 100.0d;
+                var scaleFactor = (double)DisplayInformation.GetForCurrentView().ResolutionScale / 100.0d;
                 imgExtendedSplashBackground.Width = extendedSplashBackgroundLocation.Width / scaleFactor;
                 imgExtendedSplashBackground.Height = extendedSplashBackgroundLocation.Height / scaleFactor;
             }
@@ -62,7 +62,7 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 
         internal static async Task<ExtendedSplashScreen> CreateAsync(SplashScreen splashScreen, ExtendedSplashScreenContent content)
         {
-            ExtendedSplashScreen extendedSplashScreen = new ExtendedSplashScreen(splashScreen, content);
+            var extendedSplashScreen = new ExtendedSplashScreen(splashScreen, content);
 
             await extendedSplashScreen.InitSplashScreenAsync();
 
@@ -77,19 +77,19 @@ namespace SoftwareKobo.UniversalToolkit.Controls
             {
                 if (string.IsNullOrEmpty(splashScreen.Image) == false)
                 {
-                    string imagePath = splashScreen.Image;
-                    StorageFile imageFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///" + imagePath, UriKind.Absolute));
+                    var imagePath = splashScreen.Image;
+                    var imageFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///" + imagePath, UriKind.Absolute));
                     var buffer = (await FileIO.ReadBufferAsync(imageFile)).ToArray();
-                    using (MemoryStream stream = new MemoryStream(buffer))
+                    using (var stream = new MemoryStream(buffer))
                     {
-                        BitmapImage bitmap = new BitmapImage();
+                        var bitmap = new BitmapImage();
                         await bitmap.SetSourceAsync(stream.AsRandomAccessStream());
-                        this.imgExtendedSplashBackground.Source = bitmap;
+                        imgExtendedSplashBackground.Source = bitmap;
                     }
                 }
 
-                Color backgroundColor = splashScreen.BackgroundColor.HasValue ? splashScreen.BackgroundColor.Value : visualElements.BackgroundColor;
-                this.RootLayout.Background = new SolidColorBrush(backgroundColor);
+                var backgroundColor = splashScreen.BackgroundColor.HasValue ? splashScreen.BackgroundColor.Value : visualElements.BackgroundColor;
+                RootLayout.Background = new SolidColorBrush(backgroundColor);
             }
         }
     }

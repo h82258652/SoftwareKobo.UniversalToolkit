@@ -14,17 +14,11 @@ namespace SoftwareKobo.UniversalToolkit.Utils.AppxManifest
         {
             get
             {
-                string value = this["BackgroundColor"];
+                var value = this["BackgroundColor"];
                 return ColorExtensions.TryParse(value);
             }
         }
 
-        public string Image
-        {
-            get
-            {
-                return this["Image"];
-            }
-        }
+        public string Image => this["Image"];
     }
 }

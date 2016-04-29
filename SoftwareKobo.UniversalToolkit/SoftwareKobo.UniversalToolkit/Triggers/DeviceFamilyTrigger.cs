@@ -12,18 +12,18 @@ namespace SoftwareKobo.UniversalToolkit.Triggers
         {
             get
             {
-                return (DeviceFamily)this.GetValue(DeviceFamilyProperty);
+                return (DeviceFamily)GetValue(DeviceFamilyProperty);
             }
             set
             {
-                this.SetValue(DeviceFamilyProperty, value);
+                SetValue(DeviceFamilyProperty, value);
             }
         }
 
         private static void DeviceFamilyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            DeviceFamilyTrigger obj = (DeviceFamilyTrigger)d;
-            DeviceFamily value = (DeviceFamily)e.NewValue;
+            var obj = (DeviceFamilyTrigger)d;
+            var value = (DeviceFamily)e.NewValue;
             obj.SetActive(value == DeviceFamilyHelper.DeviceFamily);
         }
     }

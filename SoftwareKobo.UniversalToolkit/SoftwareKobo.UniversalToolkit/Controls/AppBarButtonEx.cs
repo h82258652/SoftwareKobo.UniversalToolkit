@@ -11,18 +11,18 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 
         public AppBarButtonEx()
         {
-            this.DefaultStyleKey = typeof(AppBarButtonEx);
+            DefaultStyleKey = typeof(AppBarButtonEx);
         }
 
         public object IconContent
         {
             get
             {
-                return this.GetValue(IconContentProperty);
+                return GetValue(IconContentProperty);
             }
             set
             {
-                this.SetValue(IconContentProperty, value);
+                SetValue(IconContentProperty, value);
             }
         }
     }

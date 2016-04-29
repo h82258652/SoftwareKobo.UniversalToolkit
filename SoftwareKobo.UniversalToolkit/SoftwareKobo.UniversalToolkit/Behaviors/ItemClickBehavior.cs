@@ -15,11 +15,11 @@ namespace SoftwareKobo.UniversalToolkit.Behaviors
         {
             get
             {
-                ActionCollection actions = (ActionCollection)this.GetValue(ActionsProperty);
+                var actions = (ActionCollection)GetValue(ActionsProperty);
                 if (actions == null)
                 {
                     actions = new ActionCollection();
-                    this.SetValue(ActionsProperty, actions);
+                    SetValue(ActionsProperty, actions);
                 }
                 return actions;
             }
@@ -33,22 +33,22 @@ namespace SoftwareKobo.UniversalToolkit.Behaviors
 
         public void Attach(DependencyObject associatedObject)
         {
-            this.AssociatedObject = associatedObject;
-            ListViewBase view = this.AssociatedObject as ListViewBase;
+            AssociatedObject = associatedObject;
+            var view = AssociatedObject as ListViewBase;
             if (view != null)
             {
-                view.ItemClick += this.OnItemClick;
+                view.ItemClick += OnItemClick;
             }
         }
 
         public void Detach()
         {
-            ListViewBase view = this.AssociatedObject as ListViewBase;
+            var view = AssociatedObject as ListViewBase;
             if (view != null)
             {
-                view.ItemClick -= this.OnItemClick;
+                view.ItemClick -= OnItemClick;
             }
-            this.AssociatedObject = null;
+            AssociatedObject = null;
         }
 
         private void OnItemClick(object sender, ItemClickEventArgs e)

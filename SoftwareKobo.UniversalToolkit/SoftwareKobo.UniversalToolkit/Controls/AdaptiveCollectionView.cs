@@ -21,7 +21,7 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 
         public AdaptiveCollectionView()
         {
-            this.Mode = AdaptiveCollectionViewMode.List;
+            Mode = AdaptiveCollectionViewMode.List;
         }
 
         public event EventHandler<AdaptiveCollectionViewModeChangedEventArgs> ModeChanged;
@@ -30,11 +30,11 @@ namespace SoftwareKobo.UniversalToolkit.Controls
         {
             get
             {
-                return (Style)this.GetValue(ItemContainerStyleProperty);
+                return (Style)GetValue(ItemContainerStyleProperty);
             }
             set
             {
-                this.SetValue(ItemContainerStyleProperty, value);
+                SetValue(ItemContainerStyleProperty, value);
             }
         }
 
@@ -42,11 +42,11 @@ namespace SoftwareKobo.UniversalToolkit.Controls
         {
             get
             {
-                return (AdaptiveCollectionViewMode)this.GetValue(ModeProperty);
+                return (AdaptiveCollectionViewMode)GetValue(ModeProperty);
             }
             set
             {
-                this.SetValue(ModeProperty, value);
+                SetValue(ModeProperty, value);
             }
         }
 
@@ -54,34 +54,34 @@ namespace SoftwareKobo.UniversalToolkit.Controls
         {
             get
             {
-                return (ItemsPanelTemplate)this.GetValue(ItemsPanelProperty);
+                return (ItemsPanelTemplate)GetValue(ItemsPanelProperty);
             }
             set
             {
-                this.SetValue(ItemsPanelProperty, value);
+                SetValue(ItemsPanelProperty, value);
             }
         }
 
         private static async void InternalModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            AdaptiveCollectionView obj = (AdaptiveCollectionView)d;
-            AdaptiveCollectionViewMode value = (AdaptiveCollectionViewMode)e.NewValue;
+            var obj = (AdaptiveCollectionView)d;
+            var value = (AdaptiveCollectionViewMode)e.NewValue;
 
             if (Enum.IsDefined(typeof(AdaptiveCollectionViewMode), value) == false)
             {
                 throw new ArgumentException($"{nameof(AdaptiveCollectionViewMode)} is not defined", nameof(value));
             }
 
-            int index = -1;
+            var index = -1;
             if (obj.Items.Count > 0)
             {
-                ItemsStackPanel stackPanel = obj.ItemsPanelRoot as ItemsStackPanel;
+                var stackPanel = obj.ItemsPanelRoot as ItemsStackPanel;
                 if (stackPanel != null)
                 {
                     index = stackPanel.FirstVisibleIndex;
                 }
 
-                ItemsWrapGrid wrapGrid = obj.ItemsPanelRoot as ItemsWrapGrid;
+                var wrapGrid = obj.ItemsPanelRoot as ItemsWrapGrid;
                 if (wrapGrid != null)
                 {
                     index = wrapGrid.FirstVisibleIndex;
@@ -120,8 +120,8 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 
         private static void ItemContainerStyleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            AdaptiveCollectionView obj = (AdaptiveCollectionView)d;
-            Style value = (Style)e.NewValue;
+            var obj = (AdaptiveCollectionView)d;
+            var value = (Style)e.NewValue;
 
             if (value != null)
             {
@@ -140,8 +140,8 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 
         private static void ItemsPanelChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            AdaptiveCollectionView obj = (AdaptiveCollectionView)d;
-            ItemsPanelTemplate value = (ItemsPanelTemplate)e.NewValue;
+            var obj = (AdaptiveCollectionView)d;
+            var value = (ItemsPanelTemplate)e.NewValue;
 
             obj.SetBaseItemsPanel(value);
         }

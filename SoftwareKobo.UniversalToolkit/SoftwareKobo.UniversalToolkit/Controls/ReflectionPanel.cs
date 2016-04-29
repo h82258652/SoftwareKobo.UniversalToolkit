@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.UI.Xaml;
@@ -25,18 +24,18 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 
         public ReflectionPanel()
         {
-            this.DefaultStyleKey = typeof(ReflectionPanel);
+            DefaultStyleKey = typeof(ReflectionPanel);
         }
 
         public UIElement Content
         {
             get
             {
-                return (UIElement)this.GetValue(ContentProperty);
+                return (UIElement)GetValue(ContentProperty);
             }
             set
             {
-                this.SetValue(ContentProperty, value);
+                SetValue(ContentProperty, value);
             }
         }
 
@@ -44,38 +43,38 @@ namespace SoftwareKobo.UniversalToolkit.Controls
         {
             get
             {
-                return (double)this.GetValue(ReflectionSpacingProperty);
+                return (double)GetValue(ReflectionSpacingProperty);
             }
             set
             {
-                this.SetValue(ReflectionSpacingProperty, value);
+                SetValue(ReflectionSpacingProperty, value);
             }
         }
 
         protected override void OnApplyTemplate()
         {
-            FrameworkElement rootLayout = (FrameworkElement)this.GetTemplateChild("RootLayout");
+            var rootLayout = (FrameworkElement)GetTemplateChild("RootLayout");
 
             // 实际内容容器。
-            this._contentBorder = (ContentControl)this.GetTemplateChild("ContentBorder");
+            _contentBorder = (ContentControl)GetTemplateChild("ContentBorder");
 
             // 倒影图片。
-            this._reflectionImage = (Image)this.GetTemplateChild("ReflectionImage");
+            _reflectionImage = (Image)GetTemplateChild("ReflectionImage");
 
             // 倒影位移。
-            this._spacingTransform = (TranslateTransform)this.GetTemplateChild("SpacingTransform");
-            this._spacingTransform.Y = this.ReflectionSpacing;
+            _spacingTransform = (TranslateTransform)GetTemplateChild("SpacingTransform");
+            _spacingTransform.Y = ReflectionSpacing;
 
             if (DesignMode.DesignModeEnabled == false)
             {
-                rootLayout.LayoutUpdated += this.RootLayoutChanged;
+                rootLayout.LayoutUpdated += RootLayoutChanged;
             }
         }
 
         private static void ReflectionSpacingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ReflectionPanel obj = (ReflectionPanel)d;
-            double value = (double)e.NewValue;
+            var obj = (ReflectionPanel)d;
+            var value = (double)e.NewValue;
 
             if (obj._spacingTransform != null)
             {
@@ -88,33 +87,33 @@ namespace SoftwareKobo.UniversalToolkit.Controls
             try
             {
                 // 呈现控件到图像源。
-                RenderTargetBitmap contentRender = new RenderTargetBitmap();
-                await contentRender.RenderAsync(this._contentBorder);
+                var contentRender = new RenderTargetBitmap();
+                await contentRender.RenderAsync(_contentBorder);
 
                 // 获取图像数据。
-                byte[] bgra8 = (await contentRender.GetPixelsAsync()).ToArray();
+                var bgra8 = (await contentRender.GetPixelsAsync()).ToArray();
 
                 // 获取图像高度和宽度。
-                int width = contentRender.PixelWidth;
-                int height = contentRender.PixelHeight;
+                var width = contentRender.PixelWidth;
+                var height = contentRender.PixelHeight;
 
-                for (int i = 0; i < bgra8.Length; i += 4)
+                for (var i = 0; i < bgra8.Length; i += 4)
                 {
                     // 获取该像素原来的 A 通道。
-                    byte a = bgra8[i + 3];
+                    var a = bgra8[i + 3];
 
                     // 计算该像素的 Y 轴坐标。
-                    int y = (i / 4) / width;
+                    var y = (i / 4) / width;
 
                     // 计算新的 A 通道值。
                     bgra8[i + 3] = (byte)(a * y / height);
                 }
 
-                WriteableBitmap outputBitmap = new WriteableBitmap(width, height);
+                var outputBitmap = new WriteableBitmap(width, height);
                 bgra8.CopyTo(outputBitmap.PixelBuffer);
 
                 // 设置倒影图片。
-                this._reflectionImage.Source = outputBitmap;
+                _reflectionImage.Source = outputBitmap;
             }
             catch
             {

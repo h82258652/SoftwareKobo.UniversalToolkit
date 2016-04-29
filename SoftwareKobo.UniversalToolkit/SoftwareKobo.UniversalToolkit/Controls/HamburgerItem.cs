@@ -18,18 +18,18 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 
         public HamburgerItem()
         {
-            this.DefaultStyleKey = typeof(HamburgerItem);
+            DefaultStyleKey = typeof(HamburgerItem);
         }
 
         public IconElement Icon
         {
             get
             {
-                return (IconElement)this.GetValue(IconProperty);
+                return (IconElement)GetValue(IconProperty);
             }
             set
             {
-                this.SetValue(IconProperty, value);
+                SetValue(IconProperty, value);
             }
         }
 
@@ -37,11 +37,11 @@ namespace SoftwareKobo.UniversalToolkit.Controls
         {
             get
             {
-                return (Brush)this.GetValue(PointerOverBackgroundProperty);
+                return (Brush)GetValue(PointerOverBackgroundProperty);
             }
             set
             {
-                this.SetValue(PointerOverBackgroundProperty, value);
+                SetValue(PointerOverBackgroundProperty, value);
             }
         }
 
@@ -49,11 +49,11 @@ namespace SoftwareKobo.UniversalToolkit.Controls
         {
             get
             {
-                return (Brush)this.GetValue(PressedBackgroundProperty);
+                return (Brush)GetValue(PressedBackgroundProperty);
             }
             set
             {
-                this.SetValue(PressedBackgroundProperty, value);
+                SetValue(PressedBackgroundProperty, value);
             }
         }
 
@@ -61,11 +61,11 @@ namespace SoftwareKobo.UniversalToolkit.Controls
         {
             get
             {
-                return (string)this.GetValue(TextProperty);
+                return (string)GetValue(TextProperty);
             }
             set
             {
-                this.SetValue(TextProperty, value);
+                SetValue(TextProperty, value);
             }
         }
     }

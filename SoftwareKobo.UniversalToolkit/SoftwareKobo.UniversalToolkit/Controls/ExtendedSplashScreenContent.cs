@@ -12,12 +12,6 @@ namespace SoftwareKobo.UniversalToolkit.Controls
             Finished?.Invoke(this, EventArgs.Empty);
         }
 
-        public ExtendedSplashScreen ExtendedSplashScreen
-        {
-            get
-            {
-                return this.Parent as ExtendedSplashScreen;
-            }
-        }
+        public ExtendedSplashScreen ExtendedSplashScreen => Parent as ExtendedSplashScreen;
     }
 }

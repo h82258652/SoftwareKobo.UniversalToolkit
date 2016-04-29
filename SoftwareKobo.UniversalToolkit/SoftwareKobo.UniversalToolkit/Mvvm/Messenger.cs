@@ -16,9 +16,9 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
         /// <param name="view">需要注册到通信管理器的 View。</param>
         public static void Register(IView view)
         {
-            for (int i = 0; i < _registeredViews.Count; i++)
+            for (var i = 0; i < _registeredViews.Count; i++)
             {
-                WeakReference<IView> registeredViewReference = _registeredViews[i];
+                var registeredViewReference = _registeredViews[i];
                 IView registeredView;
                 if (registeredViewReference.TryGetTarget(out registeredView))
                 {
@@ -45,9 +45,9 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
         /// <param name="view">需要注销的 View。</param>
         public static void Unregister(IView view)
         {
-            for (int i = 0; i < _registeredViews.Count; i++)
+            for (var i = 0; i < _registeredViews.Count; i++)
             {
-                WeakReference<IView> registeredViewReference = _registeredViews[i];
+                var registeredViewReference = _registeredViews[i];
                 IView registeredView;
                 if (registeredViewReference.TryGetTarget(out registeredView))
                 {
@@ -68,7 +68,7 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
 
         internal static void Process(IView view, object parameter)
         {
-            ViewModelBase viewModel = view.DataContext as ViewModelBase;
+            var viewModel = view.DataContext as ViewModelBase;
             if (viewModel != null)
             {
                 viewModel.ReceiveFromView(parameter);
@@ -77,13 +77,13 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
 
         internal static async void Process(ViewModelBase viewModel, object parameter)
         {
-            for (int i = 0; i < _registeredViews.Count; i++)
+            for (var i = 0; i < _registeredViews.Count; i++)
             {
-                WeakReference<IView> registeredViewReference = _registeredViews[i];
+                var registeredViewReference = _registeredViews[i];
                 IView registeredView;
                 if (registeredViewReference.TryGetTarget(out registeredView))
                 {
-                    DependencyObject element = registeredView as DependencyObject;
+                    var element = registeredView as DependencyObject;
                     if (element != null)
                     {
                         try

@@ -12,11 +12,11 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
 
         internal ModelVerifyErrors(object verifiableObject)
         {
-            ValidationContext context = new ValidationContext(verifiableObject);
-            Validator.TryValidateObject(verifiableObject, context, this._results, true);
-            foreach (var result in this._results)
+            var context = new ValidationContext(verifiableObject);
+            Validator.TryValidateObject(verifiableObject, context, _results, true);
+            foreach (var result in _results)
             {
-                this.Add(result.ErrorMessage);
+                Add(result.ErrorMessage);
             }
         }
 
@@ -24,7 +24,7 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
         {
             get
             {
-                foreach (var result in this._results)
+                foreach (var result in _results)
                 {
                     if (result.MemberNames.Contains(propertyName))
                     {
@@ -37,7 +37,7 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
 
         public override string ToString()
         {
-            return string.Join(Environment.NewLine, this.Items);
+            return string.Join(Environment.NewLine, Items);
         }
     }
 }

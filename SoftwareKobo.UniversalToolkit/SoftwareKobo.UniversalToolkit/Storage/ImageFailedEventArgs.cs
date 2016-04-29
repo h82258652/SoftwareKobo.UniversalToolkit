@@ -9,7 +9,7 @@ namespace SoftwareKobo.UniversalToolkit.Storage
     {
         public ImageFailedEventArgs(Exception failReason)
         {
-            this.FailReason = failReason;
+            FailReason = failReason;
         }
 
         /// <summary>

@@ -22,11 +22,11 @@ namespace SoftwareKobo.UniversalToolkit.Behaviors
         {
             get
             {
-                ActionCollection actions = (ActionCollection)this.GetValue(ActionsProperty);
+                var actions = (ActionCollection)GetValue(ActionsProperty);
                 if (actions == null)
                 {
                     actions = new ActionCollection();
-                    this.SetValue(ActionsProperty, actions);
+                    SetValue(ActionsProperty, actions);
                 }
                 return actions;
             }
@@ -39,11 +39,11 @@ namespace SoftwareKobo.UniversalToolkit.Behaviors
         {
             get
             {
-                return (bool)this.GetValue(IsConcurrentProperty);
+                return (bool)GetValue(IsConcurrentProperty);
             }
             set
             {
-                this.SetValue(IsConcurrentProperty, value);
+                SetValue(IsConcurrentProperty, value);
             }
         }
 
@@ -51,11 +51,11 @@ namespace SoftwareKobo.UniversalToolkit.Behaviors
         {
             get
             {
-                return (TimeSpan)this.GetValue(TimeoutProperty);
+                return (TimeSpan)GetValue(TimeoutProperty);
             }
             set
             {
-                this.SetValue(TimeoutProperty, value);
+                SetValue(TimeoutProperty, value);
             }
         }
 
@@ -63,28 +63,28 @@ namespace SoftwareKobo.UniversalToolkit.Behaviors
         {
             DispatcherTimer timer;
 
-            if (this.IsConcurrent == false)
+            if (IsConcurrent == false)
             {
                 // 不并发，使用上一个 timer。
-                if (this._timer != null)
+                if (_timer != null)
                 {
                     // 取消上一个
-                    this._timer.Tick -= this._lastTimerTickHandler;
-                    this._timer.Stop();
+                    _timer.Tick -= _lastTimerTickHandler;
+                    _timer.Stop();
                 }
 
-                this._timer = new DispatcherTimer()
+                _timer = new DispatcherTimer()
                 {
-                    Interval = this.Timeout
+                    Interval = Timeout
                 };
-                timer = this._timer;
+                timer = _timer;
             }
             else
             {
                 // 并发，使用新 timer。
                 timer = new DispatcherTimer()
                 {
-                    Interval = this.Timeout
+                    Interval = Timeout
                 };
             }
 
@@ -94,13 +94,13 @@ namespace SoftwareKobo.UniversalToolkit.Behaviors
                 timer.Tick -= tickHandler;
                 timer.Stop();
 
-                Interaction.ExecuteActions(sender, this.Actions, parameter);
+                Interaction.ExecuteActions(sender, Actions, parameter);
             };
             timer.Tick += tickHandler;
 
-            if (this.IsConcurrent == false)
+            if (IsConcurrent == false)
             {
-                this._lastTimerTickHandler = tickHandler;
+                _lastTimerTickHandler = tickHandler;
             }
 
             timer.Start();

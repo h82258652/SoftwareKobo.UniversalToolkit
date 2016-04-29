@@ -14,7 +14,7 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
             {
                 if (_displayMemoryPopup == null)
                 {
-                    DisplayMemoryUsage memoryUsage = new DisplayMemoryUsage()
+                    var memoryUsage = new DisplayMemoryUsage()
                     {
                         HorizontalAlignment = HorizontalAlignment.Left,
                         VerticalAlignment = VerticalAlignment.Bottom,
@@ -40,12 +40,12 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
         ///     // 仅在你的 App 类继承自 Bootstrapper 下正确。
         ///     this.DebugSettings.EnableDisplayMemoryUsage();
         /// }
-        /// 
+        ///
         /// protected override Task OnPreStartAsync(IActivatedEventArgs args, AppStartInfo info)
         /// {
         ///     // 正确使用。
         ///     this.DebugSettings.EnableDisplayMemoryUsage();
-        /// } 
+        /// }
         /// </example>
         [Conditional("DEBUG")]
         public static void EnableDisplayMemoryUsage(this DebugSettings debugSettings, bool isEnable = true)

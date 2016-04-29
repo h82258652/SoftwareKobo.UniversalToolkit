@@ -12,16 +12,13 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
 
         public void RaiseHasMoreItemsChanged(bool value)
         {
-            if (this.HasMoreItemsChanged != null)
-            {
-                this.HasMoreItemsChanged(this, value);
-            }
+            HasMoreItemsChanged?.Invoke(this, value);
         }
 
         internal void InternalRefresh(ICollection<TItem> collection)
         {
-            this.RaiseHasMoreItemsChanged(true);
-            this.OnRefresh(collection);
+            RaiseHasMoreItemsChanged(true);
+            OnRefresh(collection);
         }
 
         protected internal abstract Task LoadMoreItemsAsync(ICollection<TItem> collection, uint suggestLoadCount);

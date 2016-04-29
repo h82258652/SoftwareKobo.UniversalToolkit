@@ -8,7 +8,7 @@ namespace SoftwareKobo.UniversalToolkit.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            ItemClickEventArgs args = value as ItemClickEventArgs;
+            var args = value as ItemClickEventArgs;
             return args == null ? null : args.ClickedItem;
         }
 

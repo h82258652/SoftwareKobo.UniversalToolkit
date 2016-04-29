@@ -20,29 +20,29 @@ namespace SoftwareKobo.UniversalToolkit.Triggers
         {
             get
             {
-                return (NetworkState)this.GetValue(NetworkStateProperty);
+                return (NetworkState)GetValue(NetworkStateProperty);
             }
             set
             {
-                this.SetValue(NetworkStateProperty, value);
+                SetValue(NetworkStateProperty, value);
             }
         }
 
         private static void NetworkStateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            NetworkStateTrigger obj = (NetworkStateTrigger)d;
+            var obj = (NetworkStateTrigger)d;
 
             obj.UpdateState();
         }
 
         private async void NetworkInformation_NetworkStatusChanged(object sender)
         {
-            await this.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, UpdateState);
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, UpdateState);
         }
 
         private void UpdateState()
         {
-            bool isAvailable = false;
+            var isAvailable = false;
             var profile = NetworkInformation.GetInternetConnectionProfile();
             if (profile != null)
             {
@@ -51,11 +51,11 @@ namespace SoftwareKobo.UniversalToolkit.Triggers
 
             if (isAvailable)
             {
-                this.SetActive(this.NetworkState == NetworkState.Avaliable);
+                SetActive(NetworkState == NetworkState.Avaliable);
             }
             else
             {
-                this.SetActive(this.NetworkState == NetworkState.Unavaliable);
+                SetActive(NetworkState == NetworkState.Unavaliable);
             }
         }
     }

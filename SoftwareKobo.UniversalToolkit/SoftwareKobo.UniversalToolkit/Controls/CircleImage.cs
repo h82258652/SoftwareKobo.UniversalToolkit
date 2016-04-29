@@ -14,7 +14,7 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 
         public CircleImage()
         {
-            this.DefaultStyleKey = typeof(CircleImage);
+            DefaultStyleKey = typeof(CircleImage);
         }
 
         public event ExceptionRoutedEventHandler ImageFailed;
@@ -25,11 +25,11 @@ namespace SoftwareKobo.UniversalToolkit.Controls
         {
             get
             {
-                return (ImageSource)this.GetValue(SourceProperty);
+                return (ImageSource)GetValue(SourceProperty);
             }
             set
             {
-                this.SetValue(SourceProperty, value);
+                SetValue(SourceProperty, value);
             }
         }
 
@@ -37,11 +37,11 @@ namespace SoftwareKobo.UniversalToolkit.Controls
         {
             get
             {
-                return (Stretch)this.GetValue(StretchProperty);
+                return (Stretch)GetValue(StretchProperty);
             }
             set
             {
-                this.SetValue(StretchProperty, value);
+                SetValue(StretchProperty, value);
             }
         }
 
@@ -49,17 +49,17 @@ namespace SoftwareKobo.UniversalToolkit.Controls
         {
             base.OnApplyTemplate();
 
-            this._imageBrush = (ImageBrush)this.GetTemplateChild("imageBrush");
-            this._imageBrush.ImageOpened += this.ImageOpened;
-            this._imageBrush.ImageFailed += this.ImageFailed;
-            this._imageBrush.ImageSource = this.Source;
-            this._imageBrush.Stretch = this.Stretch;
+            _imageBrush = (ImageBrush)GetTemplateChild("imageBrush");
+            _imageBrush.ImageOpened += ImageOpened;
+            _imageBrush.ImageFailed += ImageFailed;
+            _imageBrush.ImageSource = Source;
+            _imageBrush.Stretch = Stretch;
         }
 
         private static void SourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            CircleImage obj = (CircleImage)d;
-            ImageSource value = (ImageSource)e.NewValue;
+            var obj = (CircleImage)d;
+            var value = (ImageSource)e.NewValue;
 
             if (obj._imageBrush != null)
             {
@@ -69,8 +69,8 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 
         private static void StretchChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            CircleImage obj = (CircleImage)d;
-            Stretch value = (Stretch)e.NewValue;
+            var obj = (CircleImage)d;
+            var value = (Stretch)e.NewValue;
 
             if (obj._imageBrush != null)
             {

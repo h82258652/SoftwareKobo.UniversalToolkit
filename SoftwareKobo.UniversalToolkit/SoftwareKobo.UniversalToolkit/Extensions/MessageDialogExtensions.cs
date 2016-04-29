@@ -14,13 +14,7 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
         /// <summary>
         /// 指示当前是否可以显示对话框。
         /// </summary>
-        public static bool IsCurrentShowable
-        {
-            get
-            {
-                return _currentDialogShowRequest == null;
-            }
-        }
+        public static bool IsCurrentShowable => _currentDialogShowRequest == null;
 
         /// <summary>
         /// 添加一个命令到对话框。
@@ -37,7 +31,7 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
                 throw new ArgumentNullException(nameof(dialog));
             }
 
-            UICommand command = new UICommand(label, commandAction => action?.Invoke());
+            var command = new UICommand(label, commandAction => action?.Invoke());
             dialog.Commands.Add(command);
 
             return dialog;
@@ -62,8 +56,8 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
             }
 
             _currentDialogShowRequest = new TaskCompletionSource<MessageDialog>();
-            TaskCompletionSource<MessageDialog> request = _currentDialogShowRequest;
-            IUICommand result = await dialog.ShowAsync();
+            var request = _currentDialogShowRequest;
+            var result = await dialog.ShowAsync();
             _currentDialogShowRequest = null;
             request.SetResult(dialog);
 

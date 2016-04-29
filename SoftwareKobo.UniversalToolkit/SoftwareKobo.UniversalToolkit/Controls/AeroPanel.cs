@@ -42,20 +42,20 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 
         public AeroPanel()
         {
-            this.DefaultStyleKey = typeof(AeroPanel);
-            this.Loaded += this.AeroPanel_Loaded;
-            this.Unloaded += this.AeroPanel_Unloaded;
+            DefaultStyleKey = typeof(AeroPanel);
+            Loaded += AeroPanel_Loaded;
+            Unloaded += AeroPanel_Unloaded;
         }
 
         public object Content
         {
             get
             {
-                return this.GetValue(ContentProperty);
+                return GetValue(ContentProperty);
             }
             set
             {
-                this.SetValue(ContentProperty, value);
+                SetValue(ContentProperty, value);
             }
         }
 
@@ -63,11 +63,11 @@ namespace SoftwareKobo.UniversalToolkit.Controls
         {
             get
             {
-                return (Color)this.GetValue(MaskColorProperty);
+                return (Color)GetValue(MaskColorProperty);
             }
             set
             {
-                this.SetValue(MaskColorProperty, value);
+                SetValue(MaskColorProperty, value);
             }
         }
 
@@ -75,11 +75,11 @@ namespace SoftwareKobo.UniversalToolkit.Controls
         {
             get
             {
-                return (FrameworkElement)this.GetValue(RenderElementProperty);
+                return (FrameworkElement)GetValue(RenderElementProperty);
             }
             set
             {
-                this.SetValue(RenderElementProperty, value);
+                SetValue(RenderElementProperty, value);
             }
         }
 
@@ -90,54 +90,54 @@ namespace SoftwareKobo.UniversalToolkit.Controls
                 return;
             }
 
-            if (this._canvas.ReadyToDraw == false)
+            if (_canvas.ReadyToDraw == false)
             {
                 return;
             }
 
-            if (this._dpi <= 0)
+            if (_dpi <= 0)
             {
                 return;
             }
 
-            double thisWidth = this.ActualWidth;
-            double thisHeight = this.ActualHeight;
+            var thisWidth = ActualWidth;
+            var thisHeight = ActualHeight;
             if (thisWidth <= 0 || thisHeight <= 0)
             {
                 return;
             }
 
-            if (this.RenderElement == null)
+            if (RenderElement == null)
             {
                 return;
             }
 
             try
             {
-                float scale = this._dpi / 96;
-                int width = (int)(thisWidth * scale);
-                int height = (int)(thisHeight * scale);
-                GeneralTransform transform = this.TransformToVisual(this.RenderElement);
-                Point location = transform.TransformPoint(new Point());
-                int left = (int)(location.X * scale);
-                int top = (int)(location.Y * scale);
+                var scale = _dpi / 96;
+                var width = (int)(thisWidth * scale);
+                var height = (int)(thisHeight * scale);
+                var transform = TransformToVisual(RenderElement);
+                var location = transform.TransformPoint(new Point());
+                var left = (int)(location.X * scale);
+                var top = (int)(location.Y * scale);
 
-                RenderTargetBitmap bitmap = new RenderTargetBitmap();
-                await bitmap.RenderAsync(this.RenderElement);
-                byte[] pixels = (await bitmap.GetPixelsAsync()).ToArray();
-                int bitmapWidth = bitmap.PixelWidth;
+                var bitmap = new RenderTargetBitmap();
+                await bitmap.RenderAsync(RenderElement);
+                var pixels = (await bitmap.GetPixelsAsync()).ToArray();
+                var bitmapWidth = bitmap.PixelWidth;
                 if (bitmapWidth <= 0)
                 {
                     return;
                 }
 
                 IList<byte> buffer = new List<byte>(width * height * 4);
-                int pixelsLength = pixels.Length;
-                for (int y = top; y < top + height; y++)
+                var pixelsLength = pixels.Length;
+                for (var y = top; y < top + height; y++)
                 {
-                    for (int x = left; x < left + width; x++)
+                    for (var x = left; x < left + width; x++)
                     {
-                        int offset = (y * bitmapWidth + x) * 4;
+                        var offset = (y * bitmapWidth + x) * 4;
                         if (offset < pixelsLength && offset >= 0)
                         {
                             buffer.Add(pixels[offset]);
@@ -155,9 +155,9 @@ namespace SoftwareKobo.UniversalToolkit.Controls
                     }
                 }
 
-                this._bytes = buffer.ToArray();
-                this._widthInPixels = width;
-                this._heightInPixels = height;
+                _bytes = buffer.ToArray();
+                _widthInPixels = width;
+                _heightInPixels = height;
             }
             catch
             {
@@ -168,30 +168,30 @@ namespace SoftwareKobo.UniversalToolkit.Controls
         {
             base.OnApplyTemplate();
 
-            this._canvas = (CanvasAnimatedControl)base.GetTemplateChild("canvas");
-            this._canvas.CreateResources += this.Canvas_CreateResources;
-            this._canvas.Draw += this.Canvas_Draw;
+            _canvas = (CanvasAnimatedControl)GetTemplateChild("canvas");
+            _canvas.CreateResources += Canvas_CreateResources;
+            _canvas.Draw += Canvas_Draw;
         }
 
         private static void MaskColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            AeroPanel obj = (AeroPanel)d;
-            Color value = (Color)e.NewValue;
+            var obj = (AeroPanel)d;
+            var value = (Color)e.NewValue;
 
             obj._maskColor = value;
         }
 
         private static void RenderElementChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            AeroPanel obj = (AeroPanel)d;
+            var obj = (AeroPanel)d;
 
-            FrameworkElement oldValue = (FrameworkElement)e.OldValue;
+            var oldValue = (FrameworkElement)e.OldValue;
             if (oldValue != null)
             {
                 oldValue.LayoutUpdated -= obj.RenderElement_LayoutUpdated;
             }
 
-            FrameworkElement newValue = (FrameworkElement)e.NewValue;
+            var newValue = (FrameworkElement)e.NewValue;
             if (newValue != null)
             {
                 newValue.LayoutUpdated += obj.RenderElement_LayoutUpdated;
@@ -200,25 +200,25 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 
         private void AeroPanel_Loaded(object sender, RoutedEventArgs e)
         {
-            DisplayInformation displayInformation = DisplayInformation.GetForCurrentView();
-            this._dpi = displayInformation.LogicalDpi;
-            displayInformation.DpiChanged += this.DpiChanged;
+            var displayInformation = DisplayInformation.GetForCurrentView();
+            _dpi = displayInformation.LogicalDpi;
+            displayInformation.DpiChanged += DpiChanged;
         }
 
         private void AeroPanel_Unloaded(object sender, RoutedEventArgs e)
         {
-            DisplayInformation.GetForCurrentView().DpiChanged -= this.DpiChanged;
+            DisplayInformation.GetForCurrentView().DpiChanged -= DpiChanged;
 
-            if (this._canvas != null)
+            if (_canvas != null)
             {
-                this._canvas.RemoveFromVisualTree();
-                this._canvas = null;
+                _canvas.RemoveFromVisualTree();
+                _canvas = null;
             }
         }
 
         private void Canvas_CreateResources(CanvasAnimatedControl sender, CanvasCreateResourcesEventArgs args)
         {
-            this._effect = new GaussianBlurEffect()
+            _effect = new GaussianBlurEffect()
             {
                 BlurAmount = 5,
                 BorderMode = EffectBorderMode.Hard
@@ -227,35 +227,35 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 
         private void Canvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
         {
-            CanvasCommandList cl = new CanvasCommandList(sender);
-            using (CanvasDrawingSession clds = cl.CreateDrawingSession())
+            var cl = new CanvasCommandList(sender);
+            using (var clds = cl.CreateDrawingSession())
             {
-                if (this._bytes != null)
+                if (_bytes != null)
                 {
-                    using (CanvasBitmap bitmap = CanvasBitmap.CreateFromBytes(sender, this._bytes, this._widthInPixels, this._heightInPixels, DirectXPixelFormat.B8G8R8A8UIntNormalized, this._dpi))
+                    using (var bitmap = CanvasBitmap.CreateFromBytes(sender, _bytes, _widthInPixels, _heightInPixels, DirectXPixelFormat.B8G8R8A8UIntNormalized, _dpi))
                     {
                         clds.DrawImage(bitmap);
                     }
-                    clds.FillRectangle(0, 0, this._widthInPixels, this._heightInPixels, this._maskColor);
+                    clds.FillRectangle(0, 0, _widthInPixels, _heightInPixels, _maskColor);
                 }
                 else
                 {
-                    clds.FillRectangle(0, 0, (float)sender.Size.Width, (float)sender.Size.Height, this._maskColor);
+                    clds.FillRectangle(0, 0, (float)sender.Size.Width, (float)sender.Size.Height, _maskColor);
                 }
             }
 
-            this._effect.Source = cl;
-            args.DrawingSession.DrawImage(this._effect);
+            _effect.Source = cl;
+            args.DrawingSession.DrawImage(_effect);
         }
 
         private void DpiChanged(DisplayInformation sender, object args)
         {
-            this._dpi = sender.LogicalDpi;
+            _dpi = sender.LogicalDpi;
         }
 
         private void RenderElement_LayoutUpdated(object sender, object e)
         {
-            this.UpdateRender();
+            UpdateRender();
         }
     }
 }

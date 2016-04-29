@@ -28,9 +28,9 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
 
             itemSource.HasMoreItemsChanged += (object sender, bool hasMoreItems) =>
             {
-                this.HasMoreItems = hasMoreItems;
+                HasMoreItems = hasMoreItems;
             };
-            this._itemSource = itemSource;
+            _itemSource = itemSource;
         }
 
         [SuppressMessage("Microsoft.Design", "CA1009")]
@@ -43,12 +43,12 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
         {
             get
             {
-                return this._hasMoreItems;
+                return _hasMoreItems;
             }
             protected set
             {
-                this._hasMoreItems = value;
-                this.OnPropertyChanged(new PropertyChangedEventArgs(nameof(HasMoreItems)));
+                _hasMoreItems = value;
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(HasMoreItems)));
             }
         }
 
@@ -56,12 +56,12 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
         {
             get
             {
-                return this._isLoading;
+                return _isLoading;
             }
             protected set
             {
-                this._isLoading = value;
-                this.OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsLoading)));
+                _isLoading = value;
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsLoading)));
             }
         }
 
@@ -69,18 +69,18 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
         {
             get
             {
-                return this._lastLoadedTime;
+                return _lastLoadedTime;
             }
             protected set
             {
-                this._lastLoadedTime = value;
-                this.OnPropertyChanged(new PropertyChangedEventArgs(nameof(LastLoadedTime)));
+                _lastLoadedTime = value;
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(LastLoadedTime)));
             }
         }
 
         public IAsyncOperation<LoadMoreItemsResult> LoadMoreItemsAsync(uint count)
         {
-            if (this.IsLoading)
+            if (IsLoading)
             {
                 return Task.FromResult<LoadMoreItemsResult>(new LoadMoreItemsResult()
                 {
@@ -88,26 +88,26 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
                 }).AsAsyncOperation();
             }
 
-            this.IsLoading = true;
-            if (this.LoadMoreStarted != null)
+            IsLoading = true;
+            if (LoadMoreStarted != null)
             {
-                this.LoadMoreStarted(this, count);
+                LoadMoreStarted(this, count);
             }
             return AsyncInfo.Run(async c =>
             {
                 uint resultCount = 0;
                 try
                 {
-                    int beforeLoadCount = this.Count;
-                    await this._itemSource.LoadMoreItemsAsync(this, count);
-                    int afterLoadCount = this.Count;
+                    var beforeLoadCount = Count;
+                    await _itemSource.LoadMoreItemsAsync(this, count);
+                    var afterLoadCount = Count;
 
                     if (afterLoadCount > beforeLoadCount)
                     {
                         resultCount = (uint)(afterLoadCount - beforeLoadCount);
                     }
 
-                    this.LastLoadedTime = DateTime.Now;
+                    LastLoadedTime = DateTime.Now;
                     return new LoadMoreItemsResult()
                     {
                         Count = resultCount
@@ -122,10 +122,10 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
                 }
                 finally
                 {
-                    this.IsLoading = false;
-                    if (this.LoadMoreCompleted != null)
+                    IsLoading = false;
+                    if (LoadMoreCompleted != null)
                     {
-                        this.LoadMoreCompleted(this, resultCount);
+                        LoadMoreCompleted(this, resultCount);
                     }
                 }
             });
@@ -133,11 +133,11 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
 
         public async void Refresh()
         {
-            this.ClearItems();
-            this._itemSource.InternalRefresh(this);
+            ClearItems();
+            _itemSource.InternalRefresh(this);
 
             // 尝试加载 1 项以重置 UI。
-            await this.LoadMoreItemsAsync(1);
+            await LoadMoreItemsAsync(1);
         }
     }
 }

@@ -58,11 +58,11 @@ namespace SoftwareKobo.UniversalToolkit.Storage
 
         public StorageCachedImage(Uri uri) : this()
         {
-            this.UriSource = new BitmapImage(uri);
+            UriSource = new BitmapImage(uri);
         }
 
         public event EventHandler<ImageFailedEventArgs> ImageFailed;
-        
+
         [SuppressMessage("Microsoft.Design", "CA1009")]
         public event RoutedEventHandler ImageOpened;
 
@@ -70,11 +70,11 @@ namespace SoftwareKobo.UniversalToolkit.Storage
         {
             get
             {
-                return (bool)this.GetValue(IsAutoRetryProperty);
+                return (bool)GetValue(IsAutoRetryProperty);
             }
             set
             {
-                this.SetValue(IsAutoRetryProperty, value);
+                SetValue(IsAutoRetryProperty, value);
             }
         }
 
@@ -82,11 +82,11 @@ namespace SoftwareKobo.UniversalToolkit.Storage
         {
             get
             {
-                return (bool)this.GetValue(IsLoadingProperty);
+                return (bool)GetValue(IsLoadingProperty);
             }
             private set
             {
-                this.SetValue(IsLoadingProperty, value);
+                SetValue(IsLoadingProperty, value);
             }
         }
 
@@ -94,11 +94,11 @@ namespace SoftwareKobo.UniversalToolkit.Storage
         {
             get
             {
-                return (ImageSource)this.GetValue(UriSourceProperty);
+                return (ImageSource)GetValue(UriSourceProperty);
             }
             set
             {
-                this.SetValue(UriSourceProperty, value);
+                SetValue(UriSourceProperty, value);
             }
         }
 
@@ -121,13 +121,13 @@ namespace SoftwareKobo.UniversalToolkit.Storage
 
         public static bool CachedImageExist(Uri uri)
         {
-            string cachePath = GetCachePath(uri);
+            var cachePath = GetCachePath(uri);
             return IsCacheExist(cachePath);
         }
 
         public static void RemoveCachedImage(Uri uri)
         {
-            string cachePath = GetCachePath(uri);
+            var cachePath = GetCachePath(uri);
             using (var isf = IsolatedStorageFile.GetUserStoreForApplication())
             {
                 isf.DeleteFile(cachePath);
@@ -146,8 +146,8 @@ namespace SoftwareKobo.UniversalToolkit.Storage
                 return;
             }
 
-            StorageCachedImage obj = (StorageCachedImage)d;
-            bool value = (bool)e.NewValue;
+            var obj = (StorageCachedImage)d;
+            var value = (bool)e.NewValue;
             if (value)
             {
                 obj.ImageFailed += obj._autoRetryHandler;
@@ -178,7 +178,7 @@ namespace SoftwareKobo.UniversalToolkit.Storage
             {
                 using (var fs = isf.OpenFile(cachePath, FileMode.Open, FileAccess.Read, FileShare.Read))
                 {
-                    using (MemoryStream stream = new MemoryStream())
+                    using (var stream = new MemoryStream())
                     {
                         await fs.CopyToAsync(stream);
                         return stream.ToArray();
@@ -221,7 +221,7 @@ namespace SoftwareKobo.UniversalToolkit.Storage
                 return;
             }
 
-            StorageCachedImage obj = (StorageCachedImage)d;
+            var obj = (StorageCachedImage)d;
             obj.UriSourceChanged();
         }
 
@@ -230,24 +230,24 @@ namespace SoftwareKobo.UniversalToolkit.Storage
             if (_lastRequestTime == requestTime)
             {
                 // 确保为最后设置的 Uri 对应的图像。
-                await this.SetSourceAsync(stream);
+                await SetSourceAsync(stream);
             }
         }
 
         public void SetUriSource(Uri uriSource)
         {
-            this.UriSource = new BitmapImage(uriSource);
+            UriSource = new BitmapImage(uriSource);
         }
 
         private async void UriSourceChanged()
         {
-            this.IsLoading = true;
+            IsLoading = true;
 
             #region 清空之前的图像
 
             using (var emptyStream = new InMemoryRandomAccessStream())
             {
-                this.SetSource(emptyStream);
+                SetSource(emptyStream);
             }
 
             #endregion 清空之前的图像
@@ -255,37 +255,37 @@ namespace SoftwareKobo.UniversalToolkit.Storage
             // 清空图像。
             if (UriSource == null)
             {
-                this.IsLoading = false;
+                IsLoading = false;
                 return;
             }
 
-            BitmapImage bitmapImage = UriSource as BitmapImage;
-            Uri uri = bitmapImage != null ? bitmapImage.UriSource : null;
+            var bitmapImage = UriSource as BitmapImage;
+            var uri = bitmapImage != null ? bitmapImage.UriSource : null;
             if (uri == null)
             {
-                this.IsLoading = false;
+                IsLoading = false;
                 throw new InvalidOperationException("not support image source");
             }
 
             var requestTime = DateTime.Now;
-            this._lastRequestTime = requestTime;
+            _lastRequestTime = requestTime;
 
-            string scheme = uri.Scheme;
+            var scheme = uri.Scheme;
             if (scheme == "http" || scheme == "https")
             {
                 // 网络图像。
                 byte[] networkImageDatas;
 
                 // 获取本地对应的缓存路径。
-                string cachePath = GetCachePath(uri);
+                var cachePath = GetCachePath(uri);
 
                 // 本地图片缓存文件是否存在。
-                bool isCacheExist = IsCacheExist(cachePath);
+                var isCacheExist = IsCacheExist(cachePath);
 
                 if (isCacheExist == false)
                 {
                     // 缓存不存在，下载图像。
-                    using (HttpClient client = new HttpClient())
+                    using (var client = new HttpClient())
                     {
                         try
                         {
@@ -294,11 +294,11 @@ namespace SoftwareKobo.UniversalToolkit.Storage
                         catch (Exception ex)
                         {
                             // 下载失败。
-                            if (this.ImageFailed != null)
+                            if (ImageFailed != null)
                             {
-                                this.ImageFailed(this, new ImageFailedEventArgs(ex));
+                                ImageFailed(this, new ImageFailedEventArgs(ex));
                             }
-                            this.IsLoading = false;
+                            IsLoading = false;
                             return;
                         }
                     }
@@ -313,23 +313,23 @@ namespace SoftwareKobo.UniversalToolkit.Storage
                 }
 
                 // 加载图像。
-                using (MemoryStream stream = new MemoryStream(networkImageDatas))
+                using (var stream = new MemoryStream(networkImageDatas))
                 {
                     try
                     {
-                        await this.SetStreamAsync(stream.AsRandomAccessStream(), requestTime);
+                        await SetStreamAsync(stream.AsRandomAccessStream(), requestTime);
                     }
                     catch (Exception ex)
                     {
-                        if (this.ImageFailed != null)
+                        if (ImageFailed != null)
                         {
-                            this.ImageFailed(this, new ImageFailedEventArgs(ex));
+                            ImageFailed(this, new ImageFailedEventArgs(ex));
                         }
 
                         // 丢弃缓存。
                         RemoveCachedImage(uri);
 
-                        this.IsLoading = false;
+                        IsLoading = false;
                         return;
                     }
                 }
@@ -341,30 +341,30 @@ namespace SoftwareKobo.UniversalToolkit.Storage
                 {
                     try
                     {
-                        RandomAccessStreamReference reference = RandomAccessStreamReference.CreateFromUri(uri);
+                        var reference = RandomAccessStreamReference.CreateFromUri(uri);
                         using (var stream = await reference.OpenReadAsync())
                         {
-                            await this.SetStreamAsync(stream, requestTime);
+                            await SetStreamAsync(stream, requestTime);
                         }
                     }
                     catch (Exception ex)
                     {
-                        if (this.ImageFailed != null)
+                        if (ImageFailed != null)
                         {
-                            this.ImageFailed(this, new ImageFailedEventArgs(ex));
+                            ImageFailed(this, new ImageFailedEventArgs(ex));
                         }
-                        this.IsLoading = false;
+                        IsLoading = false;
                         return;
                     }
                 }
             }
 
             // 加载成功。
-            if (this.ImageOpened != null)
+            if (ImageOpened != null)
             {
-                this.ImageOpened(this, new RoutedEventArgs());
+                ImageOpened(this, new RoutedEventArgs());
             }
-            this.IsLoading = false;
+            IsLoading = false;
         }
     }
 }

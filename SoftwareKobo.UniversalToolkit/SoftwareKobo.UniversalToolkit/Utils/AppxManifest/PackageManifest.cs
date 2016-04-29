@@ -13,22 +13,16 @@ namespace SoftwareKobo.UniversalToolkit.Utils.AppxManifest
         {
         }
 
-        public static PackageManifest Current
-        {
-            get
-            {
-                return Package.Current.Manifest();
-            }
-        }
+        public static PackageManifest Current => Package.Current.Manifest();
 
         public IEnumerable<ApplicationManifest> Applications
         {
             get
             {
-                XElement applications = this.GetChildElement("Applications");
+                var applications = GetChildElement("Applications");
                 if (applications != null)
                 {
-                    foreach (XElement application in applications.Elements())
+                    foreach (var application in applications.Elements())
                     {
                         yield return new ApplicationManifest(application);
                     }
@@ -36,20 +30,14 @@ namespace SoftwareKobo.UniversalToolkit.Utils.AppxManifest
             }
         }
 
-        public string IgnorableNamespaces
-        {
-            get
-            {
-                return this["IgnorableNamespaces"];
-            }
-        }
+        public string IgnorableNamespaces => this["IgnorableNamespaces"];
 
         public IEnumerable<ResourceManifest> Resources
         {
             get
             {
-                XElement resources = this.GetChildElement("Resources");
-                foreach (XElement resource in resources.Elements())
+                var resources = GetChildElement("Resources");
+                foreach (var resource in resources.Elements())
                 {
                     yield return new ResourceManifest(resource);
                 }
@@ -63,8 +51,8 @@ namespace SoftwareKobo.UniversalToolkit.Utils.AppxManifest
                 throw new ArgumentNullException(nameof(package));
             }
 
-            string manifestPath = Path.Combine(package.InstalledLocation.Path, "AppxManifest.xml");
-            XDocument document = XDocument.Load(manifestPath);
+            var manifestPath = Path.Combine(package.InstalledLocation.Path, "AppxManifest.xml");
+            var document = XDocument.Load(manifestPath);
             return document;
         }
     }

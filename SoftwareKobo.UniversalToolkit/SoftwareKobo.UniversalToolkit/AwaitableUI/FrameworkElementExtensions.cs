@@ -35,7 +35,7 @@ namespace SoftwareKobo.UniversalToolkit.AwaitableUI
 
             while (frameworkElement.ActualWidth == 0 && frameworkElement.ActualHeight == 0)
             {
-                TaskCompletionSource<object> tcs = new TaskCompletionSource<object>();
+                var tcs = new TaskCompletionSource<object>();
 
                 SizeChangedEventHandler handler = null;
 

@@ -17,11 +17,11 @@ namespace SoftwareKobo.UniversalToolkit.Controls
         {
             get
             {
-                return (int)this.GetValue(ColumnCountProperty);
+                return (int)GetValue(ColumnCountProperty);
             }
             set
             {
-                this.SetValue(ColumnCountProperty, value);
+                SetValue(ColumnCountProperty, value);
             }
         }
 
@@ -29,32 +29,32 @@ namespace SoftwareKobo.UniversalToolkit.Controls
         {
             get
             {
-                return (Orientation)this.GetValue(OrientationProperty);
+                return (Orientation)GetValue(OrientationProperty);
             }
             set
             {
-                this.SetValue(OrientationProperty, value);
+                SetValue(OrientationProperty, value);
             }
         }
 
         protected override Size ArrangeOverride(Size finalSize)
         {
-            List<double> columnsLength = new List<double>(new double[this.ColumnCount]);
+            var columnsLength = new List<double>(new double[ColumnCount]);
 
-            if (this.Orientation == Orientation.Vertical)
+            if (Orientation == Orientation.Vertical)
             {
                 // 每个流的宽度。
-                double itemWidth = finalSize.Width / this.ColumnCount;
+                var itemWidth = finalSize.Width / ColumnCount;
 
-                foreach (UIElement element in this.Children)
+                foreach (var element in Children)
                 {
                     // 子元素的大小。
-                    Size elementSize = element.DesiredSize;
+                    var elementSize = element.DesiredSize;
 
                     // 最短流的索引。
-                    int minIndex = columnsLength.IndexOf(columnsLength.Min());
+                    var minIndex = columnsLength.IndexOf(columnsLength.Min());
 
-                    Rect elementRect = new Rect(new Point(itemWidth * minIndex, columnsLength[minIndex]), new Size(itemWidth, elementSize.Height));
+                    var elementRect = new Rect(new Point(itemWidth * minIndex, columnsLength[minIndex]), new Size(itemWidth, elementSize.Height));
 
                     element.Arrange(elementRect);
 
@@ -64,13 +64,13 @@ namespace SoftwareKobo.UniversalToolkit.Controls
             }
             else
             {
-                double itemHeight = finalSize.Height / this.ColumnCount;
+                var itemHeight = finalSize.Height / ColumnCount;
 
-                foreach (UIElement element in this.Children)
+                foreach (var element in Children)
                 {
-                    Size elementSize = element.DesiredSize;
-                    int minIndex = columnsLength.IndexOf(columnsLength.Min());
-                    Rect elementRect = new Rect(new Point(columnsLength[minIndex], itemHeight * minIndex), new Size(elementSize.Width, itemHeight));
+                    var elementSize = element.DesiredSize;
+                    var minIndex = columnsLength.IndexOf(columnsLength.Min());
+                    var elementRect = new Rect(new Point(columnsLength[minIndex], itemHeight * minIndex), new Size(elementSize.Width, itemHeight));
                     element.Arrange(elementRect);
                     columnsLength[minIndex] += elementSize.Width;
                 }
@@ -81,26 +81,26 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 
         protected override Size MeasureOverride(Size availableSize)
         {
-            List<double> columnsLength = new List<double>(new double[this.ColumnCount]);
+            var columnsLength = new List<double>(new double[ColumnCount]);
 
-            if (this.Orientation == Orientation.Vertical)
+            if (Orientation == Orientation.Vertical)
             {
                 // 每个流的宽度。
-                double itemWidth = availableSize.Width / this.ColumnCount;
+                var itemWidth = availableSize.Width / ColumnCount;
 
                 // 子元素的大小。
-                Size elementMeasureSize = new Size(itemWidth, double.PositiveInfinity);
+                var elementMeasureSize = new Size(itemWidth, double.PositiveInfinity);
 
-                foreach (UIElement element in this.Children)
+                foreach (var element in Children)
                 {
                     // 测量子元素。
                     element.Measure(elementMeasureSize);
 
                     // 子元素测量结果。
-                    Size elementSize = element.DesiredSize;
+                    var elementSize = element.DesiredSize;
 
                     // 最短流的索引。
-                    int minIndex = columnsLength.IndexOf(columnsLength.Min());
+                    var minIndex = columnsLength.IndexOf(columnsLength.Min());
 
                     // 将该元素的高度追加到最短流上。
                     columnsLength[minIndex] += elementSize.Height;
@@ -110,14 +110,14 @@ namespace SoftwareKobo.UniversalToolkit.Controls
             }
             else
             {
-                double itemHeight = availableSize.Height / this.ColumnCount;
-                Size elementMeasureSize = new Size(double.PositiveInfinity, itemHeight);
+                var itemHeight = availableSize.Height / ColumnCount;
+                var elementMeasureSize = new Size(double.PositiveInfinity, itemHeight);
 
-                foreach (UIElement element in this.Children)
+                foreach (var element in Children)
                 {
                     element.Measure(elementMeasureSize);
-                    Size elementSize = element.DesiredSize;
-                    int minIndex = columnsLength.IndexOf(columnsLength.Min());
+                    var elementSize = element.DesiredSize;
+                    var minIndex = columnsLength.IndexOf(columnsLength.Min());
                     columnsLength[minIndex] += elementSize.Width;
                 }
 
@@ -127,8 +127,8 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 
         private static void ColumnCountChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            WaterfallPanel obj = (WaterfallPanel)d;
-            int value = (int)e.NewValue;
+            var obj = (WaterfallPanel)d;
+            var value = (int)e.NewValue;
 
             if (value <= 0)
             {
@@ -140,8 +140,8 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 
         private static void OrientationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            WaterfallPanel obj = (WaterfallPanel)d;
-            Orientation value = (Orientation)e.NewValue;
+            var obj = (WaterfallPanel)d;
+            var value = (Orientation)e.NewValue;
 
             if (Enum.IsDefined(typeof(Orientation), value) == false)
             {

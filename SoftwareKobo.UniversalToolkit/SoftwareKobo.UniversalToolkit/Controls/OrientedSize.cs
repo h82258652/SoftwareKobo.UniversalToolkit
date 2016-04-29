@@ -75,13 +75,7 @@ namespace SoftwareKobo.UniversalToolkit.Controls
             }
         }
 
-        public Orientation Orientation
-        {
-            get
-            {
-                return this._orientation;
-            }
-        }
+        public Orientation Orientation => _orientation;
 
         public double Width
         {

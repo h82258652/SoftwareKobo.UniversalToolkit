@@ -19,7 +19,7 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
         /// <returns>实体对象。</returns>
         public static async Task<T> GetJsonAsync<T>(this HttpClient client, Uri uri)
         {
-            string json = await client.GetStringAsync(uri);
+            var json = await client.GetStringAsync(uri);
             return await Task.Factory.StartNew(() => JsonConvert.DeserializeObject<T>(json));
         }
     }

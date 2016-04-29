@@ -10,27 +10,15 @@ namespace SoftwareKobo.UniversalToolkit.Utils.AppxManifest
         {
         }
 
-        public string Language
-        {
-            get
-            {
-                return this["Language"];
-            }
-        }
+        public string Language => this["Language"];
 
-        public string DXFeatureLevel
-        {
-            get
-            {
-                return this["uap:DXFeatureLevel"];
-            }
-        }
+        public string DXFeatureLevel => this["uap:DXFeatureLevel"];
 
         public ResolutionScale Scale
         {
             get
             {
-                string value = this["uap:Scale"];
+                var value = this["uap:Scale"];
                 return (ResolutionScale)Enum.Parse(typeof(ResolutionScale), value);
             }
         }

@@ -8,44 +8,14 @@ namespace SoftwareKobo.UniversalToolkit.Utils.AppxManifest
         {
         }
 
-        public string EntryPoint
-        {
-            get
-            {
-                return this["EntryPoint"];
-            }
-        }
+        public string EntryPoint => this["EntryPoint"];
 
-        public string Executable
-        {
-            get
-            {
-                return this["Executable"];
-            }
-        }
+        public string Executable => this["Executable"];
 
-        public string Id
-        {
-            get
-            {
-                return this["Id"];
-            }
-        }
+        public string Id => this["Id"];
 
-        public string StartPage
-        {
-            get
-            {
-                return this["StartPage"];
-            }
-        }
+        public string StartPage => this["StartPage"];
 
-        public VisualElementsManifest VisualElements
-        {
-            get
-            {
-                return new VisualElementsManifest(this.GetChildElement("uap:VisualElements"));
-            }
-        }
+        public VisualElementsManifest VisualElements => new VisualElementsManifest(GetChildElement("uap:VisualElements"));
     }
 }

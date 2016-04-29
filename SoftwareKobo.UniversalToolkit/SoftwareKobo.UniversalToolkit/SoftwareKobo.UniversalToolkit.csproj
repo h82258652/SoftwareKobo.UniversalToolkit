@@ -37,6 +37,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\SoftwareKobo.UniversalToolkit.XML</DocumentationFile>
+    <GenerateLibraryLayout>true</GenerateLibraryLayout>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <PlatformTarget>ARM</PlatformTarget>
@@ -161,6 +162,8 @@
     <Compile Include="Extensions\WebViewExtensions.cs" />
     <Compile Include="Extensions\WriteableBitmapExtensions.cs" />
     <Compile Include="Helpers\DeviceFamilyHelper.cs" />
+    <Compile Include="Helpers\NavigationHelper.cs" />
+    <Compile Include="Helpers\NavigationHelperConfig.cs" />
     <Compile Include="Helpers\StatusBarHelper.cs" />
     <Compile Include="Mvvm\IncrementalItemSourceBase.cs" />
     <Compile Include="Mvvm\IncrementalLoadingCollection.cs" />

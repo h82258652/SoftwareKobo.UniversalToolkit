@@ -7,21 +7,9 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
     /// </summary>
     public abstract class VerifiableViewModelBase : ViewModelBase
     {
-        public ModelVerifyErrors Errors
-        {
-            get
-            {
-                return new ModelVerifyErrors(this);
-            }
-        }
+        public ModelVerifyErrors Errors => new ModelVerifyErrors(this);
 
-        public bool IsValid
-        {
-            get
-            {
-                return this.Errors.Count <= 0;
-            }
-        }
+        public bool IsValid => Errors.Count <= 0;
 
         protected override void RaisePropertyChanged([CallerMemberName] string propertyName = null)
         {

@@ -9,18 +9,18 @@ namespace SoftwareKobo.UniversalToolkit.Controls
 
         public TextBoxEx()
         {
-            this.DefaultStyleKey = typeof(TextBoxEx);
+            DefaultStyleKey = typeof(TextBoxEx);
         }
 
         public CornerRadius CornerRadius
         {
             get
             {
-                return (CornerRadius)this.GetValue(CornerRadiusProperty);
+                return (CornerRadius)GetValue(CornerRadiusProperty);
             }
             set
             {
-                this.SetValue(CornerRadiusProperty, value);
+                SetValue(CornerRadiusProperty, value);
             }
         }
     }

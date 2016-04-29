@@ -26,10 +26,7 @@ namespace SoftwareKobo.UniversalToolkit.AwaitableUI
 
         internal EventHandlerTaskSource(Action<EventHandler<TEventArgs>> addEventHandler, Action<EventHandler<TEventArgs>> removeEventHandler, Action beginAction) : this(addEventHandler, removeEventHandler)
         {
-            if (beginAction != null)
-            {
-                beginAction();
-            }
+            beginAction?.Invoke();
         }
 
         private EventHandlerTaskSource()
@@ -37,13 +34,7 @@ namespace SoftwareKobo.UniversalToolkit.AwaitableUI
             _tcs = new TaskCompletionSource<object>();
         }
 
-        internal Task<object> Task
-        {
-            get
-            {
-                return _tcs.Task;
-            }
-        }
+        internal Task<object> Task => _tcs.Task;
 
         private void EventCompleted(object sender, TEventArgs args)
         {

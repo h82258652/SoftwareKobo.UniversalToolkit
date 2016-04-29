@@ -35,12 +35,12 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
                 _currentListenElement = Window.Current.Content;
                 if (_currentListenElement != null)
                 {
-                    SolidColorBrush accentColorBrush = (SolidColorBrush)XamlReader.Load("<SolidColorBrush xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\" Color=\"{ThemeResource SystemAccentColor}\" />");
+                    var accentColorBrush = (SolidColorBrush)XamlReader.Load("<SolidColorBrush xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\" Color=\"{ThemeResource SystemAccentColor}\" />");
                     _listenToken = accentColorBrush.RegisterPropertyChangedCallback(SolidColorBrush.ColorProperty, (obj, dp) =>
                     {
                         if (AccentColorChanged != null)
                         {
-                            Color accentColor = (Color)obj.GetValue(dp);
+                            var accentColor = (Color)obj.GetValue(dp);
                             AccentColorChanged(obj, accentColor);
                         }
                     });
@@ -62,13 +62,7 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
         /// <summary>
         /// 获取用户主题色。
         /// </summary>
-        public static Color AccentColor
-        {
-            get
-            {
-                return (Color)Application.Current.Resources["SystemAccentColor"];
-            }
-        }
+        public static Color AccentColor => (Color)Application.Current.Resources["SystemAccentColor"];
 
         /// <summary>
         /// 获取 <see cref="Colors"/> 中已经声明的 <see cref="Color"/>。
@@ -83,8 +77,8 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
                     _knownColors = new Dictionary<string, Color>();
                     foreach (var property in typeof(Colors).GetRuntimeProperties())
                     {
-                        string colorName = property.Name;
-                        Color color = (Color)property.GetValue(null);
+                        var colorName = property.Name;
+                        var color = (Color)property.GetValue(null);
                         _knownColors.Add(colorName, color);
                     }
                 }
@@ -99,7 +93,7 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
                 throw new ArgumentNullException(nameof(hex));
             }
 
-            Color? color = TryFromHex(hex);
+            var color = TryFromHex(hex);
             if (color.HasValue)
             {
                 return color.Value;
@@ -117,7 +111,7 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
                 throw new ArgumentNullException(nameof(name));
             }
 
-            Color? color = TryFromName(name);
+            var color = TryFromName(name);
             if (color.HasValue)
             {
                 return color.Value;
@@ -144,7 +138,7 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
         {
             return Color.FromArgb(value.A, (byte)(255 - value.R), (byte)(255 - value.G), (byte)(255 - value.B));
         }
-        
+
         public static Color? TryFromHex(string hex)
         {
             if (hex == null)
@@ -154,27 +148,27 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
 
             if (hex.Length == 4)
             {
-                Regex regex = new Regex(@"^#([0-9A-Fa-f])([0-9A-Fa-f])([0-9A-Fa-f])$");
-                Match match = regex.Match(hex);
+                var regex = new Regex(@"^#([0-9A-Fa-f])([0-9A-Fa-f])([0-9A-Fa-f])$");
+                var match = regex.Match(hex);
                 if (match.Success)
                 {
-                    GroupCollection groups = match.Groups;
-                    byte r = byte.Parse(groups[1].Value + groups[1].Value, NumberStyles.HexNumber);
-                    byte g = byte.Parse(groups[2].Value + groups[2].Value, NumberStyles.HexNumber);
-                    byte b = byte.Parse(groups[3].Value + groups[3].Value, NumberStyles.HexNumber);
+                    var groups = match.Groups;
+                    var r = byte.Parse(groups[1].Value + groups[1].Value, NumberStyles.HexNumber);
+                    var g = byte.Parse(groups[2].Value + groups[2].Value, NumberStyles.HexNumber);
+                    var b = byte.Parse(groups[3].Value + groups[3].Value, NumberStyles.HexNumber);
                     return FromRgb(r, g, b);
                 }
             }
             else if (hex.Length == 7)
             {
-                Regex regex = new Regex(@"^#([0-9A-Fa-f]{2})([0-9A-Fa-f]{2})([0-9A-Fa-f]{2})$");
-                Match match = regex.Match(hex);
+                var regex = new Regex(@"^#([0-9A-Fa-f]{2})([0-9A-Fa-f]{2})([0-9A-Fa-f]{2})$");
+                var match = regex.Match(hex);
                 if (match.Success)
                 {
-                    GroupCollection groups = match.Groups;
-                    byte r = byte.Parse(groups[1].Value, NumberStyles.HexNumber);
-                    byte g = byte.Parse(groups[2].Value, NumberStyles.HexNumber);
-                    byte b = byte.Parse(groups[3].Value, NumberStyles.HexNumber);
+                    var groups = match.Groups;
+                    var r = byte.Parse(groups[1].Value, NumberStyles.HexNumber);
+                    var g = byte.Parse(groups[2].Value, NumberStyles.HexNumber);
+                    var b = byte.Parse(groups[3].Value, NumberStyles.HexNumber);
                     return FromRgb(r, g, b);
                 }
             }

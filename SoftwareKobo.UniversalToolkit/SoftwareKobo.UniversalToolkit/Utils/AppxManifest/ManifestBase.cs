@@ -8,60 +8,54 @@ namespace SoftwareKobo.UniversalToolkit.Utils.AppxManifest
 
         protected internal ManifestBase(XElement manifestElement)
         {
-            this._manifestElement = manifestElement;
+            _manifestElement = manifestElement;
         }
 
-        public XElement Element
-        {
-            get
-            {
-                return this._manifestElement;
-            }
-        }
+        public XElement Element => _manifestElement;
 
         public string this[string attribute]
         {
             get
             {
                 XName attributeName;
-                int splitIndex = attribute.IndexOf(':');
+                var splitIndex = attribute.IndexOf(':');
                 if (splitIndex >= 0)
                 {
-                    string prefix = attribute.Substring(0, splitIndex);
-                    string localName = attribute.Substring(splitIndex + 1);
-                    attributeName = XName.Get(localName, this._manifestElement.GetNamespaceOfPrefix(prefix).NamespaceName);
+                    var prefix = attribute.Substring(0, splitIndex);
+                    var localName = attribute.Substring(splitIndex + 1);
+                    attributeName = XName.Get(localName, _manifestElement.GetNamespaceOfPrefix(prefix).NamespaceName);
                 }
                 else
                 {
                     attributeName = XName.Get(attribute);
                 }
 
-                XAttribute xAttribute = this._manifestElement.Attribute(attributeName);
+                var xAttribute = _manifestElement.Attribute(attributeName);
                 return xAttribute?.Value;
             }
         }
 
         public override string ToString()
         {
-            return this._manifestElement.ToString();
+            return _manifestElement.ToString();
         }
 
         protected internal XElement GetChildElement(string element)
         {
             XName elementName;
-            int splitIndex = element.IndexOf(':');
+            var splitIndex = element.IndexOf(':');
             if (splitIndex >= 0)
             {
-                string prefix = element.Substring(0, splitIndex);
-                string localName = element.Substring(splitIndex + 1);
-                elementName = XName.Get(localName, this._manifestElement.GetNamespaceOfPrefix(prefix).NamespaceName);
+                var prefix = element.Substring(0, splitIndex);
+                var localName = element.Substring(splitIndex + 1);
+                elementName = XName.Get(localName, _manifestElement.GetNamespaceOfPrefix(prefix).NamespaceName);
             }
             else
             {
-                elementName = XName.Get(element, this._manifestElement.GetDefaultNamespace().NamespaceName);
+                elementName = XName.Get(element, _manifestElement.GetDefaultNamespace().NamespaceName);
             }
-            
-            XElement childElement = this._manifestElement.Element(elementName);
+
+            var childElement = _manifestElement.Element(elementName);
             return childElement;
         }
     }

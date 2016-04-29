@@ -1,5 +1,4 @@
-﻿using System;
-using Windows.ApplicationModel;
+﻿using Windows.ApplicationModel;
 
 namespace SoftwareKobo.UniversalToolkit.Mvvm
 {
@@ -11,13 +10,7 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
         /// <summary>
         /// 指示当前是否处于设计模式。
         /// </summary>
-        public static bool IsInDesignMode
-        {
-            get
-            {
-                return DesignMode.DesignModeEnabled;
-            }
-        }
+        public static bool IsInDesignMode => DesignMode.DesignModeEnabled;
 
         /// <summary>
         /// 接收来自 View 的消息。

@@ -24,13 +24,13 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
                 throw new ArgumentOutOfRangeException(nameof(y));
             }
 
-            int width = bitmap.PixelWidth;
+            var width = bitmap.PixelWidth;
             if (x >= width)
             {
                 throw new ArgumentOutOfRangeException(nameof(x));
             }
 
-            int height = bitmap.PixelHeight;
+            var height = bitmap.PixelHeight;
             if (y >= height)
             {
                 throw new ArgumentOutOfRangeException(nameof(y));
@@ -38,12 +38,12 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
 
             using (var stream = bitmap.PixelBuffer.AsStream())
             {
-                int offset = y * width * 4 + x * 4;
+                var offset = y * width * 4 + x * 4;
                 stream.Seek(offset, SeekOrigin.Begin);
-                byte b = (byte)stream.ReadByte();
-                byte g = (byte)stream.ReadByte();
-                byte r = (byte)stream.ReadByte();
-                byte a = (byte)stream.ReadByte();
+                var b = (byte)stream.ReadByte();
+                var g = (byte)stream.ReadByte();
+                var r = (byte)stream.ReadByte();
+                var a = (byte)stream.ReadByte();
                 return Color.FromArgb(a, r, g, b);
             }
         }
@@ -64,13 +64,13 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
                 throw new ArgumentOutOfRangeException(nameof(y));
             }
 
-            int width = bitmap.PixelWidth;
+            var width = bitmap.PixelWidth;
             if (x >= width)
             {
                 throw new ArgumentOutOfRangeException(nameof(x));
             }
 
-            int height = bitmap.PixelHeight;
+            var height = bitmap.PixelHeight;
             if (y >= height)
             {
                 throw new ArgumentOutOfRangeException(nameof(y));
@@ -78,7 +78,7 @@ namespace SoftwareKobo.UniversalToolkit.Extensions
 
             using (var stream = bitmap.PixelBuffer.AsStream())
             {
-                int offset = y * width * 4 + x * 4;
+                var offset = y * width * 4 + x * 4;
                 stream.Seek(offset, SeekOrigin.Begin);
                 stream.WriteByte(color.B);
                 stream.WriteByte(color.G);

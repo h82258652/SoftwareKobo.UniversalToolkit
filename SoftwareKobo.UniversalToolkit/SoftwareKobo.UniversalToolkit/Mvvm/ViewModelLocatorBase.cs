@@ -1,24 +1,16 @@
-﻿using Windows.ApplicationModel;
-
-namespace SoftwareKobo.UniversalToolkit.Mvvm
+﻿namespace SoftwareKobo.UniversalToolkit.Mvvm
 {
     /// <summary>
     /// 视图模型定位器基类。
     /// </summary>
     public abstract class ViewModelLocatorBase
     {
-        private IoC _container = new IoC();
+        private readonly IoC _container = new IoC();
 
         /// <summary>
         /// 指示当前是否处于设计模式。
         /// </summary>
-        public static bool IsInDesignMode
-        {
-            get
-            {
-                return ViewModelBase.IsInDesignMode;
-            }
-        }
+        public static bool IsInDesignMode => ViewModelBase.IsInDesignMode;
 
         /// <summary>
         /// 获取注入类的实例。
@@ -27,7 +19,7 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
         /// <returns>实例。</returns>
         protected virtual T GetInstance<T>() where T : class
         {
-            return this._container.GetInstance<T>();
+            return _container.GetInstance<T>();
         }
 
         /// <summary>
@@ -36,7 +28,7 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
         /// <typeparam name="T">注入类类型。</typeparam>
         protected virtual void Register<T>() where T : class
         {
-            this._container.Register<T>();
+            _container.Register<T>();
         }
 
         /// <summary>
@@ -46,7 +38,7 @@ namespace SoftwareKobo.UniversalToolkit.Mvvm
         /// <typeparam name="TTo">注入类类型。</typeparam>
         protected virtual void Register<TFrom, TTo>() where TTo : class, TFrom where TFrom : class
         {
-            this._container.Register<TFrom, TTo>();
+            _container.Register<TFrom, TTo>();
         }
     }
 }

@@ -31,14 +31,14 @@ namespace SoftwareKobo.UniversalToolkit.Behaviors
 
         public void Attach(DependencyObject associatedObject)
         {
-            this.AssociatedObject = associatedObject;
-            ListViewBase dataView = this.AssociatedObject as ListViewBase;
+            AssociatedObject = associatedObject;
+            var dataView = AssociatedObject as ListViewBase;
             if (dataView != null)
             {
-                ScrollViewer scrollViewer = dataView.GetDescendantsOfType<ScrollViewer>().FirstOrDefault();
+                var scrollViewer = dataView.GetDescendantsOfType<ScrollViewer>().FirstOrDefault();
                 if (scrollViewer != null)
                 {
-                    this.AttachScrollBar(scrollViewer);
+                    AttachScrollBar(scrollViewer);
                 }
                 else
                 {
@@ -46,7 +46,7 @@ namespace SoftwareKobo.UniversalToolkit.Behaviors
                     loadedHandler = (sender, e) =>
                     {
                         scrollViewer = dataView.GetDescendantsOfType<ScrollViewer>().FirstOrDefault();
-                        this.AttachScrollBar(scrollViewer);
+                        AttachScrollBar(scrollViewer);
                         dataView.Loaded -= loadedHandler;
                     };
                     dataView.Loaded += loadedHandler;
@@ -56,31 +56,31 @@ namespace SoftwareKobo.UniversalToolkit.Behaviors
 
         public void Detach()
         {
-            if (this._horizontalBar != null)
+            if (_horizontalBar != null)
             {
-                this._horizontalBar.ValueChanged -= this.HorizontalBar_ValueChanged;
+                _horizontalBar.ValueChanged -= HorizontalBar_ValueChanged;
             }
-            if (this._verticalBar != null)
+            if (_verticalBar != null)
             {
-                this._verticalBar.ValueChanged -= this.VerticalBar_ValueChanged;
+                _verticalBar.ValueChanged -= VerticalBar_ValueChanged;
             }
-            this.AssociatedObject = null;
+            AssociatedObject = null;
         }
 
         private void AttachScrollBar(ScrollViewer scrollViewer)
         {
             var scrollBars = scrollViewer.GetDescendantsOfType<ScrollBar>().ToList();
-            ScrollBar horizontalBar = scrollBars.FirstOrDefault(temp => temp.Orientation == Orientation.Horizontal);
+            var horizontalBar = scrollBars.FirstOrDefault(temp => temp.Orientation == Orientation.Horizontal);
             if (horizontalBar != null)
             {
-                this._horizontalBar = horizontalBar;
-                this._horizontalBar.ValueChanged += this.HorizontalBar_ValueChanged;
+                _horizontalBar = horizontalBar;
+                _horizontalBar.ValueChanged += HorizontalBar_ValueChanged;
             }
-            ScrollBar verticalBar = scrollBars.FirstOrDefault(temp => temp.Orientation == Orientation.Vertical);
+            var verticalBar = scrollBars.FirstOrDefault(temp => temp.Orientation == Orientation.Vertical);
             if (verticalBar != null)
             {
-                this._verticalBar = verticalBar;
-                this._verticalBar.ValueChanged += this.VerticalBar_ValueChanged;
+                _verticalBar = verticalBar;
+                _verticalBar.ValueChanged += VerticalBar_ValueChanged;
             }
         }
 
@@ -88,17 +88,11 @@ namespace SoftwareKobo.UniversalToolkit.Behaviors
         {
             if (e.NewValue > e.OldValue)
             {
-                if (this.ScrollRight != null)
-                {
-                    this.ScrollRight(this.AssociatedObject, EventArgs.Empty);
-                }
+                ScrollRight?.Invoke(AssociatedObject, EventArgs.Empty);
             }
             else if (e.NewValue < e.OldValue)
             {
-                if (this.ScrollLeft != null)
-                {
-                    this.ScrollLeft(this.AssociatedObject, EventArgs.Empty);
-                }
+                ScrollLeft?.Invoke(AssociatedObject, EventArgs.Empty);
             }
         }
 
@@ -106,17 +100,11 @@ namespace SoftwareKobo.UniversalToolkit.Behaviors
         {
             if (e.NewValue > e.OldValue)
             {
-                if (this.ScrollDown != null)
-                {
-                    this.ScrollDown(this.AssociatedObject, EventArgs.Empty);
-                }
+                ScrollDown?.Invoke(AssociatedObject, EventArgs.Empty);
             }
             else if (e.NewValue < e.OldValue)
             {
-                if (this.ScrollUp != null)
-                {
-                    this.ScrollUp(this.AssociatedObject, EventArgs.Empty);
-                }
+                ScrollUp?.Invoke(AssociatedObject, EventArgs.Empty);
             }
         }
     }
